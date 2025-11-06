@@ -9,24 +9,25 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void // down untuk create table
+    public function up(): void
     {
-        Schema::create('test_customers', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('no_telepon')->unique();
             $table->string('alamat')->nullable();
-            $table->string('no_telepon');
-            $table->timestamps(); // membuat 2 kolom otomatis dibuat(created_at) dan diupdate(updated_at)
+            $table->enum('jenis_kelamin', ['Pria, Wanita'])->defaul('Unknown'); // ->default('...'); Setelah enum(), bisa juga ditambahkan nilai defaultnya
+            $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void // down untuk delete table
+    public function down(): void
     {
-        Schema::dropIfExists('test_customers');
+        Schema::dropIfExists('customers');
     }
 };

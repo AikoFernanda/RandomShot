@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('no_telepon')->unique();
-            $table->string('alamat');
-            $table->enum('jenis_kelamin', ['Pria, Wanita']); // ->default('...'); Setelah enum(), bisa juga ditambahkan nilai defaultnya
-            $table->enum('peran', ['Employee', 'Owner']);
-            $table->integer('gaji_bulanan');
+            $table->string('alamat')->nullable();
+            $table->enum('jenis_kelamin', ['Pria', 'Wanita', 'Unknown'])->default('Unknown'); // ->default('...'); Setelah enum(), bisa juga ditambahkan nilai defaultnya
+            $table->enum('peran', ['Employee', 'Owner'])->default('Employee');
+            $table->integer('gaji_bulanan')->nullable();
             $table->date('tanggal_mulai'); // menyimpan tipe tanggal (dalam format YYYY-MM-DD, kolom itu sebagai string (teks) seperti 2025-01-10)
             $table->timestamps();
         });

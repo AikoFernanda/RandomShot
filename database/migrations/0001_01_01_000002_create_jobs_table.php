@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    // ini adalah tabel default untuk fitur inti Laravel, jobs (Antrian/Queues): Digunakan untuk pekerjaan di latar belakang (misalnya, mengirim 500 email sekaligus) agar halaman web-mu tidak loading lama.
+
     /**
      * Run the migrations.
      */

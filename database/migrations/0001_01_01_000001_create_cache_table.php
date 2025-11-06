@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    // ini adalah tabel default untuk fitur inti Laravel, cache (Cache): Digunakan untuk menyimpan data sementara agar website-mu bisa berjalan lebih cepat.
+
     /**
      * Run the migrations.
      */

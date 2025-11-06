@@ -8,27 +8,27 @@
         <h3 class="text-xs font-semibold text-gray-600 mb-6">Isi sendiri buat register</h3>
         <div>
             <label for="username">Username</label><br>
-            <input type="string" id="username" name="nama" required class="border border-gray-300 rounded-md p-2">
+            <input type="string" id="username" name="nama" placeholder="..." class="border border-gray-300 rounded-md p-2">
         </div>
 
         <div>
             <label for="email">Email</label><br>
-            <input type="email" id="email" name="email" required class="border border-gray-300 rounded-md p-2">
+            <input type="email" id="email" name="email" placeholder="..." required class="border border-gray-300 rounded-md p-2">
         </div>
 
         <div>
             <label for="password">Password</label><br>
-            <input type="string" id="password" name="password" required class="border border-gray-300 rounded-md p-2">
+            <input type="string" id="password" name="password" placeholder="..." required class="border border-gray-300 rounded-md p-2">
         </div>
 
         <div>
             <label for="alamat">Alamat</label><br>
-            <textarea name="alamat" class="border border-gray-300 rounded-md p-2 resize-y">...</textarea>
+            <textarea name="alamat" placeholder="..." class="border border-gray-300 rounded-md p-2 resize-y"></textarea>
         </div>
 
         <div>
             <label for="no_telepon">Telepon</label><br>
-            <input type="numeric" id="no_telepon" name="no_telepon" required class="border border-gray-300 rounded-md p-2">
+            <input type="numeric" id="no_telepon" name="no_telepon" placeholder="..." required class="border border-gray-300 rounded-md p-2">
         </div>
 
         <div>
@@ -42,11 +42,11 @@
         <h3 class="text-xs font-semibold text-gray-600 mb-6">Isi sendiri buat login</h3>
         <div>
             <label for="email">Email</label><br>
-            <input type="email" id="email" name="email" required class="border border-gray-300 rounded-md p-2">
+            <input type="email" id="email" name="email" placeholder="..." required class="border border-gray-300 rounded-md p-2">
         </div>
         <div>
             <label for="password">Password</label><br>
-            <input type="string" id="password" name="password" required class="border border-gray-300 rounded-md p-2">
+            <input type="string" id="password" name="password" placeholder="..." required class="border border-gray-300 rounded-md p-2">
         </div>
         <div>
             <button type="submit" class="bg-green-500 text-white font-bold py-2 px-4 rounded">Login</button>
@@ -62,9 +62,11 @@
         @endif
     </div>
 
+    @if (session('status_login') == 'success')
     <div>
         <form action='/test_logout' method='GET'>
             <button type="submit" class="bg-red-500 text-white font-bold py-2 px-4 rounded">Logout</button>
         </form>
     </div>
+    @endif
 </x-Layout>
