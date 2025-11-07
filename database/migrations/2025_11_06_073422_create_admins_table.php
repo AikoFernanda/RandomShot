@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void // Fungsi up berisi instruksi untuk membuat perubahan pada databasemu. Kapan dijalankan: Saat kamu mengetik php artisan migrate
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->id();
+            $table->id('admin_id');
             $table->string('nama');
             $table->string('email')->unique();
             $table->string('password');

@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('transactions', function (Blueprint $table) {
+            $table->id('transaction_id');
+            $table->foreignId('customer_id')->constrained('customers', 'customer_id'); // secara eksplisit memberi tahu constrained() nama primary key custom di tabel tersebut
+            $table->foreignId('admin_id')->constrained('admins', 'admin_id');
+            $table->string('no_invoice')->unique();
+            $table->enum('metode_pembayaran', ['Cash', 'Cashless']);
+            $table->integer('total_transaksi');
+            $table->enum('status_transaksi', ['Paid', 'Pending', 'Expired'])->default('Pending');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('transactions');
+    }
+};

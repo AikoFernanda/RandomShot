@@ -11,6 +11,11 @@ class Customer extends Model
     // tidak perlu kita tulis  protected $table = 'nama_tabel'; untuk beri tahu tabel yang benar, karena laravel sudah menganggap model ini berinteraksi dengan tabel(customers) yang bernama bentuk jamak snake_case dari nama modelnya(Customer) dan itu valid sesuai tujuan model kita dibuat
 
     /**
+     * Beri tahu model bahwa nama primary key-nya BUKAN 'id'.
+     */
+    protected $primaryKey = 'customer_id';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
