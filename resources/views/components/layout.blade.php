@@ -15,23 +15,6 @@
     <x-Navbar></x-Navbar>
     <x-Header>{{ $title }}</x-Header>
     <main>
-        @if (session('success'))
-        <div id='popup-success' class="text-green-600 bg-green-100 p-2.5 border-green-500 rounded-[5px] mb-[15px]">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if ($errors->any() || session('error'))
-        <div id='popup-error' class="text-red-600 bg-red-100 p-2.5 border border-red-500 rounded-[5px] mb-[15px]">
-            <strong>Oops! Ada yang salah:</strong>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-                <li>{{ session('error') }}</li>
-            </ul>
-        </div>
-    @endif
     {{ $slot }}
     </main>
     <footer></footer>
