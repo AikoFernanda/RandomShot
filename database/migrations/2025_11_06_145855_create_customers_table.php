@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('no_telepon')->unique();
             $table->string('alamat')->nullable();
-            $table->enum('jenis_kelamin', ['Pria, Wanita'])->defaul('Unknown'); // ->default('...'); Setelah enum(), bisa juga ditambahkan nilai defaultnya
-            $table->timestamps();
+            $table->enum('jenis_kelamin', ['Pria', 'Wanita', 'Unknown'])->default('Unknown'); // ->default('...'); Setelah enum(), bisa juga ditambahkan nilai defaultnya
+            $table->timestamps(); // default timezone utc, WIB adalah UTC+7 (7 jam lebih cepat dari jam dunia).
         });
     }
 

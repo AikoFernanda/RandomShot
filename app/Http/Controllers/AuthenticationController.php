@@ -17,13 +17,13 @@ class AuthenticationController extends Controller
         // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder.
     }
 
-    public function customeRegister(Request $request)
+    public function customerRegister(Request $request)
     {
         // 3. Validasi data yang masuk dari form
         // Jika gagal, Laravel otomatis kembali ke form & menampilkan error
         $request->validate([
             'nama' => 'required|string|max:255',
-            'no_telepon' => 'required|numeric', // Aturan 'tel' bukan aturan validasi bawaan Laravel. harus menggantinya dengan 'numeric' (Aturan numeric berarti: "Validasi ini lolos jika isi string-nya adalah angka")
+            'no_telepon' => 'required|numeric|unique:customers', // Aturan 'tel' bukan aturan validasi bawaan Laravel. harus menggantinya dengan 'numeric' (Aturan numeric berarti: "Validasi ini lolos jika isi string-nya adalah angka"). diberi unique supaya tidak error didatabasenya, tapi errornya di validasi, jadi tidak ada kesalahan database yang membuat halaman error laravel muncul
             'email' => 'required|email|unique:customers', // unique seperti validasi, unique: Ini adalah nama aturannya. :test_customers: Ini memberi tahu Laravel, "Tolong cek di tabel test_customers apakah email ini sudah ada."
             'password' => 'required|string'
         ]);

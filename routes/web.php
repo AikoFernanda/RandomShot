@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthenticationController; // use alamat_lengkap; Perint
 
 // Bentuk 1 (Closure): Logikanya dikerjakan langsung di tempat (di file rute). Ini bagus untuk rute yang sangat sederhana dan tidak punya banyak logika
 Route::get('/', function () {
-    // return view('welcome');
+    // return view('landing');
     return view('landing', ['title' => 'Landing Page']);
 });
 
@@ -19,7 +19,7 @@ Route::get('/register', function () {
 });
 
 Route::get('/login', function() {
-    return view('auth.login_form', ['title' => 'Login Page']);
+    return view('auth.login_form', ['title' => 'Login Page']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
 });
 
  
