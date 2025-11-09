@@ -28,4 +28,25 @@ class Customer extends Model
         'jenis_kelamin',
         'alamat'
     ];
+
+    /**
+     * Satu Customer "hasMany" (punya banyak) Transaction.
+     */
+    public function transactions()
+    {
+        // Parameter 1: Model yang dituju
+        // Parameter 2: Nama foreign key di tabel 'transactions'
+        // Parameter 3: Nama primary key di tabel INI ('customers')
+        return $this->hasMany(Transaction::class, 'customer_id', 'customer_id');
+    }
+
+    public function feedbackreview()
+    {
+        return $this->hasOne(FeedbackReview::class, 'customer_id', 'customer_id');
+    }
+
 }
+
+// relasi juga harus ada di model bukan di tabel database aja
+// pakai syntax hasmany, belongto, dll cek dokumentasi laravel Eloquent ORM/relationship
+// Relasi di database (Foreign Key) dan relasi di Model (Eloquent) adalah dua hal yang berbeda tapi saling melengkapi.

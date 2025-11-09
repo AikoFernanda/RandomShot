@@ -29,4 +29,11 @@ class Menu extends Model
         'stok',
         'nama_gambar'
     ];
+
+    public function transactionDetails()
+    {
+        // Parameter 1: Model "anak"
+        // Parameter 2: Nama "awalan" (yang tadi 'item')
+        return $this->morphMany(TransactionDetail::class, 'item');
+    }
 }

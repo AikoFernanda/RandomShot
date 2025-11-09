@@ -27,4 +27,9 @@ class Reservation extends Model
         'waktu_selesai',
         'status'
     ];
+
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class, 'transaction_id', 'transaction_id');
+    }
 }

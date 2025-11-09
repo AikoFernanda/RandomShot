@@ -32,4 +32,8 @@ class Admin extends Model
         'gaji_bulanan',
         'tanggal_mulai'
     ];
+
+    public function transactions() {
+        return $this->hasMany(Transaction::class, 'admin_id', 'admin_id');
+    }
 }

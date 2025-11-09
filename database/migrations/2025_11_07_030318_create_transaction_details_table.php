@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('transaction_id')->constrained('transactions', 'transaction_id');
             $table->integer('item_id');
             $table->enum('item_type', ['table', 'menu']);
-            $table->integer('jumlah_item');
+            $table->integer('quantity');
             $table->string('deskripsi')->nullable();
             $table->string('meja_tujuan');
             $table->enum('status_pesanan', ['Selesai', 'Menunggu Dibuat', 'Dijadwalkan'])->default('Menunggu Dibuat');

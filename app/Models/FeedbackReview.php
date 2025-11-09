@@ -18,4 +18,8 @@ class FeedbackReview extends Model
         'review',
         'rating'
     ];
+
+    public function customer() {
+        return $this->belongsTo(Customer::class, 'customer_id', 'customer_id');
+    }
 }

@@ -31,4 +31,12 @@ class Table extends Model
         'nama_gambar',
         'status_meja'
     ];
+
+    /**
+     * Dapatkan semua detail transaksi untuk meja ini.
+     */
+    public function transactionDetails()
+    {
+        return $this->morphMany(TransactionDetail::class, 'item');
+    }
 }
