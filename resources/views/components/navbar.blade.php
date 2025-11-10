@@ -10,19 +10,24 @@
 
         <!-- Kanan: Tautan Navigasi -->
         <nav class="flex items-center space-x-6 text-white">
-            <a href="{{ asset('/home') }}" class="font-medium hover:text-blue-400 transition duration-200 {{ Request::is('home') ? 'text-blue-400 font-semibold' : 'text-white hover:text-blue-400' }}">
+            <a href="{{ asset('/home') }}"
+                class="font-medium hover:text-blue-400 transition duration-200 {{ Request::is('home') ? 'text-blue-400 font-semibold' : 'text-white hover:text-blue-400' }}">
                 Home
             </a>
-            <a href="#" class="font-medium hover:text-blue-400 transition duration-200 {{ Request::is('reservasi') ? 'text-blue-400 font-semibold' : 'text-white hover:text-blue-400' }}">
+            <a href="#"
+                class="font-medium hover:text-blue-400 transition duration-200 {{ Request::is('reservasi') ? 'text-blue-400 font-semibold' : 'text-white hover:text-blue-400' }}">
                 Reservasi
             </a>
-            <a href="#" class="font-medium hover:text-blue-400 transition duration-200 {{ Request::is('menu') ? 'text-blue-400 font-semibold' : 'text-white hover:text-blue-400' }}">
+            <a href="#"
+                class="font-medium hover:text-blue-400 transition duration-200 {{ Request::is('menu') ? 'text-blue-400 font-semibold' : 'text-white hover:text-blue-400' }}">
                 Menu
             </a>
-            <a href="#" class="font-medium hover:text-blue-400 transition duration-200 {{ Request::is('layanan_kami') ? 'text-blue-400 font-semibold' : 'text-white hover:text-blue-400' }}">
+            <a href="#"
+                class="font-medium hover:text-blue-400 transition duration-200 {{ Request::is('layanan_kami') ? 'text-blue-400 font-semibold' : 'text-white hover:text-blue-400' }}">
                 Layanan kami
             </a>
-            <a href="#" class="font-medium hover:text-blue-400 transition duration-200 {{ Request::is('kontak_kami') ? 'text-blue-400 font-semibold' : 'text-white hover:text-blue-400' }}">
+            <a href="{{ asset('/contact') }}"
+                class="font-medium hover:text-blue-400 transition duration-200 {{ Request::is('contact') ? 'text-blue-400 font-semibold' : 'text-white hover:text-blue-400' }}">
                 Kontak Kami
             </a>
         </nav>
