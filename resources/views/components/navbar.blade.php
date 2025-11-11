@@ -13,10 +13,10 @@
             <a href="{{ asset('/home') }}" class="font-reguler text-sm hover:text-yellow-400 transition duration-200 {{ Request::is('home') ? 'text-yellow-400 font-semibold' : 'text-white hover:text-yellow-400' }}">
                 Beranda
             </a>
-            <a href="#" class="font-reguler text-sm hover:text-yellow-400 transition duration-200 {{ Request::is('reservasi') ? 'text-yellow-400 font-semibold' : 'text-white hover:text-yellow-400' }}">
+            <a href="{{ asset('/reservasi') }}" class="font-reguler text-sm hover:text-yellow-400 transition duration-200 {{ Request::is('reservasi') ? 'text-yellow-400 font-semibold' : 'text-white hover:text-yellow-400' }}">
                 Reservasi
             </a>
-            <a href="#" class="font-reguler text-sm hover:text-yellow-400 transition duration-200 {{ Request::is('menu') ? 'text-yellow-400 font-semibold' : 'text-white hover:text-yellow-400' }}">
+            <a href="{{ asset('/cafe') }}" class="font-reguler text-sm hover:text-yellow-400 transition duration-200 {{ Request::is('cafe') ? 'text-yellow-400 font-semibold' : 'text-white hover:text-yellow-400' }}">
                 Cafe
             </a>
             <a href="{{ asset('/about') }}" class="font-reguler text-sm hover:text-yellow-400 transition duration-200 {{ Request::is('about') ? 'text-yellow-400 font-semibold' : 'text-white hover:text-yellow-400' }}">
