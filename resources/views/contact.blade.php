@@ -1,6 +1,7 @@
 <x-Layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
+  
     <!-- Background -->
     <div class="relative w-full min-h-screen bg-black overflow-hidden">
         <img src="{{ asset('img/kontak.png') }}"
@@ -47,3 +48,4 @@
         </div>
     </div>
 </x-Layout>
+

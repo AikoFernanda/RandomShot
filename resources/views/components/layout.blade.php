@@ -11,13 +11,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
-        body {
+        body{
             font-family: 'Poppins';
         }
-
-        h1,
-        h2,
-        h3 {
+        h1, h2, h3 {
             font-family: 'Bebas Neue';
         }
     </style>
