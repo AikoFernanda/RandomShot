@@ -6,7 +6,7 @@
         class="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat p-4">
 
         <!-- logo -->
-        <img src="{{ asset('img/logo_random_shot.png') }}" class=" -translate-x-25">
+        <img src="{{ asset('img/logo-rs.png') }}" class=" -translate-x-25">
 
         <!-- Card/Panel untuk Konten -->
         <div class="w-1/3 bg-[#101B08] border border-[#FFF4E4] p-8 rounded-lg shadow-lg transform translate-x-10">
