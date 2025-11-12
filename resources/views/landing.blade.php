@@ -13,8 +13,8 @@
 
                     <div class="mt-8 flex justify-center mb-48">
                         <a href="#reservasi" 
-                           class="bg-gray-100/70 text-black hover:text-white px-5 py-2 rounded-md text-base font-medium hover:bg-black/75 transition shadow-lg">
-                           Reservasi Sekarang >
+                           class="border border-white bg-gray-100/70 text-black hover:text-white px-5 py-2 rounded-md text-base font-medium hover:bg-black/75 transition shadow-lg">
+                           Lihat Layanan >
                         </a>
                     </div>
                 </div>
