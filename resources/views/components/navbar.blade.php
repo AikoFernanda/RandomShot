@@ -9,6 +9,7 @@
         {{-- 'w-48' akan membuat lebar gambar sekitar 12rem (192px), sesuaikan nilai ini jika terlalu besar/kecil. --}}
 
         <!-- Kanan: Tautan Navigasi -->
+
         <nav class="flex items-center space-x-14 text-white">
             <a href="{{ asset('/home') }}" class="font-reguler text-sm hover:text-yellow-400 transition duration-200 {{ Request::is('home') ? 'text-yellow-400 font-semibold' : 'text-white hover:text-yellow-400' }}">
                 Beranda

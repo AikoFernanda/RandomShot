@@ -9,7 +9,7 @@ Route::get('/', function () {
     return view('landing', ['title' => 'Landing Page']);
 });
 
-Route::get('/home', function() {
+Route::get('/home', function () {
     return view('home', ['title' => 'Home Page']);
 });
 
@@ -18,7 +18,7 @@ Route::get('/register', function () {
     return view('auth.register_form', ['title' => 'Register Page']);
 });
 
-Route::get('/login', function() {
+Route::get('/login', function () {
     return view('auth.login_form', ['title' => 'Login Page']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
 });
 
@@ -29,6 +29,8 @@ Route::get('/contact', function() {
 Route::get('/about', function() {
     return view('about', ['title' => 'About Us']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
 });
+
+
 
 // Bentuk 2 (Controller): Logikanya didelegasikan atau "dilempar" ke file lain yang khusus (yaitu Controller). Sangat Rapi (Best Practice) karena logika tersimpan rapi di file Controller-nya masing-masing. Ini dipakai untuk 99% semua pekerjaan yang punya logika, seperti: Menyimpan data (CRUD), Login, Logout, Menampilkan data dari database, dll
 Route::post('/logout', [AuthenticationController::class, 'customerLogout']); // /route, [] kurung siku ini berisi data (key & value) array yg akan dikirimkan ke route yg akan dituju

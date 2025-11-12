@@ -2,15 +2,16 @@
     <x-slot:title>{{ $title }}</x-slot:title>
 
     <!-- Kontainer Utama: Memusatkan konten di tengah halaman -->
-    <div class="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div style="background-image: url('{{ asset('img/login.png') }}');"
+        class="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat p-4">
 
         <!-- Card/Panel untuk Login Form -->
-        <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
+        <div class="w-1/3 bg-[#101B08] border border-[#FFF4E4] p-8 rounded-lg shadow-lg transform -translate-x-10">
 
             <!-- Header Form -->
             <div class="text-center mb-8">
-                <h1 class="text-2xl font-bold text-gray-800 mb-1">Masuk</h1>
-                <p class="text-sm text-gray-500">Jadilah Randomers Sekarang Juga!</p>
+                <h1 class="text-5xl font-bold-1/2 text-[#FFF4E4] mb-2">Selamat Datang</h1>
+                <p class="text-[#FFF4E4]">Silahkan login untuk ke laman selanjutnya</p>
             </div>
 
             <!-- notifikasi kesalahan -->
@@ -35,27 +36,31 @@
 
                 <!-- Field Email -->
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <label for="email" class="block text-sm font-medium text-[#FFF4E4] mb-1">Email</label>
                     <input type="email" id="email" name="email" placeholder="you@example.com" required
-                        class="w-full border border-gray-300 rounded-md p-3 focus:ring-green-500 focus:border-green-500">
+                        class="w-full bg-[#FFF4E4]/30 text-[#FFF4E4] border border-[#FFF4E4] rounded-md p-3 focus:ring-green-500 focus:border-green-500">
                 </div>
 
                 <!-- Field Password -->
                 <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <label for="password" class="block text-sm font-medium text-[#FFF4E4] mb-1">Password</label>
                     <input type="password" id="password" name="password" placeholder="********" required
-                        class="w-full border border-gray-300 rounded-md p-3 focus:ring-green-500 focus:border-green-500">
+                        class="w-full bg-[#FFF4E4]/30 text-[#FFF4E4] border border-[#FFF4E4] rounded-md p-3 focus:ring-green-500 focus:border-green-500">
                 </div>
 
                 <!-- Tombol Login -->
                 <div class="pt-4">
                     <button type="submit"
-                        class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200">
+                        class="w-full bg-[#ECDFCC] hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200">
                         Login
                     </button>
                 </div>
             </form>
 
         </div>
+
+        <!-- logo -->
+        <img src="{{ asset('img/logo_random_shot.png') }}" class=" translate-x-25">
+
     </div>
 </x-Layout>
