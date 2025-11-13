@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 // 1. Kita "impor" alat-alat yang kita butuhkan
 use Illuminate\Http\Request; // Untuk mengambil data dari form
-use App\Models\Customer;    // Untuk berinteraksi dengan tabel 'customers'
+use App\Models\User;    // Untuk berinteraksi dengan tabel 'users'
 use Illuminate\Support\Facades\Session; // import session
 use Illuminate\Support\Facades\Hash; // import facede hash
 
@@ -23,14 +23,14 @@ class AuthenticationController extends Controller
         // Jika gagal, Laravel otomatis kembali ke form & menampilkan error
         $request->validate([
             'nama' => 'required|string|max:255',
-            'no_telepon' => 'required|numeric|unique:customers', // Aturan 'tel' bukan aturan validasi bawaan Laravel. harus menggantinya dengan 'numeric' (Aturan numeric berarti: "Validasi ini lolos jika isi string-nya adalah angka"). diberi unique supaya tidak error didatabasenya, tapi errornya di validasi, jadi tidak ada kesalahan database yang membuat halaman error laravel muncul
-            'email' => 'required|email|unique:customers', // unique seperti validasi, unique: Ini adalah nama aturannya. :test_customers: Ini memberi tahu Laravel, "Tolong cek di tabel test_customers apakah email ini sudah ada."
+            'no_telepon' => 'required|numeric|unique:users', // Aturan 'tel' bukan aturan validasi bawaan Laravel. harus menggantinya dengan 'numeric' (Aturan numeric berarti: "Validasi ini lolos jika isi string-nya adalah angka"). diberi unique supaya tidak error didatabasenya, tapi errornya di validasi, jadi tidak ada kesalahan database yang membuat halaman error laravel muncul
+            'email' => 'required|email|unique:users', // unique seperti validasi, unique: Ini adalah nama aturannya. :test_customers: Ini memberi tahu Laravel, "Tolong cek di tabel test_customers apakah email ini sudah ada."
             'password' => 'required|string'
         ]);
 
         // 4. Jika validasi sukses, buat data baru di database
         // Data ini diambil dari 'name' di form HTML
-        Customer::create([
+        User::create([
             'nama' => $request->input('nama'),
             'no_telepon' => $request->input('no_telepon'),
             'email' => $request->input('email'),
@@ -40,7 +40,7 @@ class AuthenticationController extends Controller
         // 5. Setelah berhasil, kembalikan user ke halaman lain (misal halaman home lagi)
         // dengan pesan sukses (opsional) dan set session status_login dengan success
         session(["status_login" => "success"]);
-        return redirect('/home')->with('success', 'Customer berhasil ditambahkan!');
+        return redirect()->route('home')->with('success', 'Register berhasil, selamat datang!');
     }
 
     // LOGIN
@@ -52,27 +52,40 @@ class AuthenticationController extends Controller
     /**
      * Mengecek data customer yang sudah ada dari database
      */
-    public function customerLogin(Request $request)
+    public function userLogin(Request $request)
     {
         $request->validate([
             'email' => 'required|email|max:255', 
             'password' => 'required|string'
         ]);
 
-        $cek_akun = Customer::where('email', $request->input('email'))->first();
+        $user = User::where('email', $request->input('email'))->first();
 
-        if ($cek_akun && Hash::check($request->input('password'), $cek_akun->password)) // jika masih ingin mengeceknya "manual" untuk memahami logikanya, harus menggunakan Hash'::check(), dengan ambil data user-nya dulu, lalu membandingkan password-nya di PHP. Ada cara lain dengan fitur login bawaan Laravel: Auth'::attempt().
+        if (($user) && (Hash::check($request->input('password'), $user->password))) // jika masih ingin mengeceknya "manual" untuk memahami logikanya, harus menggunakan Hash'::check(), dengan ambil data user-nya dulu, lalu membandingkan password-nya di PHP. Ada cara lain dengan fitur login bawaan Laravel: Auth'::attempt().
         {
-            session(["status_login" => "success"]); // Cara 1: Global Helper (Paling umum), // Cara 2: Via Request (Ini biasanya untuk data yang hanya hidup 1 request/redirect seperti ->with() yang di pakai, // Cara 3: Menggunakan Facade
-            return redirect('/home')->with('success', 'Berhasil login, Selamat datang!');
+            if ($user->status == 'Aktif') {
+                session([
+                    "status_login" => "success",
+                    "user_id" => $user->user_id,
+                    "nama" => $user->nama,
+                    "peran" => $user->peran
+                ]); // Cara 1: Global Helper (Paling umum), // Cara 2: Via Request (Ini biasanya untuk data yang hanya hidup 1 request/redirect seperti ->with() yang di pakai, // Cara 3: Menggunakan Facade
+                if (session('peran') == 'Customer') {
+                    return redirect()->route('home')->with('success', 'Berhasil login, Selamat datang!');
+                } elseif (session('peran') == 'Employee') {
+                    return redirect()->route('admin.reservation')->with('success', 'Berhasil login, Selamat datang!');
+                }
+            } else {
+                return redirect()->route('login')->with('error', 'Akun anda telah di nonaktifkan');
+            }
         } else
         {
-            return redirect('/login')->with('error', 'Email atau passwowrd yang anda masukkan salah');
+            return redirect()->route('login')->with('error', 'Email atau passwowrd yang anda masukkan salah');
         }
     }
 
     // LOGOUT
-    public function customerLogout(Request $request)
+    public function userLogout(Request $request)
     {
         // Opsi A: Hapus SEMUA data di session
         $request->session()->flush(); //flush(): Ini akan menghapus semua data dari session (termasuk flash message, dll). Ini adalah "logout" yang sebenarnya.
@@ -80,7 +93,7 @@ class AuthenticationController extends Controller
         // Opsi B: Hapus satu key spesifik
         // $request->session()->forget('status_login');
 
-        return redirect('/home')->with('logout_success', 'Harap Login Kembali!');
+        return redirect()->route('home')->with('logout_success', 'Harap Login Kembali!');
     }
 
 

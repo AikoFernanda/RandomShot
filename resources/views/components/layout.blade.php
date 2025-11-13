@@ -26,8 +26,8 @@
 </head>
 
 <body>
-    <x-Navbar></x-Navbar>
-    <x-Header>{{ $title }}</x-Header>
+    <x-Header></x-Header>
+    {{-- <x-Header>{{ $title }}</x-Header> --}}
     <main>
         {{ $slot }}
     </main>
