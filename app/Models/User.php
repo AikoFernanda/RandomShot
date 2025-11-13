@@ -3,6 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Admin;
+use App\Models\Transaction;
+use App\Models\FeedbackReview;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,15 +15,24 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+        /**
+     * Beri tahu model bahwa nama primary key-nya BUKAN 'id'.
+     */
+    protected $primaryKey = 'user_id';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'nama',
         'email',
         'password',
+        'no_telepon',
+        'jenis_kelamin',
+        'alamat',
+        'peran'
     ];
 
     /**
@@ -44,5 +56,27 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+
+    /**
+     * Satu Customer "hasMany" (punya banyak) Transaction.
+     */
+    public function transactions()
+    {
+        // Parameter 1: Model yang dituju
+        // Parameter 2: Nama foreign key di tabel 'transactions'
+        // Parameter 3: Nama primary key di tabel INI ('customers')
+        return $this->hasMany(Transaction::class, 'customer_id', 'user_id');
+    }
+
+    public function feedbackreview()
+    {
+        return $this->hasOne(FeedbackReview::class, 'customer_id', 'user_id');
+    }
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class, 'user_id', 'user_id');
     }
 }

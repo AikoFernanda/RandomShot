@@ -13,15 +13,9 @@ return new class extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->id('admin_id');
-            $table->string('nama');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('no_telepon')->unique();
-            $table->string('alamat')->nullable();
-            $table->enum('jenis_kelamin', ['Pria', 'Wanita', 'Unknown'])->default('Unknown'); // ->default('...'); Setelah enum(), bisa juga ditambahkan nilai defaultnya
-            $table->enum('peran', ['Employee', 'Owner'])->default('Employee');
+            $table->foreignId('user_id')->constrained('users', 'user_id');
             $table->integer('gaji_bulanan')->nullable();
-            $table->date('tanggal_mulai'); // menyimpan tipe tanggal (dalam format YYYY-MM-DD, kolom itu sebagai string (teks) seperti 2025-01-10)
+            $table->date('tanggal_mulai')->nullable(); // menyimpan tipe tanggal (dalam format YYYY-MM-DD, kolom itu sebagai string (teks) seperti 2025-01-10)
             $table->timestamps();
         });
     }

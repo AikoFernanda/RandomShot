@@ -12,13 +12,23 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->id('user_id');
+            $table->string('nama');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            // kolom tambahan
+            $table->string('no_telepon')->unique();
+            $table->string('alamat')->nullable();
+            $table->enum('jenis_kelamin', ['Pria', 'Wanita', 'Unknown'])->default('Unknown'); // ->default('...'); Setelah enum(), bisa juga ditambahkan nilai defaultnya
+            $table->enum('peran', ['Customer', 'Employee', 'Owner'])->default('Customer');
+            $table->enum('status', ['Aktif', 'Nonaktif'])->default('Aktif');
+            // done
+
             $table->rememberToken();
             $table->timestamps();
+
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
