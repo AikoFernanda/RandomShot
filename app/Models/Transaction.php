@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\User;
+use App\Models\TransactionDetail;
+use App\Models\Admin;
+use App\Models\Reservation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,8 +40,8 @@ class Transaction extends Model
     {
         // Parameter 1: Model yang dituju
         // Parameter 2: Nama foreign key di tabel INI ('transactions')
-        // Parameter 3: Nama primary key di tabel 'customers'
-        return $this->belongsTo(Customer::class, 'customer_id', 'customer_id');
+        // Parameter 3: Nama primary key di tabel 'users'
+        return $this->belongsTo(User::class, 'customer_id', 'user_id');
     }
 
     public function transaction_details() {
