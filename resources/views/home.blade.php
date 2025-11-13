@@ -1,35 +1,125 @@
 <x-Layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    <div>
-        <!-- notifikasi -->
-        <div>
-            @if (session('success'))
-                <div id='popup-success'
-                    class="text-green-600 bg-green-100 p-2.5 border-green-500 rounded-[5px] mb-[15px]">
-                    {{ session('success') }}
-                </div>
-            @elseif (session('logout_success'))
-                <div id='popup-success'
-                    class="text-green-600 bg-green-100 p-2.5 border-green-500 rounded-[5px] mb-[15px]">
-                    {{ session('logout_success') }}
-                </div>
-            @endif
+<section id="home" 
+    style="background-image: url('{{ asset('img/bghome.png') }}');"
+    class="min-h-screen bg-cover bg-center bg-no-repeat p-">
+    <div class="container pt-24 mx-auto relative z-10">
+        <div class="flex flex-wrap">
+            <div class="w-full self-center py-20 px-10">
+                <h1 class="text-white text-center text-5xl leading-tight">
+                    Waktu Luangmu, Tempat Serumu 
+                </h1>
+                <h2 class="text-white text-center text-8xl leading-tight">
+                    RANDOM SHOT POOL AND CAFE
+                </h2>
+                <p class="text-white text-center text-xl font-medium leading-tight">
+                    Waktu luang gak harus membosankan. Yuk ke Random Shot Pool and Cafe! 
+                    <br>Main biliar, nikmatin kopi, dan temukan tempat nongkrong paling asik di Bogor
+                </p>
+                    
+                <div class="mt-8 flex justify-center mb-48">
+                        <a href="#reservasi" 
+                           class="border border-white bg-black/50 text-white
+                            hover:text-black px-5 py-2 rounded-md text-base font-semibold hover:bg-gray-100/50 transition shadow-lg">
+                           Reservasi Sekarang >
+                        </a>
+                    </div>
+
+            </div>
         </div>
-
-        <h2 class="text-xl font-semibold text-black-600 mb-6">Nikmati Suasana Bermain Biliar dan Cafe Cantik Terbaik Di
-            Bogor!</h2>
     </div>
+</section>
 
-    <!-- Area Sesi/Status -->
-    <div class="mt-8 pt-4 border-t">
-        <h3 class="text-sm font-semibold text-gray-600 mb-2">Session Status:</h3>
-        @if (session('status_login') == 'success')
-            <p class="text-green-600 font-medium">Status: {{ session('status_login') }}</p>
-        @else
-            <p class="text-red-600">Status: Belum login</p>
-        @endif
+
+{{-- PROMO TERBARU --}}
+<section id="promo" class="bg-black text-white py-20 px-4">
+  <div class="max-w-6xl mx-auto text-center">
+    <h2 class="text-5xl mb-10">Promo Terbaru</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-white text-black rounded-xl shadow-lg p-6">
+        <img src="{{ asset('img/Promo1.png') }}" alt="Promo 1" class="rounded-lg mb-4">
+        <h3 class="text-2xl mb-2">Diskon 25% untuk 10 kali reservasi</h3>
+        <p class="text-base font-medium">Berlaku hingga Desember 2025</p>
+      </div>
+
+      <div class="bg-white text-black rounded-xl shadow-lg p-6">
+        <img src="{{ asset('img/Promo2.png') }}" alt="Promo 1" class="rounded-lg mb-4">
+        <h3 class="text-2xl mb-2">Turnamen Tenis Meja Spesial 2 Tahun</h3>
+        <p class="text-base font-medium">Ikuti keseruannya dan menangkan hadiah menarik!</p>
+      </div>
+    
+      <div class="bg-white text-black rounded-xl shadow-lg p-6">
+        <img src="{{ asset('img/Promo3.png') }}" alt="Promo 1" class="rounded-lg mb-4">
+        <h3 class="text-2xl mb-2">Paket Spesial Hemat dan Kenyang!</h3>
+        <p class="text-base font-medium">Indomie Telur + Es Teh + Basreng dengan Rp 15.000 saja</p>
+      </div>
     </div>
+  </div>
+</section>
+
+{{-- MENU & MEJA FAVORIT --}}
+<section id="menu" class="bg-gray-100 py-20 px-4">
+  <div class="max-w-6xl mx-auto text-center">
+    <h2 class="text-5xl mb-10 text-black">Menu dan Meja Favorit</h2>
+    <div class="grid md:grid-cols-4 gap-8">
+      <div class="bg-white rounded-xl shadow-lg p-4">
+        <img src="{{ asset('img/mejabiliar1.png') }}" class="rounded-lg mb-4" alt="Meja Biliar 1">
+        <h3 class="text-2xl">Meja Biliar 1</h3>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg p-4">
+        <img src="{{ asset('img/extrajoss.png') }}" class="rounded-lg mb-4" alt="Extrajoss + Susu">
+        <h3 class="text-2xl">Extrajoss + Susu</h3>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg p-4">
+        <img src="{{ asset('img/mejatenis.png') }}" class="rounded-lg mb-4" alt="Meja Tenis">
+        <h3 class="text-2xl">Meja Tenis</h3>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg p-4">
+        <img src="{{ asset('img/indomiegtelur.png') }}" class="rounded-lg mb-4" alt="Indomie telur">
+        <h3 class="text-2xl">Indomie Goreng + Telur</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{-- SOSIAL MEDIA --}}
+<section class="bg-black py-10 text-center">
+  <h2 class="text-5xl text-white mb-6">IKUTI KAMI DI INSTAGRAM</h2>
+  <p class="text-gray-400 mb-10">Dapatkan update promo, event, dan konten seru seputar Random Shot Pool & Cafe di @rs.poolcafebgr</p>
+    <a href="https://www.instagram.com/rs.poolcafebgr" class="bg-white text-black font-semibold px-8 py-3 rounded-lg hover:bg-gray-100/60 hover:text-white transition">
+    Kunjungi Profil Instagram >
+    </a>
+</section>
+
+
+{{-- AJAKAN RESERVASI --}}
+<section id="reservasi" class="bg-[#273520] text-white text-center py-20 px-4">
+  <h2 class="text-5xl mb-4">Yuk, Booking Sekarang!</h2>
+  <p class="text-lg mb-8">Pilih meja favoritmu dan nikmati waktu santai bareng teman di Random Shot Pool and Cafe</p>
+  <a href="/reservasi" class="bg-white text-black font-semibold px-8 py-3 rounded-lg hover:bg-gray-100/60 hover:text-white transition">
+    Reservasi Sekarang >
+  </a>
+</section>
+
+{{-- FOOTER --}}
+<footer class="bg-black text-white py-10">
+  <div class="px-12">
+    <img id="img-logo-random-shot" src="{{ asset('img/logo-rs.png') }}" alt="logo_random_shot"
+         class="w-64 h-auto mb-4">
+    
+    <p class="text-gray-400 text-base mb-4">
+      Perumahan Indogreen Blok D1 No.1<br>
+      Gunung Sari, Citeureup, Bogor, Indonesia
+    </p>
+
+    <p class="text-gray-500 text-xs">
+      © 2025 Random Shot Pool and Cafe. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+
 
 </x-Layout>
 

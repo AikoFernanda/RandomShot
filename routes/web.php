@@ -19,24 +19,28 @@ Route::get('/', function () {
 
 Route::get('/home', function () {
     return view('home', ['title' => 'Home Page']);
-})->name('home');;
+})->name('home');
 
 Route::get('/register', function () {
     // 2. Tampilkan file Blade yang berisi form register HTML (view: test_register.blade.php)
     return view('auth.register_form', ['title' => 'Register Page']);
-})->name('register');;
+})->name('register');
 
 Route::get('/login', function () {
     return view('auth.login_form', ['title' => 'Login Page']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
-})->name('login');;
+})->name('login');
 
-Route::get('/contact', function() {
+Route::get('/cafe', function () {
+    return view('cafe', ['title' => 'Cafe Page']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
+});
+
+Route::get('/contact', function () {
     return view('contact', ['title' => 'Contact Us']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
-})->name('contact_us');;
+})->name('contact_us');
 
-Route::get('/about', function() {
+Route::get('/about', function () {
     return view('about', ['title' => 'About Us']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
-})->name('about');;
+})->name('about');
 
 Route::post('/register', [AuthenticationController::class, 'customerRegister'])->name('register');
 
