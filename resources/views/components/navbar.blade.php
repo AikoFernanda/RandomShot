@@ -29,21 +29,32 @@
         </nav>
 
         @if (session('status_login') == 'success')
+
+        <div class="flex items-center gap-2"> 
+
+        {{-- === IKON HISTORY === --}}
+        <a href="/riwayat-meja" 
+           class="flex items-center p-1 rounded-full hover:bg-gray-200/30 transition"> 
+            <img src="{{ asset('img/aktivitas.png') }}" 
+                 alt="Riwayat Pesanan" 
+                 class="w-8 h-8"> 
+        </a>
             <!-- Kanan: dropdown profil -->
             <div x-data="{ open: false }" class="relative"> {{-- Alpine.js reactive state buat buka/tutup dropdown. --}}
-                <button @click="open = !open" class="flex items-center focus:outline-none">
-                    <img src="{{ asset('img/default_profil.png') }}" alt="User"
-                        class="w-10 h-10 rounded-full border-2 border-white">
+                <button @click="open = !open" class="flex items-center focus:outline-none
+                hover:ring-4 hover:ring-gray-200/30 hover:rounded-full">
+                    <img src="{{ asset('img/profilsaya.png') }}" alt="User"
+                        class="w-8 h-8 rounded-full">
                 </button>
                 <!-- Dropdown Menu -->
                 <div x-show="open" @click.away="open = false" x-transition
                     class="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg py-2 z-50">
-                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">Profile</a>
+                    <a href="/profil-pengguna" class="block px-4 py-2 text-left font-semibold text-gray-700 hover:bg-gray-300 transition">Profil Saya</a>
                     <form method="POST" action="/logout">
                         @csrf {{--  untuk keamanan, wajib untuk post --}}
                         <button type="submit"
-                            class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 transition">
-                            Logout
+                            class="w-full px-4 py-2 text-left font-semibold text-gray-700 hover:bg-gray-300 transition">
+                            Log Out
                         </button>
                     </form>
                 </div>

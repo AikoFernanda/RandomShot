@@ -60,7 +60,11 @@
         </div>
 
         <!-- logo -->
+<<<<<<< HEAD
         <img src="{{ asset('img/logo_random_shot.png') }}" class=" translate-x-25">
+=======
+        <img src="{{ asset('img/logo-rs.png') }}" class=" translate-x-25">
+>>>>>>> cf97c2c5bcad960e22afeb7882c4c3400022ec75
 
     </div>
 </x-Layout>

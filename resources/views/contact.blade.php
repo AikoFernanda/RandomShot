@@ -46,5 +46,22 @@
             </p>
         </div>
     </div>
+
+    <footer class="bg-black text-white py-10">
+  <div class="px-12">
+    <img id="img-logo-random-shot" src="{{ asset('img/logo-rs.png') }}" alt="logo_random_shot"
+         class="w-64 h-auto mb-4">
+    
+    <p class="text-gray-400 text-base mb-4">
+      Perumahan Indogreen Blok D1 No.1<br>
+      Gunung Sari, Citeureup, Bogor, Indonesia
+    </p>
+
+    <p class="text-gray-500 text-xs">
+      © 2025 Random Shot Pool and Cafe. All rights reserved.
+    </p>
+  </div>
+</footer>
+
 </x-Layout>
 
