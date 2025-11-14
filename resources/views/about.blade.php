@@ -52,7 +52,7 @@
             </p>
         </section>
 
-    <footer class="bg-black text-white py-10">
+        <footer class="bg-black text-white py-10">
   <div class="px-12">
     <img id="img-logo-random-shot" src="{{ asset('img/logo-rs.png') }}" alt="logo_random_shot"
          class="w-64 h-auto mb-4">
@@ -65,14 +65,6 @@
     <p class="text-gray-500 text-xs">
       © 2025 Random Shot Pool and Cafe. All rights reserved.
     </p>
-  </div>
-
-    <!-- Sosial media -->
-    <div class="flex justify-center gap-5 mb-6">
-      <a href="#" class="hover:text-yellow-400 transition"><i class="fa-brands fa-instagram"></i> IG</a>
-      <a href="#" class="hover:text-yellow-400 transition"><i class="fa-brands fa-whatsapp"></i> WA</a>
-      <a href="#" class="hover:text-yellow-400 transition"><i class="fa-brands fa-tiktok"></i> TikTok</a>
-    </div>
   </div>
 </footer>
 

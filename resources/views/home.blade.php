@@ -19,7 +19,7 @@
                 </p>
                     
                 <div class="mt-8 flex justify-center mb-48">
-                        <a href="#reservasi" 
+                        <a href="/reservasi" 
                            class="border border-white bg-black/50 text-white
                             hover:text-black px-5 py-2 rounded-md text-base font-semibold hover:bg-gray-100/50 transition shadow-lg">
                            Reservasi Sekarang >
