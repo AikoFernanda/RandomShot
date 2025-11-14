@@ -46,8 +46,6 @@ Route::post('/register', [AuthenticationController::class, 'customerRegister'])-
 
 Route::post('/login', [AuthenticationController::class, 'userLogin'])->name('login');
 
-Route::post('/logout', [AuthenticationController::class, 'userLogout'])->name('logout'); // /route, [] kurung siku ini berisi data (key & value) array yg akan dikirimkan ke route yg akan dituju
-
 Route::get('/profil-pengguna', function () {
     return view('profile.profile', ['title' => 'User Profile']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
 });
@@ -67,6 +65,9 @@ Route::get('/riwayat-meja', function () {
 Route::get('/riwayat-cafe', function () {
     return view('history.cafe-history', ['title' => 'User History']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
 });
+
+Route::post('/logout', [AuthenticationController::class, 'userLogout'])->name('logout'); // /route, [] kurung siku ini berisi data (key & value) array yg akan dikirimkan ke route yg akan dituju
+
 
 
 // --- Rute untuk Admin ---
