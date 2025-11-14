@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id('transaction_id');
-            $table->foreignId('customer_id')->constrained('customers', 'customer_id'); // secara eksplisit memberi tahu constrained() nama primary key custom di tabel tersebut
+            $table->foreignId('customer_id')->constrained('users', 'user_id'); // secara eksplisit memberi tahu constrained() nama primary key custom di tabel tersebut
             $table->foreignId('admin_id')->constrained('admins', 'admin_id');
             $table->string('no_invoice')->unique();
             $table->enum('metode_pembayaran', ['Cash', 'Cashless']);

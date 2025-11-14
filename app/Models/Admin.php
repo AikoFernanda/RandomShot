@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\User;
+use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,18 +24,16 @@ class Admin extends Model
      */
     
     protected $fillable = [
-        'nama',
-        'email',
-        'password',
-        'no_telepon',
-        'alamat',
-        'jenis_kelamin',
-        'peran',
+        'user_id',
         'gaji_bulanan',
         'tanggal_mulai'
     ];
 
     public function transactions() {
         return $this->hasMany(Transaction::class, 'admin_id', 'admin_id');
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 }
