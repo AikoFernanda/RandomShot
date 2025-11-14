@@ -18,7 +18,7 @@ class MenuFactory extends Factory
     {
         return [
             // pilih kolom dari table yang mau di fake generate datanya
-            'nama' => fake()->word(3, true),
+            'nama' => fake()->unique()->words(3, true),
             'kategori' => fake()->randomElement(['Makanan', 'Minuman']),
             'deskripsi' => fake()->paragraph(2),
             'harga' => fake()->numberBetween(5000, 30000),
