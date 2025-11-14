@@ -8,11 +8,11 @@
         class="font-reguler text-sm hover:text-yellow-400 transition duration-200 {{ Request::is('reservation') ? 'text-yellow-400 font-semibold' : 'text-white hover:text-yellow-400' }}">
         Reservasi
     </a>
-    <a href="#"
+    <a href="{{ route('cafe') }}"
         class="font-reguler text-sm hover:text-yellow-400 transition duration-200 {{ Request::is('cafe') ? 'text-yellow-400 font-semibold' : 'text-white hover:text-yellow-400' }}">
         Cafe
     </a>
-    <a href="#"
+    <a href="{{ route('about') }}"
         class="font-reguler text-sm hover:text-yellow-400 transition duration-200 {{ Request::is('about') ? 'text-yellow-400 font-semibold' : 'text-white hover:text-yellow-400' }}">
         Tentang Kami
     </a>

@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route; // impor Route untuk Shortcut-nya: Route, 
 
 // Import controller customer (di luar folder Admin)
 use App\Http\Controllers\AuthenticationController; // use alamat_lengkap; Perintah use, yang pada dasarnya adalah "shortcut" atau "impor" di PHP. Kemudian ada alamat lengkap App\Http\Controllers\Test_auth_controller. Jadi, Shortcut-nya: Test_auth_controller. nanti tinggal definisi aja [Test_auth_controller::class, 'logout_acc']. jadi bisa seperi ' rutekan ke alamat itu (yg diimport awal), class Test_auth_controller, dan pada fungsi logout_acc'.
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\CartController;
+
 
 // Import controller admin (di dalam folder Admin)
 use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
@@ -30,9 +33,8 @@ Route::get('/login', function () {
     return view('auth.login_form', ['title' => 'Login Page']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
 })->name('login');
 
-Route::get('/cafe', function () {
-    return view('cafe', ['title' => 'Cafe Page']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
-});
+Route::get('/cafe', [MenuController::class, 'index'])
+     ->name('cafe');
 
 Route::get('/contact', function () {
     return view('contact', ['title' => 'Contact Us']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
@@ -48,6 +50,7 @@ Route::post('/login', [AuthenticationController::class, 'userLogin'])->name('log
 
 Route::post('/logout', [AuthenticationController::class, 'userLogout'])->name('logout'); // /route, [] kurung siku ini berisi data (key & value) array yg akan dikirimkan ke route yg akan dituju
 
+Route::post('/cart-update', [CartController::class, 'update'])->name('cart.update');
 
 // --- Rute untuk Admin ---
 Route::get('/reservation-data', [AdminReservationController::class, 'index'])
