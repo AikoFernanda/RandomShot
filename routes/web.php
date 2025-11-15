@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route; // impor Route untuk Shortcut-nya: Route, 
 use App\Http\Controllers\AuthenticationController; // use alamat_lengkap; Perintah use, yang pada dasarnya adalah "shortcut" atau "impor" di PHP. Kemudian ada alamat lengkap App\Http\Controllers\Test_auth_controller. Jadi, Shortcut-nya: Test_auth_controller. nanti tinggal definisi aja [Test_auth_controller::class, 'logout_acc']. jadi bisa seperi ' rutekan ke alamat itu (yg diimport awal), class Test_auth_controller, dan pada fungsi logout_acc'.
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileActivityController;
 
 
 // Import controller admin (di dalam folder Admin)
@@ -33,27 +35,23 @@ Route::middleware('guest')->group(function () {
 Route::prefix('customer')->name('customer.')
 ->middleware('role:Customer')
 ->group(function () {
-    Route::get('/profil-pengguna', function () {
-        return view('profile.profile', ['title' => 'User Profile']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
-    });
+    Route::get('/profil-pengguna', [ProfileController::class, 'index'])->name('profile');
+
+    Route::put('/profile-pengguna', [ProfileController::class, 'update'])->name('profile.update'); // form mengirimkan request PUT dan inti dari desain Resourceful (atau RESTful) di Laravel: Satu URL (/profil-pengguna) bisa menangani banyak aksi, asalkan Method-nya (kata kerjanya) berbeda.
+
+    Route::post('/cart-update', [CartController::class, 'update'])->name('cart.update');
     
-    Route::get('/aktivitas-meja', function () {
-        return view('profile.table-activity', ['title' => 'User Activity']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
-    });
-    
-    Route::get('/aktivitas-cafe', function () {
-        return view('profile.cafe-activity', ['title' => 'User Activity']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
-    });
+    Route::get('/aktivitas-meja', [ProfileActivityController::class, 'index'])->name('profile.activity');
+
+    Route::get('/aktivitas-cafe', [ProfileActivityController::class, 'index2'])->name('profile.activity.cafe');
     
     Route::get('/riwayat-meja', function () {
-        return view('history.table-history', ['title' => 'User History']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
+        return view('history.table-history', ['title' => 'User History']); 
     });
     
     Route::get('/riwayat-cafe', function () {
-        return view('history.cafe-history', ['title' => 'User History']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
+        return view('history.cafe-history', ['title' => 'User History']); 
     });
-    
-    Route::post('/cart-update', [CartController::class, 'update'])->name('cart.update');
 });
 
 
@@ -73,11 +71,11 @@ Route::get('/cafe', [MenuController::class, 'index'])
     ->name('cafe');
 
 Route::get('/contact', function () {
-    return view('contact', ['title' => 'Contact Us']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
+    return view('contact', ['title' => 'Contact Us']); 
 })->name('contact_us');
 
 Route::get('/about', function () {
-    return view('about', ['title' => 'About Us']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
+    return view('about', ['title' => 'About Us']); 
 })->name('about');
 });
 
@@ -104,7 +102,7 @@ Route::prefix('admin')->name('admin.')
 
 
 // --- Rute untuk Customer, Admin, dan Owner    
-Route::prefix('user')->name('user.')
+Route::prefix()->name('user.')
     ->middleware(  
         'role:Customer,Employee,Owner'
     )
