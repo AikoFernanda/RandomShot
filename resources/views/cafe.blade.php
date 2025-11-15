@@ -49,7 +49,7 @@
                     updateCart(newQty) {
                         this.qty = newQty;
                 
-                        fetch('{{ route('cart.update') }}', {
+                        fetch('{{ route('customer.cart.update') }}', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -174,7 +174,7 @@
                     Total Pesanan
                 </p>
 
-                <a href="#" {{-- Rute harus diaktifkan nanti {{ route('cart.view') }} --}}
+                <a href="#" {{-- Rute harus diaktifkan nanti {{ route('customer.cart.view') }} --}}
                     class="flex items-center gap-3 bg-[#C1121F] text-[#FFF4E4] px-6 py-3 rounded-xl cursor-pointer hover:bg-[#A00F1B] transition shadow-lg hover:scale-105">
                     <div class="relative mr-2">
                         <span class="text-2xl">🛒</span>

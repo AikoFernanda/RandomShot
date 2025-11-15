@@ -14,14 +14,14 @@
             <!-- Kanan: dropdown profil -->
             <div x-data="{ open: false }" class="relative"> {{-- Alpine.js reactive state buat buka/tutup dropdown. --}}
                 <button @click="open = !open" class="flex items-center focus:outline-none">
-                    <img src="{{ asset('img/default_profil.png') }}" alt="User"
+                    <img src="{{ asset('img/profilsaya.png') }}" alt="User"
                         class="w-10 h-10 rounded-full border-2 border-white">
                 </button>
                 <!-- Dropdown Menu -->
                 <div x-show="open" @click.away="open = false" x-transition
                     class="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg py-2 z-50">
                     <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">Profile</a>
-                    <form method="POST" action="/logout">
+                    <form method="POST" action="{{ route('user.logout') }}">
                         @csrf {{--  untuk keamanan, wajib untuk post --}}
                         <button type="submit"
                             class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 transition">
@@ -35,13 +35,13 @@
             <nav class="flex items-center space-x-2">
 
                 <!-- Tombol Daftar -->
-                <a href="/register"
+                <a href="{{ route('register') }}"
                     class="bg-gray-600 hover:bg-gray-400 text-white font-medium text-sm py-1 px-3 rounded-md transition duration-150 ease-in-out">
                     Daftar
                 </a>
 
                 <!-- Tombol Login -->
-                <a href="/login"
+                <a href="{{ route('login') }}"
                     class="bg-white hover:bg-gray-400 text-black font-medium text-sm py-1 px-3 rounded-md transition duration-150 ease-in-out">
                     Masuk
                 </a>

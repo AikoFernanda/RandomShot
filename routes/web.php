@@ -14,7 +14,52 @@ use App\Http\Controllers\Admin\TableController as AdminTableController;
 use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
 
 
+
+// --- Rute khusus untuk 'Tamu' ---
+Route::middleware('guest')->group(function () {
+    Route::get('/register', [AuthenticationController::class, 'showRegisterForm'])->name('register');
+
+    Route::get('/login', [AuthenticationController::class, 'showLoginForm'])->name('login');
+
+    Route::post('/register', [AuthenticationController::class, 'customerRegister'])->name('register.validation');
+
+    Route::post('/login', [AuthenticationController::class, 'userLogin'])->name('login.validation');
+});
+
+
+
+
 // --- Rute untuk Customer ---
+Route::prefix('customer')->name('customer.')
+->middleware('role:Customer')
+->group(function () {
+    Route::get('/profil-pengguna', function () {
+        return view('profile.profile', ['title' => 'User Profile']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
+    });
+    
+    Route::get('/aktivitas-meja', function () {
+        return view('profile.table-activity', ['title' => 'User Activity']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
+    });
+    
+    Route::get('/aktivitas-cafe', function () {
+        return view('profile.cafe-activity', ['title' => 'User Activity']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
+    });
+    
+    Route::get('/riwayat-meja', function () {
+        return view('history.table-history', ['title' => 'User History']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
+    });
+    
+    Route::get('/riwayat-cafe', function () {
+        return view('history.cafe-history', ['title' => 'User History']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
+    });
+    
+    Route::post('/cart-update', [CartController::class, 'update'])->name('cart.update');
+});
+
+
+
+// --- Rute untuk 'Tamu' dan Customer ---
+Route::middleware('block')->group(function () {
 Route::get('/', function () {
     // return view('landing');
     return view('landing', ['title' => 'Landing Page']);
@@ -24,17 +69,8 @@ Route::get('/home', function () {
     return view('home', ['title' => 'Home Page']);
 })->name('home');
 
-Route::get('/register', function () {
-    // 2. Tampilkan file Blade yang berisi form register HTML (view: test_register.blade.php)
-    return view('auth.register_form', ['title' => 'Register Page']);
-})->name('register');
-
-Route::get('/login', function () {
-    return view('auth.login_form', ['title' => 'Login Page']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
-})->name('login');
-
 Route::get('/cafe', [MenuController::class, 'index'])
-     ->name('cafe');
+    ->name('cafe');
 
 Route::get('/contact', function () {
     return view('contact', ['title' => 'Contact Us']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
@@ -43,48 +79,38 @@ Route::get('/contact', function () {
 Route::get('/about', function () {
     return view('about', ['title' => 'About Us']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
 })->name('about');
-
-Route::post('/register', [AuthenticationController::class, 'customerRegister'])->name('register');
-
-Route::post('/login', [AuthenticationController::class, 'userLogin'])->name('login');
-
-Route::get('/profil-pengguna', function () {
-    return view('profile.profile', ['title' => 'User Profile']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
 });
-
-Route::get('/aktivitas-meja', function () {
-    return view('profile.table-activity', ['title' => 'User Activity']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
-});
-
-Route::get('/aktivitas-cafe', function () {
-    return view('profile.cafe-activity', ['title' => 'User Activity']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
-});
-
-Route::get('/riwayat-meja', function () {
-    return view('history.table-history', ['title' => 'User History']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
-});
-
-Route::get('/riwayat-cafe', function () {
-    return view('history.cafe-history', ['title' => 'User History']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
-});
-
-Route::post('/logout', [AuthenticationController::class, 'userLogout'])->name('logout'); // /route, [] kurung siku ini berisi data (key & value) array yg akan dikirimkan ke route yg akan dituju
-
-Route::post('/cart-update', [CartController::class, 'update'])->name('cart.update');
 
 
 // --- Rute untuk Admin ---
-Route::get('/reservation-data', [AdminReservationController::class, 'index'])
-     ->name('admin.reservation');
+Route::prefix('admin')->name('admin.')
+    ->middleware( 
+        'role:Employee'    
+    )
+    ->group(function () {
+        Route::get('/reservation-data', [AdminReservationController::class, 'index'])
+            ->name('reservation');
 
-Route::get('/Table-data', [AdminTableController::class, 'index'])
-     ->name('admin.table');
+        Route::get('/table-data', [AdminTableController::class, 'index'])
+            ->name('table');
 
-Route::get('/customer-data', [AdminCustomerController::class, 'index'])
-    ->name('admin.customer'); //Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
+        Route::get('/customer-data', [AdminCustomerController::class, 'index'])
+            ->name('customer'); //Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
 
-Route::post('/customer/{id}/status', [AdminCustomerController::class, 'updateStatus'])
-    ->name('customer.updateStatus'); // Rute ini akan menangani update status
+        Route::post('/customer/{id}/status', [AdminCustomerController::class, 'updateStatus'])
+            ->name('updateStatus'); // Rute ini akan menangani update status
+    });
+
+
+
+// --- Rute untuk Customer, Admin, dan Owner    
+Route::prefix('user')->name('user.')
+    ->middleware(  
+        'role:Customer,Employee,Owner'
+    )
+    ->group(function () {
+        Route::post('/logout', [AuthenticationController::class, 'userLogout'])->name('logout'); // /route, [] kurung siku ini berisi data (key & value) array yg akan dikirimkan ke route yg akan dituju
+    });
 
 
 // Bentuk 1 (Closure): Logikanya dikerjakan langsung di tempat (di file rute). Ini bagus untuk rute yang sangat sederhana dan tidak punya banyak logika

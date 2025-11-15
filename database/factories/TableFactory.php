@@ -17,7 +17,12 @@ class TableFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nama' => fake()->unique()->name(),
+            'kategori' => fake()->randomElement(['Biliar', 'Tenis', 'Playstation']),
+            'deskripsi' => fake()->paragraph(2),
+            'tarif_per_jam_siang' => fake()->numberBetween(10000, 40000),
+            'tarif_per_jam_sore' => fake()->numberBetween(10000, 40000),
+            'tarif_per_jam_malam' => fake()->numberBetween(10000, 40000)
         ];
     }
 }
