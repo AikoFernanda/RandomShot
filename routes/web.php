@@ -33,72 +33,61 @@ Route::middleware('guest')->group(function () {
 
 // --- Rute untuk Customer ---
 Route::prefix('customer')->name('customer.')
-->middleware('role:Customer')
-->group(function () {
-    Route::get('/profil-pengguna', [ProfileController::class, 'index'])->name('profile');
+    ->middleware('role:Customer')
+    ->group(function () {
+        Route::get('/profil-pengguna', [ProfileController::class, 'index'])->name('profile');
 
-    Route::put('/profile-pengguna', [ProfileController::class, 'update'])->name('profile.update'); // form mengirimkan request PUT dan inti dari desain Resourceful (atau RESTful) di Laravel: Satu URL (/profil-pengguna) bisa menangani banyak aksi, asalkan Method-nya (kata kerjanya) berbeda.
+        Route::put('/profile-pengguna', [ProfileController::class, 'update'])->name('profile.update'); // form mengirimkan request PUT dan inti dari desain Resourceful (atau RESTful) di Laravel: Satu URL (/profil-pengguna) bisa menangani banyak aksi, asalkan Method-nya (kata kerjanya) berbeda.
 
-    Route::post('/cart-update', [CartController::class, 'update'])->name('cart.update');
-    
-    Route::get('/aktivitas-meja', [ProfileActivityController::class, 'index'])->name('profile.activity');
+        Route::post('/cart-update', [CartController::class, 'update'])->name('cart.update');
 
-    Route::get('/aktivitas-cafe', [ProfileActivityController::class, 'index2'])->name('profile.activity.cafe');
-    
-    Route::get('/riwayat-meja', function () {
-        return view('history.table-history', ['title' => 'User History']); 
+        Route::get('/aktivitas-meja', [ProfileActivityController::class, 'index'])->name('profile.activity');
+
+        Route::get('/aktivitas-cafe', [ProfileActivityController::class, 'index2'])->name('profile.activity.cafe');
+
+        Route::get('/riwayat-meja', function () {
+            return view('history.table-history', ['title' => 'User History']);
+        });
+
+        Route::get('/riwayat-cafe', function () {
+            return view('history.cafe-history', ['title' => 'User History']);
+        });
+
+        Route::get('/riwayat', function () {
+            return view('riwayatPemesanan', ['title' => 'Riwayat Pemasanan']);
+        });
     });
-    
-    Route::get('/riwayat-cafe', function () {
-        return view('history.cafe-history', ['title' => 'User History']); 
-    });
-});
 
 
 
 // --- Rute untuk 'Tamu' dan Customer ---
 Route::middleware('block')->group(function () {
-Route::get('/', function () {
-    // return view('landing');
-    return view('landing', ['title' => 'Landing Page']);
-})->name('landing');
+    Route::get('/', function () {
+        // return view('landing');
+        return view('landing', ['title' => 'Landing Page']);
+    })->name('landing');
 
-Route::get('/home', function () {
-    return view('home', ['title' => 'Home Page']);
-})->name('home');
+    Route::get('/home', function () {
+        return view('home', ['title' => 'Home Page']);
+    })->name('home');
 
-Route::get('/cafe', [MenuController::class, 'index'])
-    ->name('cafe');
+    Route::get('/cafe', [MenuController::class, 'index'])
+        ->name('cafe');
 
-Route::get('/contact', function () {
-    return view('contact', ['title' => 'Contact Us']); 
-})->name('contact_us');
+    Route::get('/contact', function () {
+        return view('contact', ['title' => 'Contact Us']);
+    })->name('contact_us');
 
-Route::get('/about', function () {
-    return view('about', ['title' => 'About Us']); 
-})->name('about');
-
-Route::get('/riwayat', function () {
-    return view('riwayatPemesanan', ['title' => 'Riwayat Pemasanan']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
-});
-
-Route::post('/register', [AuthenticationController::class, 'customerRegister'])->name('register');
-
-Route::post('/login', [AuthenticationController::class, 'userLogin'])->name('login');
-
-Route::get('/profil-pengguna', function () {
-    return view('profile.profile', ['title' => 'User Profile']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
-});
-
-Route::get('/aktivitas-meja', function () {
-    return view('profile.table-activity', ['title' => 'User Activity']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
+    Route::get('/about', function () {
+        return view('about', ['title' => 'About Us']);
+    })->name('about');
 });
 
 
 // --- Rute untuk Admin ---
 Route::prefix('admin')->name('admin.')
-    ->middleware( 
-        'role:Employee'    
+    ->middleware(
+        'role:Employee'
     )
     ->group(function () {
         Route::get('/reservation-data', [AdminReservationController::class, 'index'])
@@ -118,7 +107,7 @@ Route::prefix('admin')->name('admin.')
 
 // --- Rute untuk Customer, Admin, dan Owner    
 Route::prefix()->name('user.')
-    ->middleware(  
+    ->middleware(
         'role:Customer,Employee,Owner'
     )
     ->group(function () {
