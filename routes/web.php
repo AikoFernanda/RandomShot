@@ -77,6 +77,21 @@ Route::get('/contact', function () {
 Route::get('/about', function () {
     return view('about', ['title' => 'About Us']); 
 })->name('about');
+
+Route::get('/riwayat', function () {
+    return view('riwayatPemesanan', ['title' => 'Riwayat Pemasanan']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
+});
+
+Route::post('/register', [AuthenticationController::class, 'customerRegister'])->name('register');
+
+Route::post('/login', [AuthenticationController::class, 'userLogin'])->name('login');
+
+Route::get('/profil-pengguna', function () {
+    return view('profile.profile', ['title' => 'User Profile']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
+});
+
+Route::get('/aktivitas-meja', function () {
+    return view('profile.table-activity', ['title' => 'User Activity']); // // Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
 });
 
 
