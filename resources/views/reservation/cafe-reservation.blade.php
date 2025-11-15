@@ -31,19 +31,22 @@
         <p class="text-gray-300 leading-relaxed max-w-7xl">
             Nikmati sajian terbaik dari kafe kami untuk menemani waktu bermain Anda!<br>
             Jika Anda memesan menu kafe bersamaan dengan reservasi meja, pesanan akan diantar saat reservasi dimulai.
-            Untuk pemesanan langsung di tempat, silakan akses layanan pemesanan kafe yang tersedia.
+            Untuk pemesanan langsung di tempat, silakan akses layanan pemesanan kafe yang tersedia
         </p>
     </div>
 
     {{-- KATEGORI --}}
-    <div class="px-8 mt-6 flex gap-4">
-        <button class="px-4 py-2 bg-white text-black rounded-lg font-semibold">
-            Makanan
-        </button>
-        <button class="px-4 py-2 bg-white/10 border border-white rounded-lg">
-            Minuman
-        </button>
-    </div>
+    <div class="flex justify-end gap-3 mb-6 mr-8">
+            <a href="/riwayat-meja"
+               class="px-6 py-2 bg-white/30 rounded-md border border-white text-white text-medium">
+               Makanan
+            </a>
+
+            <a href="/riwayat-cafe"
+               class="px-6 py-2 bg-transparent rounded-md border border-white text-white text-medium">
+               Minuman
+            </a>
+        </div>
 
     {{-- LIST MENU --}}
     <div class="px-8 mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">

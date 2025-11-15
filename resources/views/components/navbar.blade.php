@@ -33,7 +33,7 @@
 
         <div class="flex items-center gap-2"> 
 
-        {{-- === IKON HISTORY === --}}
+        {{-- === Ikon Aktivitas Saya === --}}
         <a href="/riwayat-meja" 
            class="flex items-center p-1 rounded-full hover:bg-gray-200/30 transition"> 
             <img src="{{ asset('img/aktivitas.png') }}" 
@@ -66,7 +66,7 @@
 
                 <!-- Tombol Daftar -->
                 <a href="/register"
-                    class="bg-gray-600 hover:bg-gray-400 text-white font-medium text-sm py-1 px-3 rounded-md transition duration-150 ease-in-out">
+                    class="bg-gray-600 hover:bg-gray-500 text-white font-medium text-sm py-1 px-3 rounded-md transition duration-150 ease-in-out">
                     Daftar
                 </a>
 
