@@ -15,7 +15,7 @@
             <a href="{{ asset('/home') }}" class="font-reguler text-sm hover:text-yellow-400 transition duration-200 {{ Request::is('home') ? 'text-yellow-400 font-semibold' : 'text-white hover:text-yellow-400' }}">
                 Beranda
             </a>
-            <a href="{{ asset('/reservasi') }}" class="font-reguler text-sm hover:text-yellow-400 transition duration-200 {{ Request::is('reservasi') ? 'text-yellow-400 font-semibold' : 'text-white hover:text-yellow-400' }}">
+            <a href="{{ asset('/biliar-reservation') }}" class="font-reguler text-sm hover:text-yellow-400 transition duration-200 {{ Request::is('biliar-reservation') ? 'text-yellow-400 font-semibold' : 'text-white hover:text-yellow-400' }}">
                 Reservasi
             </a>
             <a href="{{ asset('/cafe') }}" class="font-reguler text-sm hover:text-yellow-400 transition duration-200 {{ Request::is('cafe') ? 'text-yellow-400 font-semibold' : 'text-white hover:text-yellow-400' }}">
