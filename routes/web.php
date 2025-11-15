@@ -33,6 +33,18 @@ Route::get('/cafe-reservation', function () {
     return view('reservation.cafe-reservation', ['title' => 'Reservation Page']);
 });
 
+Route::get('/drink-reservation', function () {
+    return view('reservation.drink-reservation', ['title' => 'Reservation Page']);
+});
+
+Route::get('/cart', function () {
+    return view('cart', ['title' => 'My Cart Page']);
+});
+
+Route::get('/payment', function () {
+    return view('payment', ['title' => 'Payment Page']);
+});
+
 Route::get('/detail-meja1', function () {
     return view('detail.detail-meja1', ['title' => 'Detail Page']);
 });
