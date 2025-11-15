@@ -44,7 +44,7 @@
             </a> --}}
             
             {{-- Ini form logout, sesuaikan action-nya --}}
-            <form method="POST" action="{{ route('logout') }}">
+            <form method="POST" action="{{ route('user.logout') }}">
                 @csrf
                 <button type="submit" class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition">
                     Logout
