@@ -17,6 +17,43 @@ use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
 
 
 
+Route::get('/biliar-reservation', function () {
+    return view('reservation.biliar-reservation', ['title' => 'Reservation Page']);
+})->name('reservation');
+
+Route::get('/tenis-reservation', function () {
+    return view('reservation.tenis-reservation', ['title' => 'Reservation Page']);
+});
+
+Route::get('/ps4-reservation', function () {
+    return view('reservation.ps4-reservation', ['title' => 'Reservation Page']);
+});
+
+Route::get('/cafe-reservation', function () {
+    return view('reservation.cafe-reservation', ['title' => 'Reservation Page']);
+});
+
+Route::get('/drink-reservation', function () {
+    return view('reservation.drink-reservation', ['title' => 'Reservation Page']);
+});
+
+Route::get('/cart', function () {
+    return view('cart', ['title' => 'My Cart Page']);
+});
+
+Route::get('/payment', function () {
+    return view('payment', ['title' => 'Payment Page']);
+});
+
+Route::get('/detail-meja1', function () {
+    return view('detail.detail-meja1', ['title' => 'Detail Page']);
+});
+
+Route::get('/detail-meja2', function () {
+    return view('detail.detail-meja2', ['title' => 'Detail Page']);
+});
+
+
 // --- Rute khusus untuk 'Tamu' ---
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthenticationController::class, 'showRegisterForm'])->name('register');
