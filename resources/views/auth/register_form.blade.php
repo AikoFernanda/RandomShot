@@ -34,7 +34,7 @@
             </div>
 
             <!-- Form Pendaftaran -->
-            <form action="{{ route('register') }}" method="POST" class="space-y-4">
+            <form action="{{ route('register.validation') }}" method="POST" class="space-y-4">
                 @csrf
 
                 <!-- Field Username -->

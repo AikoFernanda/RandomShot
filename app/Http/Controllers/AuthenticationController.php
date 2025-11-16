@@ -7,6 +7,7 @@ use Illuminate\Http\Request; // Untuk mengambil data dari form
 use App\Models\User;    // Untuk berinteraksi dengan tabel 'users'
 use Illuminate\Support\Facades\Session; // import session
 use Illuminate\Support\Facades\Hash; // import facede hash
+use Illuminate\Support\Facades\Auth;
 
 class AuthenticationController extends Controller
 {
@@ -87,38 +88,16 @@ class AuthenticationController extends Controller
     // LOGOUT
     public function userLogout(Request $request)
     {
-        // Opsi A: Hapus SEMUA data di session
-        $request->session()->flush(); //flush(): Ini akan menghapus semua data dari session (termasuk flash message, dll). Ini adalah "logout" yang sebenarnya.
+        // 1. Logout dari Guard (menghapus status login user)
+        Auth::logout();
 
-        // Opsi B: Hapus satu key spesifik
-        // $request->session()->forget('status_login');
+        // 2. Ini menghapus semua data sesi DAN membuat ID Sesi baru. Jauh lebih aman daripada flush().
+        $request->session()->invalidate();
+
+        // 3. Regenerate Token CSRF Supaya form login berikutnya aman dari serangan CSRF lama.
+        $request->session()->regenerateToken();
 
         return redirect()->route('home')->with('logout_success', 'Harap Login Kembali!');
-    }
-
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**

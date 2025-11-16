@@ -8,12 +8,12 @@
         <h2 class="text-3xl">HALO,</h2>
         <h1 class="text-5xl mb-10 uppercase">PENGGUNA!</h1>
 
-        <a href="/profil-pengguna" 
+        <a href="{{ route('customer.profile') }}" 
            class="w-full py-3 rounded-xl bg-transparent mb-3 text-center">
            Informasi Akun
         </a>
 
-        <a href="/aktivitas-meja" 
+        <a href="{{ route('customer.profile.activity') }}" 
            class="w-full py-3 bg-black/40 border border-white rounded-xl text-white text-center">
            Aktivitas Saya
         </a>
@@ -25,12 +25,12 @@
 
         {{-- HEADER BUTTONS --}}
         <div class="flex justify-end gap-3 mb-6 mr-8">
-            <a href="/aktivitas-meja"
+            <a href="{{ route('customer.profile.activity') }}"
                class="px-4 py-2 bg-white/30 rounded-md border border-white text-white text-sm">
                Reservasi Meja
             </a>
 
-            <a href="/aktivitas-cafe"
+            <a href="{{ route('customer.profile.activity.cafe') }}"
                class="px-4 py-2 bg-transparent rounded-md border border-white text-white text-sm">
                Menu Cafe
             </a>

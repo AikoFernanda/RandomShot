@@ -31,7 +31,7 @@
             </div>
 
             <!-- Form Login -->
-            <form action="{{ route('login') }}" method="POST" class="space-y-4">
+            <form action="{{ route('login.validation') }}" method="POST" class="space-y-4">
                 @csrf
 
                 <!-- Field Email -->

@@ -6,11 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $title }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
+        html, body {
+            /* PERBAIKAN KEDIP PUTIH.
+            */
+            background-color: #181C14; 
+        }
 
         body {
             font-family: 'Poppins';
@@ -20,7 +25,7 @@
             font-family: 'Bebas Neue';
         }
     </style>
-
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- Make sure your compiled CSS is included in the <head> then start using Tailwind’s utility classes to style your content and beri tahu Vite untuk memuat app.js --}}
 
     {{-- /* Folder public adalah satu-satunya folder di proyek Laravel-mu yang memang dirancang untuk bisa diakses langsung oleh browser. untuk me-link dari folder public, dari folder public, kamu harus menggunakan helper function Laravel yang bernama asset(). selalu menghasilkan URL absolut yang benar (akan selalu href root '/', misal http://random_shot.test/), tidak peduli kamu sedang ada di halaman mana.*/  --}}
