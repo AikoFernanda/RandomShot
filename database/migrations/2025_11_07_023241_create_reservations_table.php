@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id('reservation_id');
-            $table->foreignId('transaction_id')->constrained('transactions', 'transaction_id');
+            $table->foreignId('transaction_detail_id')->constrained('transaction_details', 'transaction_detail_id');
             $table->dateTime('waktu_mulai')->unique();
             $table->dateTime('waktu_selesai')->unique();
             $table->enum('status', ['Checked-in', 'Menunggu Check-in', 'Selesai'])->default("Menunggu Check-in");
