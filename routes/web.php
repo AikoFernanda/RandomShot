@@ -45,7 +45,9 @@ Route::prefix('customer')->name('customer.')
     
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
     
-    Route::post('/cart-update', [CartController::class, 'update'])->name('cart.update');
+    Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+
+    Route::delete('/cart/remove', [CartController::class, 'destroy'])->name('cart.remove');
     
     Route::get('/table-activity', [ProfileActivityController::class, 'index'])->name('profile.activity');
     

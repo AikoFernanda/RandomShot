@@ -51,6 +51,7 @@ class ReservationController extends Controller
         $reservationData = [
             'table_id' => $table->table_id,
             'nama' => $table->nama,
+            'nama_gambar' => $table->nama_gambar,
             'tanggal_pemesanan' => $request->tanggal_pemesanan,
             'slots' => $selectedSlots,
             'total_price' => $totalReservationPrice
