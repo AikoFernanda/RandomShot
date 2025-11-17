@@ -13,6 +13,16 @@ use function Pest\Laravel\session as LaravelSession;
 class CartController extends Controller
 {
         /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        return view('cart', [
+            'title' => 'My Cart Page'
+        ]);
+    }
+
+        /**
      * Update the specified resource in storage.
      */
     public function update(Request $request)
@@ -20,47 +30,60 @@ class CartController extends Controller
         $id = $request->id;
         $qty = $request->qty;
 
-        $cart = Session()->get('cart', []);
+        // Ambil 'items' dari 'cart', BUKAN 'cart' langsung
+        $cartItems = session()->get('cart.items', []);
 
         if ($qty > 0) { // jika qty > 0, tambah/update ke keranjang
             $menu = Menu::find($id);
-
-            $cart[$id] = [
+            $cartItems[$id] = [
                 'id' => $menu->menu_id,
                 'nama' => $menu->nama,
                 'harga' => $menu->harga,
                 'qty' => $qty
+
             ];
+
         } else { // jika qty 0, hapus dari keranjang
-            if (isset($cart[$id])) {
-                unset($cart[$id]);
+            if (isset($cartItems[$id])) {
+                unset($cartItems[$id]);
             }
         }
 
-        // Simpan kembali ke session
-        Session()->put('cart', $cart);
+        // Simpan kembali ke 'cart.items'
+        session()->put('cart.items', $cartItems);
 
         // hitung total harga dan quantity dalam keranjang untuk data FE
-        $totalQty = 0;
-        $totalPrice = 0;
+        $itemsQty = 0;
+        $itemsPrice = 0;
 
-        foreach ($cart as $item) {
-            $totalQty += $item['qty'];
-            $totalPrice += ($item['qty'] * $item['harga']);
+        foreach ($cartItems as $item) {
+            $itemsQty += $item['qty'];
+            $itemsPrice += ($item['qty'] * $item['harga']);
         }
+
+        // ambil total reservasi dari session
+        $reservation = session('cart.reservation');
+        $reservationPrice = $reservation['total_price'] ?? 0;
+
+        if ($reservation) {
+            $itemsQty += 1; // +1 untuk item meja
+        }
+
+        // hitung total items dan reservation
+        $grandTotal = $itemsPrice + $reservationPrice;
 
         // kirim json
         return response()->json([
             'success' => true,
-            'totalQty' => $totalQty,
-            'totalPrice' => number_format($totalPrice, 0, ',', '.')
+            'totalQty' => $itemsQty, // Badge keranjang (hanya hitung menu)
+            'totalPrice' => number_format($grandTotal, 0, ',', '.') // Badge keranjang (total harga keranjang)
         ]);
     }
 
     /**
-     * Display a listing of the resource.
+     * Store a newly created resource in storage.
      */
-    public function index(Request $request)
+    public function store(Request $request)
     {
         //
     }
@@ -73,13 +96,6 @@ class CartController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Transaction;
+use App\Models\TransactionDetail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,14 +23,14 @@ class Reservation extends Model
      */
     
     protected $fillable = [
-        'transaction_id',
+        'transaction_detail_id',
         'waktu_mulai',
         'waktu_selesai',
         'status'
     ];
 
-    public function transaction()
+    public function transactionDetail()
     {
-        return $this->belongsTo(Transaction::class, 'transaction_id', 'transaction_id');
+        return $this->belongsTo(TransactionDetail::class, 'transaction_detail_id', 'transaction_detail_id');
     }
 }

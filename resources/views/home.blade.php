@@ -19,7 +19,7 @@
                 </p>
                     
                 <div class="mt-8 flex justify-center mb-48">
-                        <a href="/reservasi" 
+                        <a href="/biliar-reservation" 
                            class="border border-white bg-black/50 text-white
                             hover:text-black px-5 py-2 rounded-md text-base font-semibold hover:bg-gray-100/50 transition shadow-lg">
                            Reservasi Sekarang >
@@ -97,7 +97,7 @@
 <section id="reservasi" class="bg-[#273520] text-white text-center py-20 px-4">
   <h2 class="text-5xl mb-4">Yuk, Booking Sekarang!</h2>
   <p class="text-lg mb-8">Pilih meja favoritmu dan nikmati waktu santai bareng teman di Random Shot Pool and Cafe</p>
-  <a href="/reservasi" class="bg-white text-black font-semibold px-8 py-3 rounded-lg hover:bg-gray-100/60 hover:text-white transition">
+  <a href="/biliar-reservasi" class="bg-white text-black font-semibold px-8 py-3 rounded-lg hover:bg-gray-100/60 hover:text-white transition">
     Reservasi Sekarang >
   </a>
 </section>
