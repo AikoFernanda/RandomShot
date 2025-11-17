@@ -2,7 +2,7 @@
     <x-slot:title>{{ $title }}</x-slot:title>
 
     {{-- Kartu Konten Utama (yang gelap) --}}
-    <div class="bg-gray-800 rounded-2xl p-6 text-white">
+    <div class="bg-[#3C3D37] rounded-2xl p-6 text-white">
         {{-- search bar --}}
         <form action="{{ route('admin.customer') }}" method="GET" class="mb-4">
             <div class="relative">
@@ -108,7 +108,7 @@
                     {{-- Pagination (Footer Tabel) --}}
                     <nav class="pt-6 flex justify-between items-center text-sm">
 
-                        {{-- Kiri: Link pagination--}}
+                        {{-- Kiri: Link pagination --}}
                         {{ $customers->withQueryString()->links() }}
 
                         {{-- Kanan: Dropdown "per page" --}}

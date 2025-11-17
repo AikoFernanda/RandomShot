@@ -33,11 +33,11 @@
 
         {{-- Kode sidebar --}}
         <aside
-            class="w-72 bg-gray-900 text-white p-6 flex flex-col space-y-8 fixed inset-y-0 left-0 z-20
+            class="w-72 bg-[#3C3D37] text-white p-6 flex flex-col space-y-8 fixed inset-y-0 left-0 z-20
                    transform transition-transform duration-300 ease-in-out"
             :class="{ 'translate-x-0': isSidebarOpen, '-translate-x-full': !isSidebarOpen }">
             <div class="flex justify-between items-center">
-                <h1 class="text-3xl font-bold leading-tight">HALO,<br>ADMIN!</h1>
+                <h1 class="text-4xl font-bold-1/2 tracking-wide">HALO,<br>ADMIN!</h1>
 
                 {{-- 
                   Ubah <a> menjadi <button> dan tambahkan @click
@@ -79,7 +79,7 @@
           - 'ml-0': Margin kiri 0 (saat isSidebarOpen = false)
           - 'transition-all duration-300' untuk animasi margin
         --}}
-        <main class="flex-1 p-8 transition-all duration-300 ease-in-out bg-gray-500"
+        <main class="flex-1 p-8 transition-all duration-300 ease-in-out bg-[#181C14]"
             :class="{ 'ml-72': isSidebarOpen, 'ml-0': !isSidebarOpen }">
 
             <x-HeaderAdmin></x-HeaderAdmin>
