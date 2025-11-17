@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Transaction;
+use App\Models\Reservation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -34,8 +35,12 @@ class TransactionDetail extends Model
     // kolom created_at dan updated_at yang dibuat otomatis oleh $table->timestamps(); tidak perlu didefinisikan dalam $fillable.
     // hanya perlu fokus mendefinisikan kolom-kolom yang datanya berasal dari input pengguna atau logika aplikasi spesifik ke dalam properti $fillable. Kolom timestamps biarkan Laravel yang urus.
 
+    public function reservation() {
+        return $this->hasOne(Reservation::class, 'transaction_detail_id', 'transaction_detail_id');
+    }
+
     public function transaction() {
-        return $this->belongsTo(Transaction::class, 'transaction_id', 'transaction_id');
+        return $this->belongsTo(Transaction::class, 'transaction_id', 'transaction_id'); //transaction_detail_id
     }
 
         /**
