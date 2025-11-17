@@ -5,7 +5,7 @@
 
     {{-- BACK + TITLE --}}
     <div class="flex items-center gap-4 mb-12">
-        <a href="/cart" 
+        <a href="{{ route('customer.cart') }}" 
            class="w-10 h-10 bg-black/40 rounded-full flex items-center justify-center 
                   text-white text-2xl backdrop-blur hover:bg-white/20">←
         </a>
@@ -46,7 +46,6 @@
                 <label class="text-sm">Alamat meja</label>
                 <div class="flex justify-between items-center border border-white/30 rounded-full px-4 py-2 mt-2 cursor-pointer">
                     <p class="text-sm text-gray-300">Meja 1</p>
-                    <span>›</span>
                 </div>
             </div>
 
@@ -55,7 +54,6 @@
                 <label class="text-sm">Metode Pembayaran</label>
                 <div class="flex justify-between items-center border border-white/30 rounded-full px-4 py-2 mt-2 cursor-pointer">
                     <p class="text-sm text-gray-300">QRIS</p>
-                    <span>›</span>
                 </div>
             </div>
 

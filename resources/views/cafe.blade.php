@@ -1,17 +1,35 @@
 <x-Layout>
     <x-slot:title>{{ $title }}</x-slot:title>
+    {{-- {{ 
+    dd(session('cart.reservation'), session('cart.items'), session('cart'))
+     }} // debug --}}
+    @php
+        $isReservationFlow = session()->has('cart.reservation');
+    @endphp
 
-    <div class="relative w-full min-h-screen bg-[#181C14] pt-20 pb-24"> {{-- pb-24 agar footer tidak menutupi konten --}}
+    {{-- SECTION HEADER (Gambar + Text) --}}
+    <div class="relative w-full h-[300px] pt-24"> 
+        <img src="{{ asset('img/headercafe.png') }}"
+     class="absolute inset-0 w-full h-full object-cover opacity-50">
 
-        <div class="text-[#FFF4E4] ml-10 mt-8">
-            <h1 class="text-6xl mb-3 font-bold">Menu Cafe</h1>
-            <p class="mb-10 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed pr-12 max-w-4xl">
-                Santai sejenak dan nikmati hidangan lezat dari Menu Cafe Random Shot!
-                Cocok buat kamu yang ingin nongkrong, ngopi, atau mengisi energi!
-            </p>
+        <div class="relative z-10 text-[#FFF4E4] ml-10 pt-10">
+            @if ($isReservationFlow)
+                <h1 class="text-6xl mb-3 font-bold">Langkah 2: Tambah Menu</h1>
+                <p class="mb-10 text-lg sm:text-base md:text-lg lg:text-xl leading-relaxed pr-12 max-w-4xl">
+                    Meja Anda sudah disimpan. Pilih menu menu yang ingin ditambahkan untuk dinikmati 
+                    bersama saat bermain meja Anda.
+                </p>
+            @else
+                <h1 class="text-6xl mb-3 font-bold">Menu Cafe</h1>
+                <p class="mb-10 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed pr-12 max-w-4xl">
+                    Santai sejenak dan nikmati hidangan lezat dari Menu Cafe Random Shot!
+                Cocok buat kamu yang cuma ingin nongkrong, ngopi, atau mengisi energi!
+                </p>
+            @endif
         </div>
+    </div>
 
-        <div class="grid grid-cols-2 gap-3 w-full max-w-md ml-10 mb-10 pr-10">
+        <div class="grid grid-cols-2 gap-3 w-full max-w-md ml-17 mb-10 pr-10 mt-10">
             {{-- 
                 Logika: Jika URL sedang ?kategori=Makanan, beri background terang. 
                 Jika tidak, beri border biasa.
@@ -29,7 +47,7 @@
             </a>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-[90%] mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-[90%] mx-auto pb-28">
 
             @forelse($menus as $menu)
                 {{-- 
@@ -38,7 +56,7 @@
                 --}}
 
                 @php
-                    $cart = session('cart', []);
+                    $cart = session('cart.items', []);
                     $currentQty = isset($cart[$menu->menu_id]) ? $cart[$menu->menu_id]['qty'] : 0;
                 @endphp
 
@@ -149,39 +167,57 @@
         </div>
 
         @php
-            $totalQty = 0;
-            $totalPrice = 0;
-
-            if (session('cart')) {
-                foreach (session('cart') as $item) {
-                    $totalQty += $item['qty'];
-                    $totalPrice += $item['harga'] * $item['qty'];
+            // 1. Hitung total menu
+            $itemsQty = 0;
+            $itemsPrice = 0;
+            if (session('cart.items')) {
+                foreach (session('cart.items') as $item) {
+                    $itemsQty += $item['qty'];
+                    $itemsPrice += $item['harga'] * $item['qty'];
                 }
             }
+
+            // ambil total reservasi dari session
+            $reservation = session('cart.reservation');
+            $reservationPrice = $reservation['total_price'] ?? 0;
+
+            if ($reservation) {
+                $itemsQty += 1; // +1 untuk item meja
+            }
+
+            // 3. Hitung Grand Total
+            $grandTotal = $itemsPrice + $reservationPrice;
         @endphp
 
         <div x-data="{
-            totalQty: {{ $totalQty }},
-            totalPrice: '{{ number_format($totalPrice, 0, ',', '.') }}'
+            totalQty: {{ $itemsQty }},
+            totalPrice: '{{ number_format($grandTotal, 0, ',', '.') }}'
         }"
             @cart-updated.window="totalQty = $event.detail.totalQty; totalPrice = $event.detail.totalPrice"
-            x-show="totalQty > 0" x-transition.duration.500ms class="fixed bottom-0 left-0 right-0 z-50"
-            style="{{ $totalQty == 0 ? 'display: none;' : '' }}">
+            x-show="totalQty > 0 || {{ session()->has('cart.reservation') ? 'true' : 'false' }}"
+            x-transition.duration.500ms 
+            class="fixed bottom-0 left-0 right-0 z-50"
+            style="display: none;"> {{-- Sembunyikan saat load awal --}}
 
             <footer
                 class="bg-[#181C14] border-t-4 border-[#3C3D37] flex justify-between items-center px-6 py-4 shadow-2xl">
+                
                 <p class="text-[#FFF4E4] font-semibold text-lg">
-                    Total Pesanan
+                    @if(session()->has('cart.reservation'))
+                    Total Reservasi
+                    @else
+                    Total Pesanan Menu
+                    @endif
                 </p>
 
-                <a href="#" {{-- Rute harus diaktifkan nanti {{ route('customer.cart.view') }} --}}
+                <a href="{{ route('customer.cart') }}" {{-- Rute harus diaktifkan nanti {{ route('customer.cart.view') }} --}}
                     class="flex items-center gap-3 bg-[#C1121F] text-[#FFF4E4] px-6 py-3 rounded-xl cursor-pointer hover:bg-[#A00F1B] transition shadow-lg hover:scale-105">
                     <div class="relative mr-2">
                         <span class="text-2xl">🛒</span>
                         <span
                             class="absolute -top-2 -right-2 bg-black text-[#FFF4E4] text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border border-[#C1121F]"
                             x-text="totalQty">
-                            {{-- Angka qty dinamis dari x-text --}}
+                            {{-- Angka qty dinamis dari x-text ()Badge ini hanya menampilkan jumlah MENU)--}}
                         </span>
                     </div>
 
@@ -190,6 +226,5 @@
                 </a>
             </footer>
         </div>
-
     </div>
 </x-Layout>
