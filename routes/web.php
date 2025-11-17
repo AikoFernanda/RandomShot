@@ -103,6 +103,9 @@ Route::prefix('admin')->name('admin.')
             ->name('updateStatus'); // Rute ini akan menangani update status
     });
 
+Route::get('/owner/dashboard', function () {
+    return view('owner.dashboard');
+});
 
 
 // --- Rute untuk Customer, Admin, dan Owner    
