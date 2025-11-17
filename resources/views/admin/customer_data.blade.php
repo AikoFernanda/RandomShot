@@ -8,9 +8,9 @@
             <div class="relative">
                 <input type="text" name="search" placeholder="Cari berdasarkan nama..." value="{{ request('search') }}"
                     {{-- Menampilkan query search saat ini --}}
-                    class="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                    class="w-full bg-[#757572] rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500">
                 {{-- Ikon search di dalam input --}}
-                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -25,7 +25,7 @@
         <div class="overflow-x-auto">
             <table class="w-full min-w-[800px] text-sm text-left">
                 {{-- Header Tabel --}}
-                <thead class="text-gray-400 uppercase font-medium">
+                <thead class="text-[#ECDFCC]/75 uppercase font-medium">
                     <tr>
                         <th scope="col" class="py-3 px-4">Nama Pengguna</th>
                         <th scope="col" class="py-3 px-4">No. Handphone</th>
@@ -38,7 +38,7 @@
                 {{-- Isi Tabel --}}
                 <tbody>
                     @foreach ($customers as $customer)
-                        <tr class="border-b border-gray-700">
+                        <tr class="border-b border-[#FFF3E1]/50">
                             <td class="py-4 px-4 whitespace-nowrap">
                                 <div class="flex items-center space-x-3">
                                     <span>{{ $customer->nama }}</span>
@@ -106,7 +106,7 @@
                     @endforeach
 
                     {{-- Pagination (Footer Tabel) --}}
-                    <nav class="pt-6 flex justify-between items-center text-sm">
+                    <nav class="pt-2 mb-4 flex justify-end items-center text-sm">
 
                         {{-- Kiri: Link pagination --}}
                         {{ $customers->withQueryString()->links() }}
@@ -120,7 +120,7 @@
                                 <input type="hidden" name="search" value="{{ request('search') }}">
 
                                 <select name="per_page" onchange="this.form.submit()" {{-- Otomatis submit saat diganti --}}
-                                    class="bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                                    class="text-white bg-[#3C3D37] border border-white mb-3 rounded-lg py-2 px-3 focus:outline-none focus:ring-1 focus:ring-blue-500">
 
                                     {{-- 
                                       @selected() adalah helper Blade untuk mengecek 

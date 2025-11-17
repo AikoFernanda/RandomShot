@@ -12,7 +12,7 @@
             <div class="relative">
                 <input type="text" name="search" placeholder="Cari berdasarkan nama..."
                     value="{{ request('search') }}" {{-- Menampilkan query search saat ini --}}
-                    class="w-full bg-[#757572] rounded-lg py-3 pl-12 pr-4 text-[#] placeholder-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                    class="w-full bg-[#757572] rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500">
                 {{-- Ikon search di dalam input --}}
                 <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -24,50 +24,62 @@
                 {{-- Tombol submit tersembunyi, form akan submit saat menekan Enter --}}
             </div>
 
-            <!-- RESERVASI MEJA
-            <div
-                class="grid grid-cols-[1.5fr_2fr_1.5fr_1fr_1.5fr_1.5fr_1.5fr] min-w-full mt-5 text-center text-xl tracking-wide text-[#ECDFCC]">
-                <h1 class="py-5">Tanggal</h1>
-                <h1 class="py-5">Nama Pengguna</h1>
-                <h1 class="py-5">Meja</h1>
-                <h1 class="py-5">Durasi</h1>
-                <h1 class="py-5">Waktu Mulai</h1>
-                <h1 class="py-5">Waktu Selesai</h1>
-                <h1 class="py-5">Status</h1>
-            </div>
-            <div
-                class="grid grid-cols-[1.5fr_2fr_1.5fr_1fr_1.5fr_1.5fr_1.5fr] min-w-full text-center text-[#ECDFCC] border-b">
-                <div class="py-5">23/10/2025</div>
-                <div class="py-5">afra</div>
-                <div class="py-5">Biliar 1</div>
-                <div class="py-5">1</div>
-                <div class="py-5">20.00</div>
-                <div class="py-5">21.00</div>
-                <div class="py-5">Status</div>
-            </div> -->
+            <!-- RESERVASI MEJA -->
+            <div class="overflow-x-auto">
+                <table class="w-full min-w-[800px] text-sm text-left">
+                    {{-- Header Tabel --}}
+                    <thead class="text-[#ECDFCC]/75 uppercase font-medium">
+                        <tr>
+                            <th scope="col" class="w-[150px] py-4 px-4">Tanggal</th>
+                            <th scope="col" class="w-[180px] py-4 px-4">Nama Pengguna</th>
+                            <th scope="col" class="w-[100px] py-4 px-4">Meja</th>
+                            <th scope="col" class="w-[100px] py-4 px-4">Durasi</th>
+                            <th scope="col" class="w-[150px] py-4 px-4">Waktu Mulai</th>
+                            <th scope="col" class="w-[150px] py-4 px-4">Waktu Selesai</th>
+                            <th scope="col" class="w-[100px] py-4 px-4">Status</th>
+                        </tr>
+                    </thead>
 
-            <!-- Pesanan menu -->
-            <div
-                class="grid grid-cols-[2fr_1.5fr_1.5fr_0.5fr_1fr_2fr_1fr] min-w-full mt-5 text-center text-xl tracking-wide text-[#ECDFCC]">
-                <h1 class="py-5">Tanggal dan Waktu</h1>
-                <h1 class="py-5">Nama Pengguna</h1>
-                <h1 class="py-5">Menu Pesanan</h1>
-                <h1 class="py-5">Jumlah</h1>
-                <h1 class="py-5">Tempat</h1>
-                <h1 class="py-5">Catatan</h1>
-                <h1 class="py-5">Status</h1>
+                    <tbody class="text-[#FFF3E1]">
+                        <tr class="border-b border-[#FFF3E1]/50 gap-3">
+                            <td class="py-3 px-4">2025-11-01</td>
+                            <td class="py-3 px-4">afra</td>
+                            <td class="py-3 px-4">Biliar 1</td>
+                            <td class="py-3 px-4">1</td>
+                            <td class="py-3 px-4">20.00</td>
+                            <td class="py-3 px-4">21.00</td>
+                            <td class="py-1 px-2"></td> <!-- menunggu-check in, check-in, selesai, dibatalkan -->
+                        </tr>
+                    </tbody>
             </div>
 
-            <div
-                class="grid grid-cols-[2fr_1.5fr_1.5fr_0.5fr_1fr_2fr_1fr] min-w-full text-center text-[#ECDFCC] border-b">
-                <div class="py-5">23/10/2025 <br> 20.30</div>
-                <div class="py-5">afra</div>
-                <div class="py-5">Indomie Goreng</div>
-                <div class="py-5">1</div>
-                <div class="py-5">B1</div>
-                <div class="py-5">Gapake sambel</div>
-                <div class="py-5">Status</div>
+            <!-- PESAN MENU -->
+            <div class="overflow-x-auto">
+                <table class="w-full min-w-[800px] text-sm text-left">
+                    {{-- Header Tabel --}}
+                    <thead class="text-[#ECDFCC]/70 uppercase font-medium">
+                        <tr>
+                            <th scope="col" class="w-[220px] py-4 px-4">Tanggal dan Waktu</th>
+                            <th scope="col" class="w-[180px] py-4 px-4">Nama Pengguna</th>
+                            <th scope="col" class="w-[150px] py-4 px-4">Menu Pesanan</th>
+                            <th scope="col" class="w-[100px] py-4 px-4">Jumlah</th>
+                            <th scope="col" class="w-[100px] py-4 px-4">Tempat</th>
+                            <th scope="col" class="w-[200px] py-4 px-4">Catatan</th>
+                            <th scope="col" class="w-[100px] py-4 px-4">Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="text-[#FFF3E1]">
+                        <tr class="border-b border-[#FFF3E1]/50 gap-3">
+                            <td class="py-3 px-4">2025-11-01 20.30</td>
+                            <td class="py-3 px-4">afra</td>
+                            <td class="py-3 px-4">Indomie Goreng</td>
+                            <td class="py-3 px-4">1</td>
+                            <td class="py-3 px-4">B1</td>
+                            <td class="py-3 px-4">Gapake sambal</td>
+                            <td class="py-1 px-2"></td> <!-- menunggu dibuat, selesai, dibatalkan -->
+                        </tr>
+                    </tbody>
             </div>
         </div>
-    </div>
 </x-LayoutAdmin>
