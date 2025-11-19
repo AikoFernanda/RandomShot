@@ -1,4 +1,4 @@
-<x-Layout>
+<x-layout-owner>
     <x-slot:title>{{ $title }}</x-slot:title>
 
     {{-- ================= HEADER ================= --}}
@@ -106,8 +106,6 @@
     </div>
 
 
-
-
     {{-- ================= PELANGGAN TERBAIK ================= --}}
     <div class="bg-white/10 border border-white/10 rounded-xl p-6 mt-12">
         <h2 class="text-xl font-bold mb-4">Pelanggan Terbaik</h2>
@@ -160,4 +158,4 @@
 
     </div>
 
-</x-Layout>
+</x-layout-owner>

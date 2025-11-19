@@ -113,9 +113,36 @@ Route::prefix('admin')->name('admin.')
             ->name('updateStatus'); // Rute ini akan menangani update status
     });
 
-Route::get('/owner/dashboard', function () {
-    return view('owner.dashboard');
-});
+// --- Rute untuk Owner ---
+Route::prefix('owner')->name('owner.')
+    ->middleware('role:Owner')
+    ->group(function () {
+
+        Route::get('/performa', function () {
+            return view('performa', [
+                'title' => 'Performa Bisnis',
+            ]);
+        })->name('performa');
+
+        // Route::get('/laporan', function () {
+        //     return view('laporan', [
+        //         'title' => 'Laporan Bisnis',
+        //     ]);
+        // })->name('laporan');
+
+        // Route::get('/feedback', function () {
+        //     return view('feedback', [
+        //         'title' => 'Feedback Pelanggan',
+        //     ]);
+        // })->name('feedback');
+
+        // Route::get('/data-admin', function () {
+        //     return view('data-admin', [
+        //         'title' => 'Data Admin',
+        //     ]);
+        // })->name('data-admin');
+    });
+
 
 
 // --- Rute untuk Customer, Admin, dan Owner    

@@ -26,7 +26,7 @@ class BlockRole
                 
                 // Arahkan Owner ke dashboard-nya
                 // (Pastikan nama rute 'owner.performance' sudah ada)
-                return redirect()->route('owner.performance'); 
+                return redirect()->route('owner.performa'); 
             }
             
             // Jika perannya 'Customer', jangan lakukan apa-apa, biarkan lanjut
