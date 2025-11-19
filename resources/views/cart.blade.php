@@ -1,20 +1,50 @@
 <x-Layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    {{-- {{ dd(session('cart.reservation'), session('cart.items'), session('cart')) }} // debug --}}
+    {{-- {{ dd(session('user_id'), session('cart.reservation'), session('cart.items'), session('cart.selected_table'), session('cart'))}} --}}
 
     <section x-data="{
         pilihMeja: false,
-        selectedTable: '',
+        selectedTable: {{ session('cart.selected_table') ? json_encode(session('cart.selected_table')) : 'null' }},
+        isLoading: false,
     
-        selectTable(meja) {
-            // 1. Set datanya
-            this.selectedTable = meja;
+        async selectTable(tableId, tableName) {
+            this.isLoading = true;
     
-            // 2. Beri browser ruang 50 milidetik untuk update teks, sebelum perintahkan modal untuk tutup
-            setTimeout(() => {
-                this.pilihMeja = false;
-            }, 100);
+            try {
+                const response = await fetch('{{ route('customer.cart.selectTable') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        table_id: tableId,
+                        table_name: tableName
+                    })
+                });
+    
+                const data = await response.json();
+    
+                if (data.success) {
+                    // Update data lokal
+                    this.selectedTable = {
+                        table_id: tableId,
+                        nama: tableName
+                    };
+    
+                    // Tutup modal
+                    this.pilihMeja = false;
+    
+                    // Optional: Tampilkan notifikasi sukses
+                    console.log('Meja berhasil dipilih!');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Gagal memilih meja. Silakan coba lagi.');
+            } finally {
+                this.isLoading = false;
+            }
         }
     }" class="min-h-screen bg-[#0e0f0b] text-white px-8 pt-20 pb-10">
 
@@ -153,7 +183,7 @@
                             <p class="text-gray-400 italic">{{ $reservationData['nama'] }}
                                 ({{ count($reservationData['slots']) }} jam)</p>
                         </div>
-                        <p>Rp {{ number_format($reservationData['total_price'], 0, ',', '.') }}</p>
+                        <p>Rp{{ number_format($reservationData['total_price'], 0, '.', '.') }}</p>
                     </div>
                 @endif
 
@@ -195,13 +225,27 @@
 
                     <div class="mt-6">
                         <label class="text-sm">Alamat Meja</label>
-                        <button type="button" @click="pilihMeja = true"
-                            class="w-full flex justify-between items-center border border-white/30 rounded-full px-4 py-2 mt-2 cursor-pointer hover:bg-white/10">
-                            <p class="text-sm" :class="selectedTable ? 'text-white' : 'text-gray-300'">
-                                <span x-text="selectedTable ? selectedTable : 'Pilih Meja'"></span>
-                            </p>
-                            <span>›</span>
-                        </button>
+
+                        {{-- Jika sudah pilih meja --}}
+                        <template x-if="selectedTable">
+                            <div
+                                class="flex justify-between items-center border border-green-500/30 bg-green-500/10 rounded-full px-4 py-2 mt-2">
+                                <p class="text-sm text-white" x-text="selectedTable.nama"></p>
+                                <button type="button" @click="pilihMeja = true"
+                                    class="text-xs text-green-400 hover:text-green-300">
+                                    Ganti
+                                </button>
+                            </div>
+                        </template>
+
+                        {{-- Jika belum pilih meja --}}
+                        <template x-if="!selectedTable">
+                            <button type="button" @click="pilihMeja = true"
+                                class="w-full flex justify-between items-center border border-white/30 rounded-full px-4 py-2 mt-2 cursor-pointer hover:bg-white/10">
+                                <p class="text-sm text-gray-300">Pilih Meja</p>
+                                <span>›</span>
+                            </button>
+                        </template>
                     </div>
 
                     {{-- MODAL OVERLAY --}}
@@ -217,8 +261,7 @@
                                 @click="pilihMeja = false" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
 
                             {{-- Modal Content --}}
-                            <div x-show="pilihMeja" x-trap.noscroll.inert="pilihMeja"
-                                x-transition:enter="transition ease-out duration-300"
+                            <div x-show="pilihMeja" x-transition:enter="transition ease-out duration-300"
                                 x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
                                 x-transition:leave="transition ease-in duration-200"
@@ -242,39 +285,35 @@
                                 {{-- List Meja dengan scrollbar custom --}}
                                 <div
                                     class="p-6 space-y-3 max-h-[50vh] overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
-                                    <button type="button" @click="selectedTable = 'Meja 1'; pilihMeja = false"
-                                        class="group w-full text-left p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-red-500/50 transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-red-500/10">
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-center gap-3">
-                                                <span
-                                                    class="text-base font-medium text-white group-hover:text-red-400 transition-colors">Meja
-                                                    1</span>
+                                    @foreach ($tables as $table)
+                                        <button type="button"
+                                            @click="selectTable({{ $table->table_id }}, '{{ addslashes($table->nama) }}')"
+                                            :disabled="isLoading"
+                                            class="group w-full text-left p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-red-500/50 transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-red-500/10 disabled:opacity-50 disabled:cursor-not-allowed">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center gap-3">
+                                                    <span
+                                                        class="text-base font-medium text-white group-hover:text-red-400 transition-colors">
+                                                        {{ $table->nama }}
+                                                    </span>
+                                                </div>
+                                                <svg class="w-5 h-5 text-gray-500 group-hover:text-red-400 transition-colors"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M9 5l7 7-7 7" />
+                                                </svg>
                                             </div>
-                                            <svg class="w-5 h-5 text-gray-500 group-hover:text-red-400 transition-colors"
-                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M9 5l7 7-7 7" />
-                                            </svg>
-                                        </div>
-                                    </button>
+                                        </button>
+                                    @endforeach
 
-                                    <button type="button" @click="selectedTable = 'Meja 2'; pilihMeja = false"
-                                        class="group w-full text-left p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-red-500/50 transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-red-500/10">
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-center gap-3">
-                                                <span
-                                                    class="text-base font-medium text-white group-hover:text-red-400 transition-colors">Meja
-                                                    2</span>
-                                            </div>
-                                            <svg class="w-5 h-5 text-gray-500 group-hover:text-red-400 transition-colors"
-                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M9 5l7 7-7 7" />
-                                            </svg>
+                                    {{-- Loading indicator --}}
+                                    <div x-show="isLoading" class="text-center py-4">
+                                        <div
+                                            class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-red-500">
                                         </div>
-                                    </button>
+                                        <p class="text-sm text-gray-400 mt-2">Memproses...</p>
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                     </template>
@@ -298,12 +337,21 @@
                     <p>Rp{{ number_format($totalPrice, 0, '.', '.') }}</p>
                 </div>
 
+                @if (session('error'))
+                    <div class="bg-red-500/20 text-red-300 p-4 rounded-lg mb-4 border border-red-500/50">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
 
                 {{-- CHECKOUT --}}
-                <a href="{{ route('customer.payment') }}"
-                    class="mt-6 w-full py-3 bg-red-600 hover:bg-red-700 rounded-full border
-                           border-white text-white font-bold text-lg text-center block">
-                    Check Out</a>
+                <form method="POST" action="{{ route('customer.checkout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="mt-6 w-full py-3 bg-red-600 hover:bg-red-700 rounded-full border  border-white text-white font-bold text-lg text-center block">
+                        Bayar Sekarang
+                    </button>
+                </form>
 
             </div>
 

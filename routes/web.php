@@ -10,14 +10,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileActivityController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TransactionHistoryController;
-use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CheckoutController;
 
 // Import controller admin (di dalam folder Admin)
 use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
 use App\Http\Controllers\Admin\TableController as AdminTableController;
 use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
-
-
+use Psy\ManualUpdater\Checker;
 
 // --- Rute khusus untuk 'Tamu' ---
 Route::middleware('guest')->group(function () {
@@ -35,31 +34,32 @@ Route::middleware('guest')->group(function () {
 
 // --- Rute untuk Customer ---
 Route::prefix('customer')->name('customer.')
-    ->middleware('role:Customer')
-    ->group(function () {
-        Route::get('/profil-pengguna', [ProfileController::class, 'index'])->name('profile');
+->middleware('role:Customer')
+->group(function () {
+    Route::get('/profil-pengguna', [ProfileController::class, 'index'])->name('profile');
+    
+    Route::put('/profile-pengguna', [ProfileController::class, 'update'])->name('profile.update'); // form mengirimkan request PUT dan inti dari desain Resourceful (atau RESTful) di Laravel: Satu URL (/profil-pengguna) bisa menangani banyak aksi, asalkan Method-nya (kata kerjanya) berbeda.
+    
+    Route::post('/reservation/save-table', [ReservationController::class, 'store'])->name('reservation.cart');
+    
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    
+    Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 
-        Route::put('/profile-pengguna', [ProfileController::class, 'update'])->name('profile.update'); // form mengirimkan request PUT dan inti dari desain Resourceful (atau RESTful) di Laravel: Satu URL (/profil-pengguna) bisa menangani banyak aksi, asalkan Method-nya (kata kerjanya) berbeda.
+    Route::delete('/cart/remove', [CartController::class, 'destroy'])->name('cart.remove');
 
-        Route::post('/reservation/save-table', [ReservationController::class, 'store'])->name('reservation.cart');
+    Route::post('/cart/select-table', [CartController::class, 'selectTable'])->name('cart.selectTable');
+    
+    Route::get('/table-activity', [ProfileActivityController::class, 'index'])->name('profile.activity');
+    
+    Route::get('/cafe-activity', [ProfileActivityController::class, 'index2'])->name('profile.activity.cafe');
+    
+    Route::get('/transaction-history', [TransactionHistoryController::class, 'index'])->name('transaction.history');
 
-        Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::post('/checkout', [CheckoutController::class, 'processCheckout'])->name('checkout');
 
-        Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
-
-        Route::delete('/cart/remove', [CartController::class, 'destroy'])->name('cart.remove');
-
-        Route::get('/table-activity', [ProfileActivityController::class, 'index'])->name('profile.activity');
-
-        Route::get('/cafe-activity', [ProfileActivityController::class, 'index2'])->name('profile.activity.cafe');
-
-        Route::get('/transaction-history', [TransactionHistoryController::class, 'index'])->name('transaction.history');
-
-        Route::get('/payment', [PaymentController::class, 'index'])->name('payment');
-    });
-
-
-
+    Route::get('/payment/{transaction}', [CheckoutController::class, 'index'])->name('payment');
+});
 
 // --- Rute untuk 'Tamu' dan Customer ---
 Route::middleware('block')->group(function () {
@@ -153,7 +153,6 @@ Route::prefix()->name('user.')
     ->group(function () {
         Route::post('/logout', [AuthenticationController::class, 'userLogout'])->name('logout'); // /route, [] kurung siku ini berisi data (key & value) array yg akan dikirimkan ke route yg akan dituju
     });
-
 
 // Bentuk 1 (Closure): Logikanya dikerjakan langsung di tempat (di file rute). Ini bagus untuk rute yang sangat sederhana dan tidak punya banyak logika
 // Bentuk 2 (Controller): Logikanya didelegasikan atau "dilempar" ke file lain yang khusus (yaitu Controller). Sangat Rapi (Best Practice) karena logika tersimpan rapi di file Controller-nya masing-masing. Ini dipakai untuk 99% semua pekerjaan yang punya logika, seperti: Menyimpan data (CRUD), Login, Logout, Menampilkan data dari database, dll
