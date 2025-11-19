@@ -1,7 +1,7 @@
 <x-Layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    <section class="min-h-screen bg-black text-white flex">
+    <section class="min-h-screen bg-black text-[#F4EFE7] flex">
 
         {{-- SIDEBAR --}}
         <aside class="w-72 bg-[#2e2e2c] py-24 px-8 flex flex-col">
@@ -13,7 +13,7 @@
             </a>
 
             <a href="{{ route('customer.profile.activity') }}"
-                class="w-full py-3 bg-black/40 border border-white rounded-xl text-white text-center">
+                class="w-full py-3 bg-black/40 border border-[#F4EFE7] rounded-xl text-[#F4EFE7] text-center">
                 Aktivitas Saya
             </a>
         </aside>
@@ -25,12 +25,12 @@
             {{-- HEADER BUTTONS --}}
             <div class="flex justify-end gap-3 mb-6 mr-8">
                 <a href="{{ route('customer.profile.activity') }}"
-                    class="px-4 py-2 bg-transparent rounded-md border border-white text-white text-sm">
+                    class="px-4 py-2 bg-transparent rounded-md border border-[#F4EFE7] text-[#F4EFE7] text-sm">
                     Reservasi Meja
                 </a>
 
                 <a href="{{ route('customer.profile.activity.cafe') }}"
-                    class="px-4 py-2 bg-white/30 rounded-md border border-white text-white text-sm">
+                    class="px-4 py-2 bg-[#F4EFE7]/30 rounded-md border border-[#F4EFE7] text-[#F4EFE7] text-sm">
                     Menu Cafe
                 </a>
             </div>
@@ -41,7 +41,7 @@
 
                 {{-- CARD 1 --}}
                 <div
-                    class="ml-6 mr-6 flex bg-[#141414] rounded-xl border border-white 
+                    class="ml-6 mr-6 flex bg-[#141414] rounded-xl border border-[#F4EFE7] 
                         overflow-hidden relative">
 
                     <img src="{{ asset('img/menu/indomie.png') }}" class="w-40 h-28 object-cover">
@@ -60,7 +60,7 @@
 
                 {{-- CARD 2 --}}
                 <div
-                    class="ml-6 mr-6 flex bg-[#141414] rounded-xl border border-white 
+                    class="ml-6 mr-6 flex bg-[#141414] rounded-xl border border-[#F4EFE7] 
                         overflow-hidden relative">
 
                     <img src="{{ asset('img/menu/indomie.png') }}" class="w-40 h-28 object-cover">
@@ -79,7 +79,7 @@
 
                 {{-- CARD 3 --}}
                 <div
-                    class="ml-6 mr-6 flex bg-[#141414] rounded-xl border border-white 
+                    class="ml-6 mr-6 flex bg-[#141414] rounded-xl border border-[#F4EFE7] 
                         overflow-hidden relative">
 
                     <img src="{{ asset('img/menu/indomie.png') }}" class="w-40 h-28 object-cover">
@@ -98,7 +98,7 @@
 
                 {{-- CARD 2 --}}
                 <div
-                    class="ml-6 mr-6 flex bg-[#141414] rounded-xl border border-white 
+                    class="ml-6 mr-6 flex bg-[#141414] rounded-xl border border-[#F4EFE7] 
                         overflow-hidden relative">
 
                     <img src="{{ asset('img/menu/indomie.png') }}" class="w-40 h-28 object-cover">

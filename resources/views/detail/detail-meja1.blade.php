@@ -1,7 +1,7 @@
 <x-Layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-<section class="min-h-screen bg-black text-white">
+<section class="min-h-screen bg-black text-[#F4EFE7]">
 
     {{-- HEADER GAMBAR --}}
     <div class="relative w-full h-[250px]">
@@ -10,7 +10,7 @@
         {{-- Back Button --}}
         <a href="/biliar-reservation" 
            class="absolute top-16 left-3 w-10 h-10 bg-black/40 rounded-full flex items-center 
-                  justify-center text-white text-2xl backdrop-blur hover:bg-black">←
+                  justify-center text-[#F4EFE7] text-2xl backdrop-blur hover:bg-black">←
         </a>
 
         {{-- Nama Meja (CENTER) --}}
@@ -90,8 +90,8 @@
             @endphp
 
             @foreach ($days as $d)
-                <div class="min-w-[220px] bg-[#2d2d2d] rounded-xl p-6 text-white 
-                            flex flex-col items-center justify-center text-center border border-white/10">
+                <div class="min-w-[220px] bg-[#2d2d2d] rounded-xl p-6 text-[#F4EFE7] 
+                            flex flex-col items-center justify-center text-center border border-[#F4EFE7]/10">
                     <p class="text-gray-300">{{ $d['tgl'] }}</p>
                     <p class="text-2xl font-bold">{{ $d['hari'] }}</p>
                 </div>
@@ -115,7 +115,7 @@
 
     {{-- JUMLAH JADWAL --}}
     <div class="px-8 mt-8">
-        <button class="px-4 py-2 border border-white rounded-lg text-white text-sm bg-white/10">
+        <button class="px-4 py-2 border border-[#F4EFE7] rounded-lg text-[#F4EFE7] text-sm bg-[#F4EFE7]/10">
             8 Jadwal Tersedia
         </button>
     </div>
@@ -153,7 +153,7 @@
             class="flex gap-4 overflow-x-auto no-scrollbar scroll-smooth px-14 mb-10">
 
             @foreach ($jadwal as $slot)
-            <div class="min-w-[150px] bg-[#2d2d2d] rounded-xl border border-white/20 
+            <div class="min-w-[150px] bg-[#2d2d2d] rounded-xl border border-[#F4EFE7]/20 
                         flex flex-col items-center justify-center text-center p-4">
                 
                 <p class="text-sm text-gray-300">60 Menit</p>
@@ -182,17 +182,17 @@
 
     {{-- BOTTOM FLOATING BUTTON --}}
     <div class="fixed bottom-0 left-0 w-full bg-black/80 backdrop-blur-lg px-8 
-            flex items-center justify-between py-4 z-50 border-t-2 border-white/20">
+            flex items-center justify-between py-4 z-50 border-t-2 border-[#F4EFE7]/20">
 
-    <p class="text-white text-xl font-bold leading-none">
+    <p class="text-[#F4EFE7] text-xl font-bold leading-none">
         Total Rp20.000</p>
 
     <a href="/cafe-reservation?meja=1"
-    class="flex items-center gap-3 bg-red-700 hover:bg-red-800 text-white 
+    class="flex items-center gap-3 bg-red-700 hover:bg-red-800 text-[#F4EFE7] 
           px-10 py-3 rounded-xl text-lg font-semibold">
     <div class="relative">
         <img src="{{ asset('img/keranjang.png') }}" class="w-7 h-7 object-contain">
-        <span class="absolute -top-1 -right-1 bg-white text-black text-xs font-bold 
+        <span class="absolute -top-1 -right-1 bg-[#F4EFE7] text-black text-xs font-bold 
                        px-2 py-1 rounded-full leading-none">1</span>
     </div>
     Lanjut

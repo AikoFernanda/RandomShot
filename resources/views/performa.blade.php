@@ -1,49 +1,49 @@
 <x-layout-owner>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    {{-- ================= HEADER ================= --}}
-    <h1 class="text-3xl font-bold mb-6">Highlight Bisnis Harian</h1>
+    <section class="min-h-screen bg-black text-[#F4EFE7]">
 
-    {{-- ================= CARDS SUMMARY ================= --}}
+    {{-- HEADER --}}
+    <h1 class="text-5xl mb-6">Highlight Bisnis Harian</h1>
+
+    {{-- CARDS SUMMARY --}}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
 
-        <div class="bg-white/10 border border-white/10 rounded-xl p-4">
+        <div class="bg-[#3C3D37]/90 border border-[#F4EFE7]/10 rounded-xl p-4">
             <p class="text-sm text-gray-300">Pendapatan Hari ini</p>
             <p class="text-3xl font-bold mt-2">Rp 250,5k</p>
         </div>
 
-        <div class="bg-white/10 border border-white/10 rounded-xl p-4">
+        <div class="bg-[#3C3D37]/90 border border-[#F4EFE7]/10 rounded-xl p-4">
             <p class="text-sm text-gray-300">Total Transaksi Hari ini</p>
             <p class="text-3xl font-bold mt-2">25 Transaksi</p>
         </div>
 
-        <div class="bg-white/10 border border-white/10 rounded-xl p-4">
+        <div class="bg-[#3C3D37]/90 border border-[#F4EFE7]/10 rounded-xl p-4">
             <p class="text-sm text-gray-300">Reservasi Meja Hari ini</p>
             <p class="text-3xl font-bold mt-2">15 Reservasi</p>
         </div>
 
-        <div class="bg-white/10 border border-white/10 rounded-xl p-4">
+        <div class="bg-[#3C3D37]/90 border border-[#F4EFE7]/10 rounded-xl p-4">
             <p class="text-sm text-gray-300">Pesanan Cafe Hari ini</p>
             <p class="text-3xl font-bold mt-2">10 Pesanan</p>
         </div>
     </div>
 
-
-
-    {{-- ================= GRAFIK & PIE CHART ================= --}}
+    {{-- GRAFIK & PIE CHART --}}
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-10">
 
         {{-- GRAFIK TREND --}}
-        <div class="lg:col-span-2 bg-white/10 border border-white/10 rounded-xl p-6">
-            <h2 class="text-xl font-bold mb-4">Grafik Tren Pendapatan Harian</h2>
+        <div class="lg:col-span-2 bg-[#F4EFE7]/10 border border-[#F4EFE7]/10 rounded-xl p-6">
+            <h2 class="text-2xl mb-4">Grafik Tren Pendapatan Harian</h2>
 
             {{-- Gambar dummy grafik --}}
             <img src="{{ asset('img/grafik.png') }}" class="w-full rounded-lg">
         </div>
 
         {{-- PIE CHART --}}
-        <div class="bg-white/10 border border-white/10 rounded-xl p-6">
-            <h2 class="text-xl font-bold mb-4">Persentase Transaksi</h2>
+        <div class="bg-[#F4EFE7]/10 border border-[#F4EFE7]/10 rounded-xl p-6">
+            <h2 class="text-2xl mb-4">Persentase Transaksi</h2>
 
             <img src="{{ asset('img/chart-pie.png') }}" class="w-full">
 
@@ -52,22 +52,18 @@
                 <p><span class="inline-block w-3 h-3 bg-gray-400 rounded mr-2"></span> Reservasi Meja</p>
             </div>
         </div>
-
     </div>
 
-
-
-
-    {{-- ================= MENU TERLARIS & MEJA TERLARIS ================= --}}
+    {{-- MENU TERLARIS & MEJA TERLARIS --}}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-12">
 
         {{-- MENU CAFE TERLARIS --}}
-        <div class="bg-white/10 border border-white/10 rounded-xl p-6">
-            <h2 class="text-xl font-bold mb-4">Menu Cafe Terlaris</h2>
+        <div class="bg-[#F4EFE7]/10 border border-[#F4EFE7]/10 rounded-xl p-6">
+            <h2 class="text-2xl mb-4">Menu Cafe Terlaris</h2>
 
             <table class="w-full text-sm">
                 <thead>
-                    <tr class="text-gray-400 border-b border-white/10">
+                    <tr class="text-gray-400 border-b border-[#F4EFE7]/10">
                         <th class="py-2 text-left w-10">No.</th>
                         <th class="py-2 text-left">Menu</th>
                         <th class="py-2 text-left">Total Pesanan</th>
@@ -84,12 +80,12 @@
         </div>
 
         {{-- MEJA TERLARIS --}}
-        <div class="bg-white/10 border border-white/10 rounded-xl p-6">
-            <h2 class="text-xl font-bold mb-4">Meja Terlaris</h2>
+        <div class="bg-[#F4EFE7]/10 border border-[#F4EFE7]/10 rounded-xl p-6">
+            <h2 class="text-2xl mb-4">Meja Terlaris</h2>
 
             <table class="w-full text-sm">
                 <thead>
-                    <tr class="text-gray-400 border-b border-white/10">
+                    <tr class="text-gray-400 border-b border-[#F4EFE7]/10">
                         <th class="py-2 w-10">No.</th>
                         <th class="py-2">Meja</th>
                         <th class="py-2">Total Reservasi</th>
@@ -107,12 +103,12 @@
 
 
     {{-- ================= PELANGGAN TERBAIK ================= --}}
-    <div class="bg-white/10 border border-white/10 rounded-xl p-6 mt-12">
-        <h2 class="text-xl font-bold mb-4">Pelanggan Terbaik</h2>
+    <div class="bg-[#F4EFE7]/10 border border-[#F4EFE7]/10 rounded-xl p-6 mt-12">
+        <h2 class="text-2xl mb-4">Pelanggan Terbaik</h2>
 
         <table class="w-full text-sm">
             <thead>
-                <tr class="text-gray-400 border-b border-white/10">
+                <tr class="text-gray-400 border-b border-[#F4EFE7]/10">
                     <th class="py-2 w-10">No.</th>
                     <th class="py-2">Pelanggan</th>
                     <th class="py-2">Email</th>
@@ -135,12 +131,12 @@
 
 
     {{-- ================= FEEDBACK TERBARU ================= --}}
-    <div class="bg-white/10 border border-white/10 rounded-xl p-6 mt-12">
-        <h2 class="text-xl font-bold mb-4">Feedback Terbaru</h2>
+    <div class="bg-[#F4EFE7]/10 border border-[#F4EFE7]/10 rounded-xl p-6 mt-12">
+        <h2 class="text-2xl mb-4">Feedback Terbaru</h2>
 
         <table class="w-full text-sm">
             <thead>
-                <tr class="text-gray-400 border-b border-white/10">
+                <tr class="text-gray-400 border-b border-[#F4EFE7]/10">
                     <th class="py-2 w-10">No.</th>
                     <th class="py-2">Pelanggan</th>
                     <th class="py-2">Deskripsi</th>
@@ -157,5 +153,5 @@
         </table>
 
     </div>
-
+</section>
 </x-layout-owner>
