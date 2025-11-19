@@ -19,6 +19,8 @@ class CartController extends Controller
     {
         $reservationData = session()->get('cart.reservation', []);
         $itemsData = session()->get('cart.items', []);
+        $tables = Table::all();
+        $selectedTable = session()->get('cart.selected_table');
         $totalPrice = 0;
 
         if ($reservationData) {
@@ -38,7 +40,9 @@ class CartController extends Controller
             'title' => 'My Cart Page',
             'reservationData' => $reservationData,
             'itemsData' => $itemsData,
-            'totalPrice' => $totalPrice
+            'totalPrice' => $totalPrice,
+            'tables' => $tables,
+            'selectedTable' => $selectedTable
         ]);
     }
 
@@ -119,6 +123,31 @@ class CartController extends Controller
         }
 
         return redirect()->route('customer.cart')->with('success', 'Item berhasil dihapus');
+    }
+
+    public function selectTable(Request $request)
+    {
+        $request->validate([
+            'table_id' => 'required|integer',
+            'table_name' => 'required|string'
+        ]);
+
+        $tableId = $request->input('table_id');
+        $tableName = $request->input('table_name');
+
+        session()->put('cart.selected_table', [
+            'table_id' => $tableId,
+            'nama' => $tableName
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Meja Berhasil dipilih',
+            'data' => [
+                'table_id' => $tableId,
+                'nama' => $tableName
+            ]
+        ]);
     }
 
     /**

@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
                 'alamat' => 'Jalan Lupa',
                 'peran' => 'Customer'
             ]
-        ];
+            ];
 
         // create gabisa insert banyak array, pakai User::insert ([[]]) kalo mau banyak sekaligus
         foreach($users as $user) {

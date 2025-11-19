@@ -36,7 +36,7 @@ class TransactionDetail extends Model
     // hanya perlu fokus mendefinisikan kolom-kolom yang datanya berasal dari input pengguna atau logika aplikasi spesifik ke dalam properti $fillable. Kolom timestamps biarkan Laravel yang urus.
 
     public function reservation() {
-        return $this->hasOne(Reservation::class, 'transaction_detail_id', 'transaction_detail_id');
+        return $this->hasMany(Reservation::class, 'transaction_detail_id', 'transaction_detail_id');
     }
 
     public function transaction() {
