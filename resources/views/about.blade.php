@@ -7,7 +7,7 @@
 
         <div class="container pt-8 mx-auto relative z-10">
             <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-5xl text-white mb-16">TENTANG KAMI</h2>
+                <h2 class="text-8xl text-white mb-16">TENTANG KAMI</h2>
                 <p class="text-white font-medium text-lg leading-relaxed mb-10">
                     Selamat datang di Random Shot Pool & Cafe, tempat seru buat kamu yang pengin main biliar,
                     nongkrong santai, atau sekadar ngisi waktu bareng teman.
