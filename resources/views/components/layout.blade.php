@@ -11,18 +11,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
-        html, body {
+        html,
+        body {
             /* PERBAIKAN KEDIP PUTIH.
             */
-            background-color: #181C14; 
+            background-color: #181C14;
         }
 
         body {
             font-family: 'Poppins';
         }
 
-        h1,h2,h3 {
+        h1,
+        h2,
+        h3 {
             font-family: 'Bebas Neue';
+        }
+
+        [x-cloak] {
+            display: none !important;
         }
     </style>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
