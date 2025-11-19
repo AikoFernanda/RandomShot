@@ -2,13 +2,13 @@
     <x-slot:title>{{ $title }}</x-slot:title>
 
 <section x-data="{ pilihMeja:false }" 
-         class="min-h-screen bg-[#0e0f0b] text-white px-8 pt-20 pb-10">
+         class="min-h-screen bg-[#0e0f0b] text-[#F4EFE7] px-8 pt-20 pb-10">
 
     {{-- BACK BUTTON + TITLE --}}
     <div class="flex items-center gap-4 mb-10">
         <a href="/drink-reservation" 
            class="w-10 h-10 bg-black/40 rounded-full flex items-center justify-center 
-                  text-white text-2xl backdrop-blur hover:bg-white/20">←
+                  text-[#F4EFE7] text-2xl backdrop-blur hover:bg-white/20">←
         </a>
 
         <h1 class="text-5xl tracking-wide">
@@ -156,7 +156,7 @@
             {{-- CHECKOUT --}}
             <a href="/payment"
             class="mt-6 w-full py-3 bg-red-600 hover:bg-red-700 rounded-full border
-             border-white text-white font-bold text-lg text-center block">
+             border-white text-[#F4EFE7] font-bold text-lg text-center block">
                 Check Out</a>
 
         </div>
