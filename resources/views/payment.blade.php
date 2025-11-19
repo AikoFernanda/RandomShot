@@ -2,7 +2,7 @@
     <x-slot:title>{{ $title }}</x-slot:title>
 
     <section class="min-h-screen bg-[#0e0f0b] text-white px-8 pt-20 pb-16">
-{{-- {{ dd(session('cart.reservation'), session('cart.items'), session('cart'), $items) }}  --}}
+{{-- {{ dd($reservationData, $itemsData, $selectedTable) }}  --}}
         {{-- BACK + TITLE --}}
         <div class="flex items-center gap-4 mb-12">
             <a href="{{ route('customer.cart') }}"
@@ -23,18 +23,16 @@
 
                 <h2 class="text-3xl mb-4">Detail Pesanan</h2>
 
-                <p class="text-gray-300 text-sm mb-2">Item</p>
-
                 @if ($reservationData)
                     <div class="text-sm">
                         <p>Meja</p>
                     </div>
                     <div class="flex justify-between text-xs mb-2">
                         <div>
-                            <p class="text-gray-400 italic">{{ $reservationData['nama'] }}
-                                ({{ count($reservationData['slots']) }} jam)</p>
+                            <p class="text-gray-400 italic">{{ $reservationData->meja_tujuan }}
+                                ({{ $reservationData->quantity }} jam)</p>
                         </div>
-                        <p>Rp{{ number_format($reservationData['total_price'], 0, '.', '.') }}</p>
+                        <p>Rp{{ number_format($reservationData->harga, 0, '.', '.') }}</p>
                     </div>
                 @endif
 
@@ -45,20 +43,20 @@
                     @foreach ($itemsData as $item)
                         <div class="flex justify-between text-xs mt-0">
                             <div>
-                                <p class="text-gray-400 italic">{{ $item['nama'] }} ({{ $item['qty'] }})</p>
+                                <p class="text-gray-400 italic">{{ $item->item->nama }} ({{ $item->quantity }})</p>
                             </div>
-                            <p>Rp {{ number_format($item['harga'] * $item['qty'], 0, ',', '.') }}</p>
+                            <p>Rp{{ number_format($item->harga, 0, ',', '.') }}</p>
                         </div>
                     @endforeach
                 @endif
 
                 {{-- ALAMAT MEJA --}}
-                @if (session('cart.selected_table'))
+                @if ($selectedTable)
                 <div class="mt-6">
                     <label class="text-sm">Alamat meja</label>
                     <div
                         class="flex justify-between items-center border border-white/30 rounded-full px-4 py-2 mt-2">
-                        <p class="text-sm text-gray-300">{{ $selectedTable['nama'] }}</p>
+                        <p class="text-sm text-gray-300">{{ $selectedTable }}</p>
                     </div>
                 </div>
                 @endif
@@ -74,8 +72,8 @@
 
                 {{-- SUBTOTAL --}}
                 <div class="flex justify-between items-center mt-6 text-lg font-bold">
-                    <p>Sub Total :</p>
-                    <p>{{ $totalPrice }}</p>
+                    <p>Total Transaksi :</p>
+                    <p>Rp{{ number_format($totalPrice, 0, '.', '.') }}</p>
                 </div>
 
             </div>

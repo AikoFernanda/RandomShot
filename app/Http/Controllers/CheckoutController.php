@@ -17,29 +17,38 @@ class CheckoutController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Transaction $transaction)
     {
-        $reservationData = session()->get('cart.reservation', []);
-        $itemsData = session()->get('cart.items', []);
-        $selectedTable = session()->get('cart.selected_table', []);
-        $totalPrice = 0;
+        /// 1. Ambil data detail transaksi. Load relasi transaction_details, yang akan mencakup item meja dan menu
+        $details = $transaction->transaction_details;
 
-        if ($reservationData) {
-            $totalPrice += $reservationData['total_price'];
+        // 2. Data Total Transaksi
+        $totalPrice = $transaction->total_transaksi;
+
+        // ambil data meja yg dipesan
+        $reservationData = $details->firstWhere('item_type', 'table');
+
+        // ambil data menu yang dipesan
+        $itemsData = $details->where('item_type', 'menu');
+
+        // Jika ada reservasi, ambil data slot dari tabel reservation (jika ada relasi)
+        $reservationSlots = [];
+        if ($reservationData && $reservationData->reservation) {
+            $reservationSlots = $reservationData->reservation;
         }
 
-        if ($itemsData) {
-            foreach ($itemsData as $item) {
-                $totalPrice += $item['harga'] * $item['qty'];
-            }
-        }
+        // Ambil selectedTable (alamat meja on-site) jika tidak ada reservasi
+        $selectedTable = $reservationData ? null : $itemsData->first()->meja_tujuan;
+
+
 
         return view('payment', [
             'title' => 'Payment',
             'totalPrice' => $totalPrice,
             'reservationData' => $reservationData,
             'itemsData' => $itemsData,
-            'selectedTable' => $selectedTable
+            'selectedTable' => $selectedTable ?? ($reservationDetail->meja_tujuan ?? null), // Alamat meja
+            'reservationSlots' => $reservationSlots
         ]);
     }
 
