@@ -2,19 +2,19 @@
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- Kartu Konten Utama --}}
     <div class="bg-[#181C14]">
-        <div class="mt-10 grid grid-cols-2 min-w-full text-xl font-bold text-[#FFF3E1] mb-5">
+        <div class="mt-10 grid grid-cols-2 min-w-full text-xl font-bold text-[#F4EFE7] mb-5">
             <button type="meja" class="hover:bg-[#697565] rounded-t p-4 cursor-pointer">Data Reservasi Meja</button>
 
             <button type="menu" class="hover:bg-[#697565] rounded-t p-4 cursor-pointer">Data Pesanan Menu</button>
             <hr class="col-span-2 border-t border-[#f3ebdf] w-full">
         </div>
-        <div class="bg-[#3C3D37] rounded-2xl p-6 text-white">
+        <div class="bg-[#3C3D37] rounded-2xl p-6 text-[#F4EFE7]">
             <div class="relative">
                 <input type="text" name="search" placeholder="Cari berdasarkan nama..."
                     value="{{ request('search') }}" {{-- Menampilkan query search saat ini --}}
-                    class="w-full bg-[#757572] rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                    class="w-full bg-[#757572] rounded-lg py-3 pl-12 pr-4 text-[#F4EFE7] placeholder-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500">
                 {{-- Ikon search di dalam input --}}
-                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-[#F4EFE7]">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
