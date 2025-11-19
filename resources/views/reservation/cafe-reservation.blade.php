@@ -55,7 +55,7 @@
                  class="max-w-full max-h-full object-contain p-3">
             
             <p class="mt-3 font-bold">Indomie Goreng</p>
-            <p class="text-gray-300 text-sm">Rp 7.000</p>
+            <p class="text-gray-300 text-sm">Rp 10.000</p>
 
             <button class="mt-3 w-full py-2 bg-white hover:bg-white/60 text-black hover:text-[#F4EFE7] rounded-lg font-semibold">
                 Tambahkan
