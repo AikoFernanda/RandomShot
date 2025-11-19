@@ -18,45 +18,40 @@
 {{-- Category Buttons --}}
 <section class="bg-black text-[#F4EFE7] px-12 py-10">
     <div class="flex gap-3">
-        <a href="{{ route('reservation', ['kategori' => 'Biliar']) }}"
-            class="px-6 py-2 border border-white rounded-xl font-medium
-            {{ request('kategori')== 'Biliar' ?  'bg-[#FFF4E4] text-[#181C14]' : 'text-[#FFF4E4] hover:bg-[#FFF2E0]/20' }}">
+        <a href="/table-reservation"
+            class="px-6 py-2 border border-white rounded-xl font-medium shadow">
             Meja Biliar
         </a>
-        <a href="{{ route('reservation', ['kategori' => 'Tenis']) }}"
-            class="px-6 py-2 border border-white rounded-xl font-medium
-            {{ request('kategori')== 'Tenis' ?  'bg-[#FFF4E4] text-[#181C14]' : 'text-[#FFF4E4] hover:bg-[#FFF2E0]/20' }}">
+        <a href="/tenis-reservation"
+            class="px-6 py-2 border border-white bg-white/30 text-[#F4EFE7] rounded-xl font-medium">
             Meja Tenis
         </a>
-        <a href="{{ route('reservation', ['kategori' => 'Playstation']) }}"
-            class="px-6 py-2 border border-white rounded-xl font-medium
-            {{ request('kategori')== 'Playstation' ?  'bg-[#FFF4E4] text-[#181C14]' : 'text-[#FFF4E4] hover:bg-[#FFF2E0]/20' }}">
-            PlayStation
+        <a href="/ps4-reservation"
+            class="px-6 py-2 border border-white rounded-xl font-medium">
+            PlayStation 4
         </a>
     </div>
 </section>
 
 {{-- Grid Meja --}}
 <section class="bg-black text-[#F4EFE7] px-12 pb-24">
-    <h2 class="text-5xl mb-6">MEJA BILIAR</h2>
+    <h2 class="text-5xl mb-6">MEJA TENIS</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-        @foreach ($tables as $table)
         {{-- Item 1 --}}
         <div class="bg-white/10 border border-white/20 rounded-xl p-4 shadow-lg">
-            <img src="{{ asset('img/meja1.png') }}" class="w-full h-65 object-cover rounded-lg">
+            <img src="{{ asset('img/tenis.jpeg') }}" class="w-full h-65 object-cover rounded-lg">
 
-            <h3 class="text-4xl mt-4">{{ $table->nama }}</h3>
-            <p class="text-gray-300">Mulai Rp{{ number_format($table->tarif_per_jam_siang, 0,',','.') }}/jam</p>
+            <h3 class="text-4xl mt-4">MEJA TENIS 1</h3>
+            <p class="text-gray-300">Rp 10.000/jam</p>
 
-            <a href="{{ route('reservation.detail', $table->table_id)}}" {{-- route param reservation/{id} --}}
+            <a href="/detail-meja1"
                class="mt-4 inline-block px-5 py-2 bg-white hover:bg-white/50 text-black hover:text-[#F4EFE7] rounded-lg font-semibold">
                Lihat Detail
             </a>
         </div>
-            
-        @endforeach
+
     </div>
 </section>
 

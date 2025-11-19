@@ -21,11 +21,11 @@ use Psy\ManualUpdater\Checker;
 // --- Rute khusus untuk 'Tamu' ---
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthenticationController::class, 'showRegisterForm'])->name('register');
-    
+
     Route::get('/login', [AuthenticationController::class, 'showLoginForm'])->name('login');
-    
+
     Route::post('/register', [AuthenticationController::class, 'customerRegister'])->name('register.validation');
-    
+
     Route::post('/login', [AuthenticationController::class, 'userLogin'])->name('login.validation');
 });
 
@@ -72,6 +72,10 @@ Route::middleware('block')->group(function () {
         return view('home', ['title' => 'Home Page']);
     })->name('home');
 
+    Route::get('/review', function () {
+        return view('review', ['title' => 'Review']);
+    })->name('review');
+
     Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation');
 
     Route::get('/reservation/{id}', [ReservationController::class, 'show'])->name('reservation.detail');
@@ -107,6 +111,36 @@ Route::prefix('admin')->name('admin.')
 
         Route::post('/customer/{id}/status', [AdminCustomerController::class, 'updateStatus'])
             ->name('updateStatus'); // Rute ini akan menangani update status
+    });
+
+// --- Rute untuk Owner ---
+Route::prefix('owner')->name('owner.')
+    ->middleware('role:Owner')
+    ->group(function () {
+
+        Route::get('/performa', function () {
+            return view('performa', [
+                'title' => 'Performa Bisnis',
+            ]);
+        })->name('performa');
+
+        // Route::get('/laporan', function () {
+        //     return view('laporan', [
+        //         'title' => 'Laporan Bisnis',
+        //     ]);
+        // })->name('laporan');
+
+        // Route::get('/feedback', function () {
+        //     return view('feedback', [
+        //         'title' => 'Feedback Pelanggan',
+        //     ]);
+        // })->name('feedback');
+
+        // Route::get('/data-admin', function () {
+        //     return view('data-admin', [
+        //         'title' => 'Data Admin',
+        //     ]);
+        // })->name('data-admin');
     });
 
 

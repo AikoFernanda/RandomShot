@@ -37,7 +37,7 @@
                    transform transition-transform duration-300 ease-in-out"
             :class="{ 'translate-x-0': isSidebarOpen, '-translate-x-full': !isSidebarOpen }">
             <div class="flex justify-between items-center">
-                <h1 class="text-4xl font-bold-1/2 tracking-wide">HALO,<br>ADMIN!</h1>
+                <h1 class="text-3xl leading-tight">HALO,<br>OWNER!</h1>
 
                 {{-- 
                   Ubah <a> menjadi <button> dan tambahkan @click
@@ -53,22 +53,28 @@
 
             <nav class="flex flex-col space-y-3">
 
-                <a href="{{ route('admin.reservation') }}"
+                <a href="{{ route ('owner.performa') }}"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
-                    {{ request()->routeIs('admin.reservation') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
-                    Data Reservasi dan Pesanan
+                    {{ request()->routeIs('owner.performa') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
+                    Performa Bisnis
                 </a>
 
-                <a href="{{ route('admin.table') }}"
+                <a href="#"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
-                    {{ request()->routeIs('admin.table') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
-                    Data Meja dan Menu
+                    {{ request()->routeIs('owner.laporan') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
+                    Laporan Bisnis
                 </a>
 
-                <a href="{{ route('admin.customer') }}"
+                <a href="#"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
-                    {{ request()->routeIs('admin.customer') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
-                    Informasi Pelanggan
+                    {{ request()->routeIs('owner.feedback') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
+                    Feedback
+                </a>
+
+                <a href="#"
+                    class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
+                    {{ request()->routeIs('owner.data-admin') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
+                    Data Admin
                 </a>
 
             </nav>
@@ -79,7 +85,7 @@
           - 'ml-0': Margin kiri 0 (saat isSidebarOpen = false)
           - 'transition-all duration-300' untuk animasi margin
         --}}
-        <main class="flex-1 p-8 transition-all duration-300 ease-in-out bg-[#181C14]"
+        <main class="flex-1 p-8 transition-all duration-300 ease-in-out bg-black"
             :class="{ 'ml-72': isSidebarOpen, 'ml-0': !isSidebarOpen }">
 
             <x-HeaderAdmin></x-HeaderAdmin>

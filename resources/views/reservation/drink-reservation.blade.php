@@ -37,7 +37,7 @@
 
     {{-- KATEGORI --}}
     <div class="px-8 mt-6 flex gap-2">
-        <a href="/cafe-reservation"
+        <a href="/menu-makanan"
             class="px-6 py-2 bg-white/30 rounded-md border border-white text-[#F4EFE7] text-base">
             Makanan</a>
 
@@ -51,11 +51,11 @@
 
         {{-- CARD 1 --}}
         <div class="bg-white/5 border border-white/20 rounded-xl p-4">
-            <img src="{{ asset('img/menu/indomie.png') }}" 
+            <img src="{{ asset('img/menu/es-teh.png') }}" 
                  class="max-w-full max-h-full object-contain p-3">
             
-            <p class="mt-3 font-bold">Indomie Goreng</p>
-            <p class="text-gray-300 text-sm">Rp 10.000</p>
+            <p class="mt-3 font-bold">Es Teh</p>
+            <p class="text-gray-300 text-sm">Rp 7.000</p>
 
             <button class="mt-3 w-full py-2 bg-white hover:bg-white/60 text-black hover:text-[#F4EFE7] rounded-lg font-semibold">
                 Tambahkan
@@ -64,10 +64,10 @@
 
         {{-- CARD 2 --}}
         <div class="bg-white/5 border border-white/20 rounded-xl p-4">
-            <img src="{{ asset('img/menu/indomie.png') }}" 
+            <img src="{{ asset('img/menu/es-teh.png') }}" 
                  class="max-w-full max-h-full object-contain p-3">
 
-            <p class="mt-3 font-bold">Indomie Rebus</p>
+            <p class="mt-3 font-bold">Es Teh</p>
             <p class="text-gray-300 text-sm">Rp 7.000</p>
 
             <button class="mt-3 w-full py-2 bg-white hover:bg-white/60 text-black hover:text-[#F4EFE7] rounded-lg font-semibold">
@@ -77,10 +77,10 @@
 
         {{-- CARD 3 --}}
         <div class="bg-white/5 border border-white/20 rounded-xl p-4">
-            <img src="{{ asset('img/menu/indomie.png') }}" 
+            <img src="{{ asset('img/menu/es-teh.png') }}" 
                  class="max-w-full max-h-full object-contain p-3">
 
-            <p class="mt-3 font-bold">Indomie Goreng + Telur</p>
+            <p class="mt-3 font-bold">Es Teh</p>
             <p class="text-gray-300 text-sm">Rp 10.000</p>
 
             <button class="mt-3 w-full py-2 bg-white hover:bg-white/60 text-black hover:text-[#F4EFE7] rounded-lg font-semibold">
@@ -90,10 +90,10 @@
 
         {{-- CARD 4 --}}
         <div class="bg-white/5 border border-white/20 rounded-xl p-4">
-            <img src="{{ asset('img/menu/indomie.png') }}" 
+            <img src="{{ asset('img/menu/es-teh.png') }}" 
                  class="max-w-full max-h-full object-contain p-3">
 
-            <p class="mt-3 font-bold">Indomie Rebus + Telur</p>
+            <p class="mt-3 font-bold">Es Teh</p>
             <p class="text-gray-300 text-sm">Rp 10.000</p>
 
             <button class="mt-3 w-full py-2 bg-white hover:bg-white/60 text-black hover:text-[#F4EFE7] rounded-lg font-semibold">

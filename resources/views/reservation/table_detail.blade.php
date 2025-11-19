@@ -1,7 +1,7 @@
 <x-Layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    <section class="min-h-screen bg-black text-white" 
+    <section class="min-h-screen bg-black text-[#F4EFE7]" 
     x-data="reservationHandler(
         {{ $table->table_id }},
         {{ $hargaSiang }},
@@ -66,7 +66,7 @@
                     <button @click="selectDate('{{ $dateString }}')"
                         :class="{
                             'bg-white text-black': selectedDate === '{{ $dateString }}',
-                            'bg-[#2d2d2d] text-white hover:bg-white/20': selectedDate !== '{{ $dateString }}'
+                            'bg-[#2d2d2d] text-[#F4EFE7] hover:bg-white/20': selectedDate !== '{{ $dateString }}'
                         }"
                         class="min-w-[220px] rounded-xl p-6 transition duration-300 shadow-lg">
                         <p class="text-gray-300">{{ $day->format('d F Y') }}</p>
@@ -120,8 +120,8 @@
                             <button @click="toggleSlot(slot)" :disabled="slot.isBooked" 
                                 :class="{
                                     'bg-gray-800/50 opacity-40 cursor-not-allowed border-gray-700': slot.isBooked,
-                                    'bg-gradient-to-br from-red-600 to-red-700 text-white shadow-xl shadow-red-900/50 scale-105 border-red-500': slot.isSelected,
-                                    'bg-white/5 text-white hover:bg-white/10 hover:scale-105 border-white/20': !slot.isBooked && !slot.isSelected
+                                    'bg-gradient-to-br from-red-600 to-red-700 text-[#F4EFE7] shadow-xl shadow-red-900/50 scale-105 border-red-500': slot.isSelected,
+                                    'bg-white/5 text-[#F4EFE7] hover:bg-white/10 hover:scale-105 border-white/20': !slot.isBooked && !slot.isSelected
                                 }"
                                 class="min-w-[170px] rounded-2xl border backdrop-blur-sm flex flex-col items-center justify-center p-5 transition-all duration-300">
 

@@ -23,7 +23,7 @@
                             <img src="{{ asset('img/profilsaya.png') }}" alt="User" class="w-10 h-10 rounded-full">
                         </button>
                         <div x-show="open" @click.away="open = false" x-transition
-                            class="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg py-2 z-50">
+                            class="absolute right-0 mt-2 w-40 bg-[#F4EFE7]  rounded-lg shadow-lg py-2 z-50">
                             <a href="{{ route('customer.profile') }}"
                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">Profile</a>
                             <form method="POST" action="{{ route('user.logout') }}">
@@ -44,7 +44,7 @@
                 <div class="flex items-center space-x-2">
                     <a href={{ route('customer.transaction.history') }}>
                         <img src="{{ asset('img/aktivitas.png') }}" alt="user-history"
-                            class="w-9 h-9 rounded-full border-white">
+                            class="w-9 h-9 rounded-full border-[#F4EFE7] ">
                     </a>
                     <div class="w-10 h-10"></div>
                 </div>
@@ -55,13 +55,13 @@
 
                 <!-- Tombol Daftar -->
                 <a href="{{ route('register') }}"
-                    class="bg-gray-600 hover:bg-gray-400 text-white font-medium text-sm py-1 px-3 rounded-md transition duration-150 ease-in-out">
+                    class="bg-gray-600 hover:bg-gray-400 text-[#F4EFE7]  font-medium text-sm py-1 px-3 rounded-md transition duration-150 ease-in-out">
                     Daftar
                 </a>
 
                 <!-- Tombol Login -->
                 <a href="{{ route('login') }}"
-                    class="bg-white hover:bg-gray-400 text-black font-medium text-sm py-1 px-3 rounded-md transition duration-150 ease-in-out">
+                    class="bg-[#F4EFE7]  hover:bg-gray-400 text-black font-medium text-sm py-1 px-3 rounded-md transition duration-150 ease-in-out">
                     Masuk
                 </a>
 
