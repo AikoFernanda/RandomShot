@@ -4,7 +4,7 @@
         class="font-reguler text-sm hover:text-yellow-400 transition duration-200 {{ Request::is('home') ? 'text-yellow-400 font-semibold' : 'text-white hover:text-yellow-400' }}">
         Beranda
     </a>
-    <a href="#"
+    <a href="{{ route('reservation') }}"
         class="font-reguler text-sm hover:text-yellow-400 transition duration-200 {{ Request::is('reservation') ? 'text-yellow-400 font-semibold' : 'text-white hover:text-yellow-400' }}">
         Reservasi
     </a>

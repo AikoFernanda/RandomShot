@@ -1,35 +1,53 @@
 <x-Layout>
     <x-slot:title>{{ $title }}</x-slot:title>
+    {{-- {{ 
+    dd(session('cart.reservation'), session('cart.items'), session('cart'))
+     }} // debug --}}
+    @php
+        $isReservationFlow = session()->has('cart.reservation');
+    @endphp
 
-    <div class="relative w-full min-h-screen bg-[#181C14] pt-20 pb-24"> {{-- pb-24 agar footer tidak menutupi konten --}}
+    {{-- SECTION HEADER (Gambar + Text) --}}
+    <div class="relative w-full h-[300px] pt-24"> 
+        <img src="{{ asset('img/headercafe.png') }}"
+     class="absolute inset-0 w-full h-full object-cover opacity-50">
 
-        <div class="text-[#FFF4E4] ml-10 mt-8">
-            <h1 class="text-6xl mb-3 font-bold">Menu Cafe</h1>
-            <p class="mb-10 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed pr-12 max-w-4xl">
-                Santai sejenak dan nikmati hidangan lezat dari Menu Cafe Random Shot!
-                Cocok buat kamu yang ingin nongkrong, ngopi, atau mengisi energi!
-            </p>
+        <div class="relative z-10 text-[#F4EFE7] ml-10 pt-10">
+            @if ($isReservationFlow)
+                <h1 class="text-6xl mb-3 font-bold">Langkah 2: Tambah Menu</h1>
+                <p class="mb-10 text-lg sm:text-base md:text-lg lg:text-xl leading-relaxed pr-12 max-w-4xl">
+                    Meja Anda sudah disimpan. Pilih menu menu yang ingin ditambahkan untuk dinikmati 
+                    bersama saat bermain meja Anda.
+                </p>
+            @else
+                <h1 class="text-7xl mb-1">Menu Cafe</h1>
+                <p class="mb-10 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed pr-12 max-w-6xl">
+                    Santai sejenak dan nikmati hidangan lezat dari Menu Cafe Random Shot!
+                Cocok buat kamu yang cuma ingin nongkrong, ngopi, atau mengisi energi!
+                </p>
+            @endif
         </div>
+    </div>
 
-        <div class="grid grid-cols-2 gap-3 w-full max-w-md ml-10 mb-10 pr-10">
+        <div class="grid grid-cols-2 gap-3 w-full max-w-md ml-17 mb-10 pr-10 mt-10">
             {{-- 
                 Logika: Jika URL sedang ?kategori=Makanan, beri background terang. 
                 Jika tidak, beri border biasa.
             --}}
             <a href="{{ route('cafe', ['kategori' => 'Makanan']) }}"
-                class="border p-2 sm:p-3 md:p-4 text-center font-semibold text-sm sm:text-base md:text-lg rounded-2xl transition duration-300
-                {{ request('kategori') == 'Makanan' ? 'bg-[#FFF4E4] text-[#181C14]' : 'text-[#FFF4E4] hover:bg-[#FFF2E0]/20' }}">
+                class="border p-2 sm:p-3 md:p-4 text-center font-semibold text-sm sm:text-base md:text-lg rounded-xl transition duration-300
+                {{ request('kategori') == 'Makanan' ? 'bg-[#F4EFE7] text-[#181C14]' : 'text-[#F4EFE7] hover:bg-[#FFF2E0]/20' }}">
                 Makanan
             </a>
 
             <a href="{{ route('cafe', ['kategori' => 'Minuman']) }}"
-                class="border p-2 sm:p-3 md:p-4 text-center font-semibold text-sm sm:text-base md:text-lg rounded-2xl transition duration-300
-                {{ request('kategori') == 'Minuman' ? 'bg-[#FFF4E4] text-[#181C14]' : 'text-[#FFF4E4] hover:bg-[#FFF2E0]/20' }}">
+                class="border p-2 sm:p-3 md:p-4 text-center font-semibold text-sm sm:text-base md:text-lg rounded-xl transition duration-300
+                {{ request('kategori') == 'Minuman' ? 'bg-[#F4EFE7] text-[#181C14]' : 'text-[#F4EFE7] hover:bg-[#FFF2E0]/20' }}">
                 Minuman
             </a>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-[90%] mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-[90%] mx-auto pb-28">
 
             @forelse($menus as $menu)
                 {{-- 
@@ -38,7 +56,7 @@
                 --}}
 
                 @php
-                    $cart = session('cart', []);
+                    $cart = session('cart.items', []);
                     $currentQty = isset($cart[$menu->menu_id]) ? $cart[$menu->menu_id]['qty'] : 0;
                 @endphp
 
@@ -71,12 +89,12 @@
                             });
                     }
                 }"
-                    class="rounded-xl border-2 border-[#FFF4E4] p-4 h-full flex flex-col justify-between duration-300
+                    class="rounded-xl border-2 border-[#F4EFE7] p-4 h-full flex flex-col justify-between duration-300
                      {{ $menu->stok == 0 ? 'opacity-60 grayscale cursor-not-allowed' : 'hover:scale-105 transition' }}">
 
                     <div>
                         <div
-                            class="relative border-2 bg-[#3C3D37] border-[#FFF4E4] rounded-xl w-full aspect-square flex items-center justify-center overflow-hidden">
+                            class="relative border-2 bg-[#3C3D37] border-[#F4EFE7] rounded-xl w-full aspect-square flex items-center justify-center overflow-hidden">
 
                             {{-- TAMPILKAN STEMPEL 'HABIS' JIKA STOK 0 --}}
                             @if ($menu->stok == 0)
@@ -92,9 +110,9 @@
                                 class="w-3/4 h-3/4 object-contain">
                         </div>
 
-                        <h3 class="text-[#FFF4E4] font-bold text-xl mt-4 leading-tight">{{ $menu->nama }}</h3>
+                        <h3 class="text-[#F4EFE7] text-2xl mt-4 leading-tight">{{ $menu->nama }}</h3>
 
-                        <p class="text-[#FFF4E4] font-medium text-lg mt-2 opacity-90">
+                        <p class="text-[#F4EFE7] font-medium text-lg mt-1 opacity-90">
                             Rp{{ number_format($menu->harga, 0, ',', '.') }}
                         </p>
 
@@ -109,12 +127,12 @@
                         {{-- LOGIKA TOMBOL: Cek Stok di Level PHP (Blade) --}}
                         @if ($menu->stok > 0)
                             <button x-show="qty === 0" @click="updateCart(1)"
-                                class="border border-[#FFF4E4] p-2 rounded-xl bg-[#FFF4E4] text-[#181C14] font-bold hover:bg-[#FFF2E0]/80 w-full py-3 transition">
+                                class="border border-[#F4EFE7] p-2 rounded-xl bg-[#F4EFE7] text-[#181C14] font-bold hover:bg-[#FFF2E0]/80 w-full py-3 transition">
                                 Tambahkan
                             </button>
 
                             <div x-show="qty > 0"
-                                class="flex items-center justify-between gap-4 bg-[#FFF4E4]/20 border border-[#FFF4E4] px-4 py-2 rounded-full w-full transition"
+                                class="flex items-center justify-between gap-4 bg-[#F4EFE7]/20 border border-[#F4EFE7] px-4 py-2 rounded-full w-full transition"
                                 style="display: none;">
 
                                 <button @click="updateCart(qty-1)"
@@ -140,7 +158,7 @@
                 </div>
             @empty
                 {{-- Tampilan jika menu kosong --}}
-                <div class="col-span-full text-center text-[#FFF4E4] py-10">
+                <div class="col-span-full text-center text-[#F4EFE7] py-10">
                     <p class="text-2xl font-bold">Yah, menu kategori ini sedang kosong :(</p>
                     <p>Coba kategori lain yuk!</p>
                 </div>
@@ -149,39 +167,57 @@
         </div>
 
         @php
-            $totalQty = 0;
-            $totalPrice = 0;
-
-            if (session('cart')) {
-                foreach (session('cart') as $item) {
-                    $totalQty += $item['qty'];
-                    $totalPrice += $item['harga'] * $item['qty'];
+            // 1. Hitung total menu
+            $itemsQty = 0;
+            $itemsPrice = 0;
+            if (session('cart.items')) {
+                foreach (session('cart.items') as $item) {
+                    $itemsQty += $item['qty'];
+                    $itemsPrice += $item['harga'] * $item['qty'];
                 }
             }
+
+            // ambil total reservasi dari session
+            $reservation = session('cart.reservation');
+            $reservationPrice = $reservation['total_price'] ?? 0;
+
+            if ($reservation) {
+                $itemsQty += 1; // +1 untuk item meja
+            }
+
+            // 3. Hitung Grand Total
+            $grandTotal = $itemsPrice + $reservationPrice;
         @endphp
 
         <div x-data="{
-            totalQty: {{ $totalQty }},
-            totalPrice: '{{ number_format($totalPrice, 0, ',', '.') }}'
+            totalQty: {{ $itemsQty }},
+            totalPrice: '{{ number_format($grandTotal, 0, ',', '.') }}'
         }"
             @cart-updated.window="totalQty = $event.detail.totalQty; totalPrice = $event.detail.totalPrice"
-            x-show="totalQty > 0" x-transition.duration.500ms class="fixed bottom-0 left-0 right-0 z-50"
-            style="{{ $totalQty == 0 ? 'display: none;' : '' }}">
+            x-show="totalQty > 0 || {{ session()->has('cart.reservation') ? 'true' : 'false' }}"
+            x-transition.duration.500ms 
+            class="fixed bottom-0 left-0 right-0 z-50"
+            style="display: none;"> {{-- Sembunyikan saat load awal --}}
 
             <footer
                 class="bg-[#181C14] border-t-4 border-[#3C3D37] flex justify-between items-center px-6 py-4 shadow-2xl">
-                <p class="text-[#FFF4E4] font-semibold text-lg">
-                    Total Pesanan
+                
+                <p class="text-[#F4EFE7] font-semibold text-lg">
+                    @if(session()->has('cart.reservation'))
+                    Total Reservasi
+                    @else
+                    Total Pesanan Menu
+                    @endif
                 </p>
 
-                <a href="#" {{-- Rute harus diaktifkan nanti {{ route('customer.cart.view') }} --}}
-                    class="flex items-center gap-3 bg-[#C1121F] text-[#FFF4E4] px-6 py-3 rounded-xl cursor-pointer hover:bg-[#A00F1B] transition shadow-lg hover:scale-105">
+                <a href="{{ route('customer.cart') }}" {{-- Rute harus diaktifkan nanti {{ route('customer.cart.view') }} --}}
+                    class="flex items-center gap-3 bg-[#C1121F] text-[#F4EFE7] px-6 py-3 rounded-xl cursor-pointer hover:bg-[#A00F1B] transition shadow-lg hover:scale-105">
                     <div class="relative mr-2">
                         <span class="text-2xl">🛒</span>
                         <span
-                            class="absolute -top-2 -right-2 bg-black text-[#FFF4E4] text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border border-[#C1121F]"
+                            class="absolute -top-2 -right-2 bg-black text-[#F4EFE7] text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border border-[#C1121F]"
                             x-text="totalQty">
-                            {{-- Angka qty dinamis dari x-text --}}
+                            {{-- Angka qty dinamis dari x-text ()Badge ini hanya menampilkan jumlah MENU)--}}
                         </span>
                     </div>
 
@@ -190,6 +226,5 @@
                 </a>
             </footer>
         </div>
-
     </div>
 </x-Layout>

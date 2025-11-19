@@ -1,7 +1,7 @@
 <x-Layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-<section class="min-h-screen bg-black text-white">
+<section class="min-h-screen bg-black text-[#F4EFE7]">
 
     @php
         $meja = request('meja'); 
@@ -15,7 +15,7 @@
         {{-- Back Button --}}
         <a href="/detail-meja{{ $meja }}" 
            class="absolute top-16 left-3 w-10 h-10 bg-black/40 rounded-full flex items-center 
-                  justify-center text-white text-2xl backdrop-blur hover:bg-black">←
+                  justify-center text-[#F4EFE7] text-2xl backdrop-blur hover:bg-black">←
         </a>
 
         {{-- Nama Meja (CENTER) --}}
@@ -38,11 +38,11 @@
     {{-- KATEGORI --}}
     <div class="px-8 mt-6 flex gap-2">
         <a href="/menu-makanan"
-            class="px-6 py-2 bg-white/30 rounded-md border border-white text-white text-base">
+            class="px-6 py-2 bg-white/30 rounded-md border border-white text-[#F4EFE7] text-base">
             Makanan</a>
 
         <a href="/drink-reservation"
-            class="px-6 py-2 bg-transparent rounded-md border border-white text-white text-base">
+            class="px-6 py-2 bg-transparent rounded-md border border-white text-[#F4EFE7] text-base">
             Minuman</a>
     </div>
 
@@ -57,7 +57,7 @@
             <p class="mt-3 font-bold">Es Teh</p>
             <p class="text-gray-300 text-sm">Rp 7.000</p>
 
-            <button class="mt-3 w-full py-2 bg-white hover:bg-white/60 text-black hover:text-white rounded-lg font-semibold">
+            <button class="mt-3 w-full py-2 bg-white hover:bg-white/60 text-black hover:text-[#F4EFE7] rounded-lg font-semibold">
                 Tambahkan
             </button>
         </div>
@@ -70,7 +70,7 @@
             <p class="mt-3 font-bold">Es Teh</p>
             <p class="text-gray-300 text-sm">Rp 7.000</p>
 
-            <button class="mt-3 w-full py-2 bg-white hover:bg-white/60 text-black hover:text-white rounded-lg font-semibold">
+            <button class="mt-3 w-full py-2 bg-white hover:bg-white/60 text-black hover:text-[#F4EFE7] rounded-lg font-semibold">
                 Tambahkan
             </button>
         </div>
@@ -83,7 +83,7 @@
             <p class="mt-3 font-bold">Es Teh</p>
             <p class="text-gray-300 text-sm">Rp 10.000</p>
 
-            <button class="mt-3 w-full py-2 bg-white hover:bg-white/60 text-black hover:text-white rounded-lg font-semibold">
+            <button class="mt-3 w-full py-2 bg-white hover:bg-white/60 text-black hover:text-[#F4EFE7] rounded-lg font-semibold">
                 Tambahkan
             </button>
         </div>
@@ -96,7 +96,7 @@
             <p class="mt-3 font-bold">Es Teh</p>
             <p class="text-gray-300 text-sm">Rp 10.000</p>
 
-            <button class="mt-3 w-full py-2 bg-white hover:bg-white/60 text-black hover:text-white rounded-lg font-semibold">
+            <button class="mt-3 w-full py-2 bg-white hover:bg-white/60 text-black hover:text-[#F4EFE7] rounded-lg font-semibold">
                 Tambahkan
             </button>
         </div>
@@ -110,10 +110,10 @@
     <div class="fixed bottom-0 left-0 w-full py-4 bg-black/80 backdrop-blur-lg px-8 
                 flex items-center justify-between z-50 border-t-2 border-white/20">
 
-        <p class="text-white text-lg">Menu 1 Pesanan</p>
+        <p class="text-[#F4EFE7] text-lg">Menu 1 Pesanan</p>
 
         <a href="/cart"
-           class="flex items-center gap-3 bg-red-700 hover:bg-red-800 text-white 
+           class="flex items-center gap-3 bg-red-700 hover:bg-red-800 text-[#F4EFE7] 
                   px-10 py-3 rounded-xl text-lg font-semibold">
 
             <div class="relative">

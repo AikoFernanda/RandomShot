@@ -8,7 +8,9 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileActivityController;
-
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\TransactionHistoryController;
+use App\Http\Controllers\PaymentController;
 
 // Import controller admin (di dalam folder Admin)
 use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
@@ -20,11 +22,11 @@ use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
 // --- Rute khusus untuk 'Tamu' ---
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthenticationController::class, 'showRegisterForm'])->name('register');
-
+    
     Route::get('/login', [AuthenticationController::class, 'showLoginForm'])->name('login');
-
+    
     Route::post('/register', [AuthenticationController::class, 'customerRegister'])->name('register.validation');
-
+    
     Route::post('/login', [AuthenticationController::class, 'userLogin'])->name('login.validation');
 });
 
@@ -33,30 +35,29 @@ Route::middleware('guest')->group(function () {
 
 // --- Rute untuk Customer ---
 Route::prefix('customer')->name('customer.')
-    ->middleware('role:Customer')
-    ->group(function () {
-        Route::get('/profil-pengguna', [ProfileController::class, 'index'])->name('profile');
+->middleware('role:Customer')
+->group(function () {
+    Route::get('/profil-pengguna', [ProfileController::class, 'index'])->name('profile');
+    
+    Route::put('/profile-pengguna', [ProfileController::class, 'update'])->name('profile.update'); // form mengirimkan request PUT dan inti dari desain Resourceful (atau RESTful) di Laravel: Satu URL (/profil-pengguna) bisa menangani banyak aksi, asalkan Method-nya (kata kerjanya) berbeda.
+    
+    Route::post('/reservation/save-table', [ReservationController::class, 'store'])->name('reservation.cart');
+    
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    
+    Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 
-        Route::put('/profile-pengguna', [ProfileController::class, 'update'])->name('profile.update'); // form mengirimkan request PUT dan inti dari desain Resourceful (atau RESTful) di Laravel: Satu URL (/profil-pengguna) bisa menangani banyak aksi, asalkan Method-nya (kata kerjanya) berbeda.
+    Route::delete('/cart/remove', [CartController::class, 'destroy'])->name('cart.remove');
+    
+    Route::get('/table-activity', [ProfileActivityController::class, 'index'])->name('profile.activity');
+    
+    Route::get('/cafe-activity', [ProfileActivityController::class, 'index2'])->name('profile.activity.cafe');
+    
+    Route::get('/transaction-history', [TransactionHistoryController::class, 'index'])->name('transaction.history');
 
-        Route::post('/cart-update', [CartController::class, 'update'])->name('cart.update');
-
-        Route::get('/aktivitas-meja', [ProfileActivityController::class, 'index'])->name('profile.activity');
-
-        Route::get('/aktivitas-cafe', [ProfileActivityController::class, 'index2'])->name('profile.activity.cafe');
-
-        Route::get('/riwayat-meja', function () {
-            return view('history.table-history', ['title' => 'User History']);
-        });
-
-        Route::get('/riwayat-cafe', function () {
-            return view('history.cafe-history', ['title' => 'User History']);
-        });
-
-        Route::get('/riwayat', function () {
-            return view('riwayatPemesanan', ['title' => 'Riwayat Pemasanan']);
-        });
+    Route::get('/payment', [PaymentController::class, 'index'])->name('payment');
     });
+
 
 
 
@@ -70,6 +71,11 @@ Route::middleware('block')->group(function () {
     Route::get('/home', function () {
         return view('home', ['title' => 'Home Page']);
     })->name('home');
+
+    Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation');
+
+    Route::get('/reservation/{id}', [ReservationController::class, 'show'])->name('reservation.detail');
+
 
     Route::get('/cafe', [MenuController::class, 'index'])
         ->name('cafe');
