@@ -71,10 +71,12 @@ class AuthenticationController extends Controller
                     "nama" => $user->nama,
                     "peran" => $user->peran
                 ]); // Cara 1: Global Helper (Paling umum), // Cara 2: Via Request (Ini biasanya untuk data yang hanya hidup 1 request/redirect seperti ->with() yang di pakai, // Cara 3: Menggunakan Facade
-                if (session('peran') == 'Customer') {
+                if ($user->peran == 'Customer') {
                     return redirect()->route('home')->with('success', 'Berhasil login, Selamat datang!');
-                } elseif (session('peran') == 'Employee') {
+                } elseif ($user->peran == 'Employee') {
                     return redirect()->route('admin.reservation')->with('success', 'Berhasil login, Selamat datang!');
+                } elseif ($user->peran == 'Owner') {
+                    return redirect()->route('owner.performa')->with('success', 'Berhasil login, Selamat datang!');
                 }
             } else {
                 return redirect()->route('login')->with('error', 'Akun anda telah di nonaktifkan');

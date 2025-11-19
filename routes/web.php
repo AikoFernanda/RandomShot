@@ -119,25 +119,25 @@ Route::prefix('owner')->name('owner.')
     ->group(function () {
 
         Route::get('/performa', function () {
-            return view('performa', [
+            return view('owner.performa', [
                 'title' => 'Performa Bisnis',
             ]);
         })->name('performa');
 
         // Route::get('/laporan', function () {
-        //     return view('laporan', [
+        //     return view('owner.laporan', [
         //         'title' => 'Laporan Bisnis',
         //     ]);
         // })->name('laporan');
 
         // Route::get('/feedback', function () {
-        //     return view('feedback', [
+        //     return view('owner.feedback', [
         //         'title' => 'Feedback Pelanggan',
         //     ]);
         // })->name('feedback');
 
         // Route::get('/data-admin', function () {
-        //     return view('data-admin', [
+        //     return view('owner.data-admin', [
         //         'title' => 'Data Admin',
         //     ]);
         // })->name('data-admin');
