@@ -59,19 +59,19 @@
                     Performa Bisnis
                 </a>
 
-                <a href="{{ route ('owner.laporan') }}"
+                <a href="#"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
                     {{ request()->routeIs('owner.laporan') ? 'bg-black text-white font-semibold' : 'text-gray-400 hover:text-white' }}">
                     Laporan Bisnis
                 </a>
 
-                <a href="{{ route('owner.feedback') }}"
+                <a href="#"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
                     {{ request()->routeIs('owner.feedback') ? 'bg-black text-white font-semibold' : 'text-gray-400 hover:text-white' }}">
                     Feedback
                 </a>
 
-                <a href="{{ route('owner.data-admin') }}"
+                <a href="#"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
                     {{ request()->routeIs('owner.data-admin') ? 'bg-black text-white font-semibold' : 'text-gray-400 hover:text-white' }}">
                     Data Admin
