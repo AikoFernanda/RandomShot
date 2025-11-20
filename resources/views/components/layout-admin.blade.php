@@ -33,17 +33,17 @@
 
         {{-- Kode sidebar --}}
         <aside
-            class="w-72 bg-gray-900 text-white p-6 flex flex-col space-y-8 fixed inset-y-0 left-0 z-20
+            class="w-72 bg-[#3C3D37] text-[#F4EFE7]  p-6 flex flex-col space-y-8 fixed inset-y-0 left-0 z-20
                    transform transition-transform duration-300 ease-in-out"
             :class="{ 'translate-x-0': isSidebarOpen, '-translate-x-full': !isSidebarOpen }">
             <div class="flex justify-between items-center">
-                <h1 class="text-3xl font-bold leading-tight">HALO,<br>ADMIN!</h1>
+                <h1 class="text-4xl font-bold-1/2 tracking-wide">HALO,<br>ADMIN!</h1>
 
                 {{-- 
                   Ubah <a> menjadi <button> dan tambahkan @click
                   Ini sekarang akan menutup sidebar
                 --}}
-                <button @click="isSidebarOpen = false" title="Tutup Sidebar" class="text-gray-500 hover:text-white">
+                <button @click="isSidebarOpen = false" title="Tutup Sidebar" class="text-[#F4EFE7] ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -55,19 +55,19 @@
 
                 <a href="{{ route('admin.reservation') }}"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
-                    {{ request()->routeIs('admin.reservation') ? 'bg-black text-white font-semibold' : 'text-gray-400 hover:text-white' }}">
+                    {{ request()->routeIs('admin.reservation') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
                     Data Reservasi dan Pesanan
                 </a>
 
                 <a href="{{ route('admin.table') }}"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
-                    {{ request()->routeIs('admin.table') ? 'bg-black text-white font-semibold' : 'text-gray-400 hover:text-white' }}">
+                    {{ request()->routeIs('admin.table') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
                     Data Meja dan Menu
                 </a>
 
                 <a href="{{ route('admin.customer') }}"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
-                    {{ request()->routeIs('admin.customer') ? 'bg-black text-white font-semibold' : 'text-gray-400 hover:text-white' }}">
+                    {{ request()->routeIs('admin.customer') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
                     Informasi Pelanggan
                 </a>
 
@@ -79,7 +79,7 @@
           - 'ml-0': Margin kiri 0 (saat isSidebarOpen = false)
           - 'transition-all duration-300' untuk animasi margin
         --}}
-        <main class="flex-1 p-8 transition-all duration-300 ease-in-out bg-gray-500"
+        <main class="flex-1 p-8 transition-all duration-300 ease-in-out bg-[#181C14]"
             :class="{ 'ml-72': isSidebarOpen, 'ml-0': !isSidebarOpen }">
 
             <x-HeaderAdmin></x-HeaderAdmin>

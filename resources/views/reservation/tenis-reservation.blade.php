@@ -7,8 +7,8 @@
          class="w-full h-full object-cover opacity-60">
 
     <div class="absolute inset-2 flex flex-col justify-center px-12">
-        <h1 class="text-7xl text-white">RANDOM SHOT<br>POOL AND CAFE</h1>
-        <p class="text-white mt-2 max-w-2xl text-xl">
+        <h1 class="text-7xl text-[#F4EFE7]">RANDOM SHOT<br>POOL AND CAFE</h1>
+        <p class="text-[#F4EFE7] mt-2 max-w-2xl text-xl">
             Tempat ini hadir untuk memberikan pengalaman hiburan yang menyenangkan 
             dan nyaman bagi para pelanggan
         </p>
@@ -16,14 +16,14 @@
 </section>
 
 {{-- Category Buttons --}}
-<section class="bg-black text-white px-12 py-10">
+<section class="bg-black text-[#F4EFE7] px-12 py-10">
     <div class="flex gap-3">
-        <a href="/biliar-reservation"
+        <a href="/table-reservation"
             class="px-6 py-2 border border-white rounded-xl font-medium shadow">
             Meja Biliar
         </a>
         <a href="/tenis-reservation"
-            class="px-6 py-2 border border-white bg-white/30 text-white rounded-xl font-medium">
+            class="px-6 py-2 border border-white bg-white/30 text-[#F4EFE7] rounded-xl font-medium">
             Meja Tenis
         </a>
         <a href="/ps4-reservation"
@@ -34,7 +34,7 @@
 </section>
 
 {{-- Grid Meja --}}
-<section class="bg-black text-white px-12 pb-24">
+<section class="bg-black text-[#F4EFE7] px-12 pb-24">
     <h2 class="text-5xl mb-6">MEJA TENIS</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -47,7 +47,7 @@
             <p class="text-gray-300">Rp 10.000/jam</p>
 
             <a href="/detail-meja1"
-               class="mt-4 inline-block px-5 py-2 bg-white hover:bg-white/50 text-black hover:text-white rounded-lg font-semibold">
+               class="mt-4 inline-block px-5 py-2 bg-white hover:bg-white/50 text-black hover:text-[#F4EFE7] rounded-lg font-semibold">
                Lihat Detail
             </a>
         </div>
@@ -56,13 +56,13 @@
 </section>
 
 {{-- Ulasan --}}
-<section class="bg-black text-white px-12 pb-20">
+<section class="bg-black text-[#F4EFE7] px-12 pb-20">
 
     <div class="flex items-center justify-between mb-6">
         <h2 class="text-5xl tracking-wide">ULASAN</h2>
 
     <a href="/ulasan"
-        class="px-5 py-2 bg-white/30 text-white rounded-lg font-semibold hover:bg-gray-200 hover:text-black transition">
+        class="px-5 py-2 bg-white/30 text-[#F4EFE7] rounded-lg font-semibold hover:bg-gray-200 hover:text-black transition">
         Lihat Ulasan Lainnya
     </a>
 
@@ -140,7 +140,7 @@
     </div>
 </section>
 
-<footer class="bg-black text-white py-10">
+<footer class="bg-black text-[#F4EFE7] py-10">
   <div class="px-12">
     <img id="img-logo-random-shot" src="{{ asset('img/logo-rs.png') }}" alt="logo_random_shot"
          class="w-64 h-auto mb-4">

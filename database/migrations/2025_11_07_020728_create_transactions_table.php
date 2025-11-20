@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id('transaction_id');
             $table->foreignId('customer_id')->constrained('users', 'user_id'); // secara eksplisit memberi tahu constrained() nama primary key custom di tabel tersebut
-            $table->foreignId('admin_id')->constrained('admins', 'admin_id');
-            $table->string('no_invoice')->unique();
+            $table->foreignId('admin_id')->nullable()->constrained('admins', 'admin_id');
+            $table->string('no_invoice')->nullable()->unique();
             $table->enum('metode_pembayaran', ['Cash', 'Cashless']);
             $table->integer('total_transaksi');
             $table->enum('status_transaksi', ['Paid', 'Pending', 'Expired'])->default('Pending');

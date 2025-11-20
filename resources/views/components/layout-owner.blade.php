@@ -33,7 +33,7 @@
 
         {{-- Kode sidebar --}}
         <aside
-            class="w-72 bg-gray-900 text-white p-6 flex flex-col space-y-8 fixed inset-y-0 left-0 z-20
+            class="w-72 bg-[#3C3D37] text-[#F4EFE7]  p-6 flex flex-col space-y-8 fixed inset-y-0 left-0 z-20
                    transform transition-transform duration-300 ease-in-out"
             :class="{ 'translate-x-0': isSidebarOpen, '-translate-x-full': !isSidebarOpen }">
             <div class="flex justify-between items-center">
@@ -43,7 +43,7 @@
                   Ubah <a> menjadi <button> dan tambahkan @click
                   Ini sekarang akan menutup sidebar
                 --}}
-                <button @click="isSidebarOpen = false" title="Tutup Sidebar" class="text-gray-500 hover:text-white">
+                <button @click="isSidebarOpen = false" title="Tutup Sidebar" class="text-[#F4EFE7] ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -55,25 +55,25 @@
 
                 <a href="{{ route ('owner.performa') }}"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
-                    {{ request()->routeIs('owner.performa') ? 'bg-black text-white font-semibold' : 'text-gray-400 hover:text-white' }}">
+                    {{ request()->routeIs('owner.performa') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
                     Performa Bisnis
                 </a>
 
-                <a href="{{ route ('owner.laporan') }}"
+                <a href="#"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
-                    {{ request()->routeIs('owner.laporan') ? 'bg-black text-white font-semibold' : 'text-gray-400 hover:text-white' }}">
+                    {{ request()->routeIs('owner.laporan') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
                     Laporan Bisnis
                 </a>
 
-                <a href="{{ route('owner.feedback') }}"
+                <a href="#"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
-                    {{ request()->routeIs('owner.feedback') ? 'bg-black text-white font-semibold' : 'text-gray-400 hover:text-white' }}">
+                    {{ request()->routeIs('owner.feedback') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
                     Feedback
                 </a>
 
-                <a href="{{ route('owner.data-admin') }}"
+                <a href="#"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
-                    {{ request()->routeIs('owner.data-admin') ? 'bg-black text-white font-semibold' : 'text-gray-400 hover:text-white' }}">
+                    {{ request()->routeIs('owner.data-admin') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
                     Data Admin
                 </a>
 
@@ -85,7 +85,7 @@
           - 'ml-0': Margin kiri 0 (saat isSidebarOpen = false)
           - 'transition-all duration-300' untuk animasi margin
         --}}
-        <main class="flex-1 p-8 transition-all duration-300 ease-in-out bg-gray-500"
+        <main class="flex-1 p-8 transition-all duration-300 ease-in-out bg-black"
             :class="{ 'ml-72': isSidebarOpen, 'ml-0': !isSidebarOpen }">
 
             <x-HeaderAdmin></x-HeaderAdmin>
