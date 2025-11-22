@@ -60,6 +60,10 @@ class CheckoutController extends Controller
         $totalPrice = 0;
         $errorMessage = '';
 
+        if(!$reservationData && !$itemsData) {
+            $errorMessage = 'Keranjang anda kosong';
+            return redirect()->route('customer.cart')->with('error', $errorMessage);
+        }
 
         // validasi stock menu
         $stokCukup = true;
