@@ -53,7 +53,7 @@
 
             <nav class="flex flex-col space-y-3">
 
-                <a href="{{ route ('owner.performa') }}"
+                <a href="{{ route('owner.performa') }}"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
                     {{ request()->routeIs('owner.performa') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
                     Performa Bisnis
@@ -65,7 +65,7 @@
                     Laporan Bisnis
                 </a>
 
-                <a href="#"
+                <a href="{{ route('owner.feedback') }}"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
                     {{ request()->routeIs('owner.operasional') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
                     Data Operasional
@@ -77,7 +77,7 @@
                     Feedback
                 </a>
 
-                <a href="#"
+                <a href="{{ route('owner.data-admin') }}"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
                     {{ request()->routeIs('owner.data-admin') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
                     Data Admin
