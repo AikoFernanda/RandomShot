@@ -7,7 +7,8 @@
         <div class="grid grid-cols-3 gap-2 w-3xl ml-10 text-[#FFF4E4] p-4 mb-5 ">
             <button type="biliar" class="hover:bg-[#FFF2E0]/38 border rounded-xl px-4 py-3">Meja Biliar</button>
             <button type="tenis" class="hover:bg-[#FFF2E0]/38 border rounded-xl px-4 py-3">Meja Tenis</button>
-            <button type="ps" class="hover:bg-[#FFF2E0]/38 border rounded-xl px-4 py-3">PlayStation</button> -->
+            <button type="ps" class="hover:bg-[#FFF2E0]/38 border rounded-xl px-4 py-3">PlayStation</button>
+        </div> -->
 
         <!-- Ini pilih makanan/minuman
         <div class="grid grid-cols-2 gap-2 w-3xl ml-10 text-[#FFF4E4] p-4 mb-5 ">
