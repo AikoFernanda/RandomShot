@@ -67,6 +67,12 @@
 
                 <a href="#"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
+                    {{ request()->routeIs('owner.operasional') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
+                    Data Operasional
+                </a>
+
+                <a href="#"
+                    class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
                     {{ request()->routeIs('owner.feedback') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
                     Feedback
                 </a>

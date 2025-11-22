@@ -1,4 +1,4 @@
-<x-LayoutAdmin>
+<x-layout-admin>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- Kartu Konten Utama --}}
     <div class="bg-[#181C14]">
@@ -82,4 +82,4 @@
                     </tbody>
             </div>
         </div>
-</x-LayoutAdmin>
+</x-layout-admin>
