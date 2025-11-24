@@ -63,9 +63,6 @@
 
 
 
-
-
-
             <!-- INI KRITIK DAN SARAN
             <div class="relative ml-auto w-50">
                 <input type="text" name="search" placeholder="Cari tanggal..." value="{{ request('search') }}"
