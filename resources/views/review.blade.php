@@ -1,84 +1,60 @@
 <x-Layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    <section class="relative w-full min-h-full bg-[#181C14] text-[#F4EFE7] px-12 pb-20 mt-25">
+    <div class=" min-h-screen text-[#F4EFE7]">
 
-        <div class="flex items-center justify-between mb-6">
-            <h2 class="text-5xl tracking-wide">ULASAN</h2>
-        </div>
+        <div class="rounded-2xl p-6 text-[#F4EFE7] py-10 mt-20">
+            <div class="grid grid-cols-4 gap-2 w-3xl ml-10 text-[#FFF4E4] p-4 mb-5 ">
+                <button type="semua" class="hover:bg-[#FFF2E0]/38 border rounded-xl px-4 py-3">Semua</button>
+                <button type="hari" class="hover:bg-[#FFF2E0]/38 border rounded-xl px-4 py-3">1 Hari
+                    Terakhir</button>
+                <button type="minggu" class="hover:bg-[#FFF2E0]/38 border rounded-xl px-4 py-3">1 Minggu
+                    Terakhir</button>
+                <button type="bulan" class="hover:bg-[#FFF2E0]/38 border rounded-xl px-4 py-3">1 Bulan
+                    Terakhir</button>
+            </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-            {{-- Rating Summary --}}
-            <div class="bg-black/40 p-6 rounded-xl border border-[#F4EFE7] h-110">
-                <p class="text-5xl font-bold">4.9 <span class="text-2xl">/ 5</span></p>
-                <p class="text-gray-300 mb-4">2518 Penilaian</p>
-
-                {{-- Bar Graph --}}
-                <div class="space-y-2">
-                    @for ($i = 5; $i >= 1; $i--)
-                        <div class="flex items-center gap-4">
-                            <span class="w-8">{{ $i }}</span>
-                            <div class="flex-1 h-2 bg-[#F4EFE7]/20 rounded-full">
-                                <div class="h-2 bg-yellow-400 rounded-full w-[{{ rand(40, 100) }}%]"></div>
-                            </div>
+            <!-- INI RATING 1 -->
+            <div class="p-6 border-b border-[#FFF3E1]/50">
+                <div class="flex items-start gap-10 relative z-10">
+                    <div
+                        class="w-14 h-14 shrink-0 rounded-full bg-[#F4EFE7] flex items-center justify-center 
+                        text-black text-xl font-bold">
+                        AT
+                    </div>
+                    <div class="w-full">
+                        <div class="flex items-center justify-between">
+                            <p class="font-bold text-lg pt-3">Arul Tia</p>
+                            <p class="text-sm opacity-70">
+                                21 November 2025
+                            </p>
                         </div>
-                    @endfor
+                        <p class="text-yellow-400 text-sm">★★★★☆</p>
+                        <p class="pt-5">Menunya bervariasii</p>
+                    </div>
                 </div>
             </div>
 
-            {{-- Individual Reviews --}}
-            <div class="space-y-6">
-
-                {{-- Review Card 1 --}}
-                <div class="bg-black/40 p-6 rounded-xl border border-[#F4EFE7]">
-
-                    <div class="flex items-center gap-4">
-
-                        {{-- Avatar + Initials Style (mirip profil halaman akun) --}}
-                        <div
-                            class="w-14 h-14 rounded-full bg-[#F4EFE7] flex items-center justify-center 
+            <!-- INI RATING 2 -->
+            <div class="p-6 border-b border-[#FFF3E1]/50">
+                <div class="flex items-start gap-10 relative z-10">
+                    <div
+                        class="w-14 h-14 shrink-0 rounded-full bg-[#F4EFE7] flex items-center justify-center 
                         text-black text-xl font-bold">
-                            AJ
-                        </div>
-
-                        <div>
-                            <p class="font-bold text-lg">Anggita Jeon</p>
-                            <p class="text-yellow-400 text-sm">★★★★☆</p>
-                        </div>
+                        AS
                     </div>
-
-                    <p class="mt-4 text-gray-300 leading-relaxed">
-                        Suasananya nyaman! Pelayan ramah & tempatnya cozy!
-                    </p>
-                </div>
-
-                {{-- Review Card 2 --}}
-                <div class="bg-black/40 p-6 rounded-xl border border-[#F4EFE7]">
-
-                    <div class="flex items-center gap-4">
-
-                        {{-- Avatar --}}
-                        <div
-                            class="w-14 h-14 rounded-full bg-[#F4EFE7] flex items-center justify-center 
-                        text-black text-xl font-bold">
-                            AN
+                    <div class="w-full">
+                        <div class="flex items-center justify-between">
+                            <p class="font-bold text-lg pt-3">Afra Sui</p>
+                            <p class="text-sm opacity-70">
+                                19 November 2025
+                            </p>
                         </div>
-
-                        <div>
-                            <p class="font-bold text-lg">Afra Naila</p>
-                            <p class="text-yellow-400 text-sm">★★★★★</p>
-                        </div>
+                        <p class="text-yellow-400 text-sm">★★★★★</p>
+                        <p class="pt-5">Pelayanannya sangat cepat dan pelayanannya ramah</p>
                     </div>
-
-                    <p class="mt-4 text-gray-300 leading-relaxed">
-                        Tempat biliar terbaik di Bogor! Harga terjangkau, kualitas meja mantap
-                    </p>
                 </div>
-
             </div>
-
         </div>
-    </section>
 
 </x-Layout>
