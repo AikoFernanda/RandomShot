@@ -24,6 +24,10 @@
                 {{-- Tombol submit tersembunyi, form akan submit saat menekan Enter --}}
             </div>
 
+            <div class="flex mt-4">
+                <p class="inline-block border px-2 py-2 ml-auto">10/page v</p>
+            </div>
+
             <!-- RESERVASI MEJA -->
             <div class="overflow-x-auto">
                 <table class="w-full min-w-[800px] text-sm text-left">

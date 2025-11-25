@@ -58,10 +58,43 @@
                     Data Reservasi dan Pesanan
                 </a>
 
-                <a href="{{ route('admin.table') }}"
+                <div x-data="{ open: false }" class="space-y-1">
+
+                    <button @click="open = !open"
+                        class="w-full flex items-center justify-between text-lg py-2 px-3 rounded-lg transition-colors duration-150
+                           {{ request()->routeIs('admin.table') ? 'bg-black border border-[#F4EFE7] text-[#F4EFE7] font-semibold' : 'text-[#F4EFE7]' }}">
+                        <span>Data Meja dan Menu</span>
+
+                        <svg :class="open ? 'rotate-90' : ''" class="w-4 h-4 transition-transform"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+
+                    <div x-show="open" x-collapse class="ml-4 space-y-2">
+
+                        {{-- DATA MEJA --}}
+                        <a href="{{ route('admin.data.meja') }}"
+                            class="block text-sm py-2 px-3 rounded-lg transition-colors duration-150
+                        {{ request()->routeIs('admin.data.meja') ? 'bg-black/20 border border-[#F4EFE7]' : '' }}">
+                            Data Meja
+                        </a>
+
+                        {{-- DATA MENU (opsional) --}}
+                        <a href="{{ route('admin.data.menu') }}"
+                            class="block text-sm py-2 px-3 rounded-lg transition-colors duration-150
+                        {{ request()->routeIs('admin.data.menu') ? 'bg-black/20 border border-[#F4EFE7]' : '' }}">
+                            Data Menu
+                        </a>
+
+                    </div>
+                </div>
+
+                <a href="{{ route('admin.transaksi') }}"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
-                    {{ request()->routeIs('admin.table') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
-                    Data Meja dan Menu
+                    {{ request()->routeIs('admin.transaksi') ? 'bg-black border border-[#F4EFE7]  text-[#F4EFE7]  font-semibold' : 'text-[#F4EFE7] ' }}">
+                    Data Transaksi
                 </a>
 
                 <a href="{{ route('admin.customer') }}"
