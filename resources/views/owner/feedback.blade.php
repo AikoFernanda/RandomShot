@@ -63,10 +63,7 @@
 
 
 
-
-
-
-            <!-- INI KRITIK DAN SARAN
+            <!-- INI KRITIK DAN SARAN -->
             <div class="relative ml-auto w-50">
                 <input type="text" name="search" placeholder="Cari tanggal..." value="{{ request('search') }}"
                     {{-- Menampilkan query search saat ini --}}
@@ -83,14 +80,14 @@
             </div>
 
 
-            Kritik 1
+            <!-- Kritik 1 -->
             <div class="p-6 border-b border-[#FFF3E1]/50">
                 <div class="flex items-start gap-10 relative z-10">
                     <div
                         class="w-14 h-14 shrink-0 rounded-full bg-[#F4EFE7] flex items-center justify-center 
                         text-black text-xl font-bold">
                         AJ
-                   </div>
+                    </div>
                     <div class="w-full">
                         <div class="flex items-center justify-between">
                             <p class="font-bold text-lg pt-3">Aoka Jerome</p>
@@ -108,7 +105,7 @@
                 </div>
             </div>
 
-            Kritik 2
+            <!-- Kritik 2 -->
             <div class="p-6 border-b border-[#FFF3E1]/50">
                 <div class="flex items-start gap-10 relative z-10">
                     <div
@@ -131,7 +128,7 @@
                             untuk dapat meja tenis</p>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
         </div>
     </div>

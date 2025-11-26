@@ -106,6 +106,25 @@ Route::prefix('admin')->name('admin.')
         Route::get('/table-data', [AdminTableController::class, 'index'])
             ->name('table');
 
+        Route::get('/data-meja', function () {
+            return view('admin.data-meja', [
+                'title' => 'Data Meja',
+            ]);
+        })->name('data.meja');
+
+        Route::get('/data-menu', function () {
+            return view('admin.data-menu', [
+                'title' => 'Data Menu',
+            ]);
+        })->name('data.menu');
+
+        Route::get('/data-transaksi', function () {
+            return view('admin.data-transaksi', [
+                'title' => 'Data Transaksi',
+            ]);
+        })->name('transaksi');
+
+
         Route::get('/customer-data', [AdminCustomerController::class, 'index'])
             ->name('customer'); //Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
 
@@ -119,16 +138,28 @@ Route::prefix('owner')->name('owner.')
     ->group(function () {
 
         Route::get('/performa', function () {
-            return view('owner.performa', [
+            return view('owner.performance', [
                 'title' => 'Performa Bisnis',
             ]);
         })->name('performa');
 
-        // Route::get('/laporan', function () {
-        //     return view('owner.laporan', [
-        //         'title' => 'Laporan Bisnis',
-        //     ]);
-        // })->name('laporan');
+        Route::get('/laporan-keuangan', function () {
+            return view('owner.finance-report', [
+                'title' => 'Laporan Keuangan',
+            ]);
+        })->name('laporan.keuangan');
+
+        Route::get('/laporan-penjualan', function () {
+            return view('owner.sale-report', [
+                'title' => 'Laporan Penjualan',
+            ]);
+        })->name('laporan.penjualan');
+
+        Route::get('/data-operasional', function () {
+            return view('owner.operational', [
+                'title' => 'Data Operasional',
+            ]);
+        })->name('data.operasional');
 
         Route::get('/feedback', function () {
             return view('owner.feedback', [

@@ -1,4 +1,4 @@
-<x-LayoutAdmin>
+<x-layout-admin>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- Kartu Konten Utama --}}
     <div class="bg-[#181C14]">
@@ -22,6 +22,10 @@
                     </svg>
                 </span>
                 {{-- Tombol submit tersembunyi, form akan submit saat menekan Enter --}}
+            </div>
+
+            <div class="flex mt-4">
+                <p class="inline-block border px-2 py-2 ml-auto">10/page v</p>
             </div>
 
             <!-- RESERVASI MEJA -->
@@ -82,4 +86,4 @@
                     </tbody>
             </div>
         </div>
-</x-LayoutAdmin>
+</x-layout-admin>
