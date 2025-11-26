@@ -16,6 +16,7 @@ return new class extends Migration
             $table->enum('kategori', ['Tagihan Utilitas', 'Perlengkapan Habis Pakai', 'Gaji Karyawan', 'Sewa Tempat', 'Internet dan Telepon', 'Perawatan dan Perbaikan', 'Bahan Baku Kafe', 'Pemasaran dan Promosi', 'Biaya Lain-lain']);
             $table->string('deskripsi')->nullable();
             $table->integer(('total_biaya'));
+            $table->timestamp('tanggal_biaya');
             $table->timestamps();
         });
     }
