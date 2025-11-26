@@ -59,39 +59,38 @@
                     Performa Bisnis
                 </a>
 
-                 <div x-data="{ open: false }" class="space-y-1">
+                <div x-data="{ open: false }" class="space-y-1">
 
-                <button @click="open = !open"
-                    class="w-full flex items-center justify-between text-lg py-2 px-3 rounded-lg transition-colors duration-150
+                    <button @click="open = !open"
+                        class="w-full flex items-center justify-between text-lg py-2 px-3 rounded-lg transition-colors duration-150
                            {{ request()->routeIs('owner.laporan.keuangan') ? 'bg-black border border-[#F4EFE7] font-semibold' : '' }}">
-                    <span>Laporan Bisnis</span>
+                        <span>Laporan Bisnis</span>
 
-                    <svg :class="open ? 'rotate-90' : ''"
-                         class="w-4 h-4 transition-transform"
-                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                         stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                    </svg>
-                </button>
+                        <svg :class="open ? 'rotate-90' : ''" class="w-4 h-4 transition-transform"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
 
-                <div x-show="open" x-collapse class="ml-4 space-y-2">
+                    <div x-show="open" x-collapse class="ml-4 space-y-2">
 
-                    {{-- LAPORAN KEUANGAN --}}
-                    <a href="{{ route('owner.laporan.keuangan') }}"
-                        class="block text-sm py-2 px-3 rounded-lg transition-colors duration-150
+                        {{-- LAPORAN KEUANGAN --}}
+                        <a href="{{ route('owner.laporan.keuangan') }}"
+                            class="block text-sm py-2 px-3 rounded-lg transition-colors duration-150
                         {{ request()->routeIs('owner.laporan.keuangan') ? 'bg-black/20 border border-[#F4EFE7]' : '' }}">
-                        Laporan Keuangan
-                    </a>
+                            Laporan Keuangan
+                        </a>
 
-                    {{-- LAPORAN PENJUALAN (opsional) --}}
-                    <a href="{{ route('owner.laporan.penjualan') }}"
-                        class="block text-sm py-2 px-3 rounded-lg transition-colors duration-150
+                        {{-- LAPORAN PENJUALAN (opsional) --}}
+                        <a href="{{ route('owner.laporan.penjualan') }}"
+                            class="block text-sm py-2 px-3 rounded-lg transition-colors duration-150
                         {{ request()->routeIs('owner.laporan.penjualan') ? 'bg-black/20 border border-[#F4EFE7]' : '' }}">
-                        Laporan Penjualan
-                    </a>
+                            Laporan Penjualan
+                        </a>
 
+                    </div>
                 </div>
-            </div>
 
                 <a href="{{ route('owner.data.operasional') }}"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150
