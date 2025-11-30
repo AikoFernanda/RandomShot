@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,8 +14,15 @@ class OperationalCost extends Model
     protected $primaryKey = 'operational_cost_id';
 
     protected $fillable = [
+        'owner_id',
         'kategori',
         'deskripsi',
-        'total_biaya'
+        'total_biaya',
+        'tanggal_biaya'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'owner_id', 'user_id');
+    }
 }

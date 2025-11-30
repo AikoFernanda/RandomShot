@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Transaction;
-use App\Models\Reservation;
+use App\Models\Menu;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,8 +24,8 @@ class TransactionDetail extends Model
      */
     protected $fillable = [
         'transaction_id',
-        'item_id',
-        'item_type',
+        'menu_id',
+        'menu_type',
         'quantity',
         'deskripsi',
         'meja_tujuan',
@@ -35,22 +35,13 @@ class TransactionDetail extends Model
     // kolom created_at dan updated_at yang dibuat otomatis oleh $table->timestamps(); tidak perlu didefinisikan dalam $fillable.
     // hanya perlu fokus mendefinisikan kolom-kolom yang datanya berasal dari input pengguna atau logika aplikasi spesifik ke dalam properti $fillable. Kolom timestamps biarkan Laravel yang urus.
 
-    public function reservation() {
-        return $this->hasMany(Reservation::class, 'transaction_detail_id', 'transaction_detail_id');
-    }
-
     public function transaction() {
         return $this->belongsTo(Transaction::class, 'transaction_id', 'transaction_id'); //transaction_detail_id
     }
-
-        /**
-    * Berdasarkan nama function 'item' itu, Laravel secara otomatis mencari dua kolom di tabel transaction_details yang cocok dengan pola:
-    * [nama_fungsi]_id -> menjadi item_id
-    * [nama_fungsi]_type -> menjadi item_type
-    */
-    public function item()
+    
+    public function menu()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Menu::class, 'menu_id', 'menu_id');
         // Buka file Service Provider utamamu: app/Providers/AppServiceProvider.php 
         // tambahkan use relation, cari fungsi boot(). Di dalamnya, "daftarkan" semua "nama panggilan" (nickname) model.
         // Tambahkan Relation::morphMap([...]).

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('operational_costs', function (Blueprint $table) {
             $table->id('operational_cost_id');
+            $table->foreignId('owner_id')->constrained('users', 'user_id');
             $table->enum('kategori', ['Tagihan Utilitas', 'Perlengkapan Habis Pakai', 'Gaji Karyawan', 'Sewa Tempat', 'Internet dan Telepon', 'Perawatan dan Perbaikan', 'Bahan Baku Kafe', 'Pemasaran dan Promosi', 'Biaya Lain-lain']);
             $table->string('deskripsi')->nullable();
             $table->integer(('total_biaya'));

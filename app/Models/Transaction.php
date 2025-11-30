@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\TransactionDetail;
-use App\Models\Admin;
+use App\Models\Reservation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -49,6 +49,11 @@ class Transaction extends Model
 
     public function admin()
     {
-        return $this->belongsTo(Admin::class, 'admin_id', 'admin_id');
+        return $this->belongsTo(User::class, 'admin_id', 'user_id');
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'transaction_id', 'transaction_id');
     }
 }
