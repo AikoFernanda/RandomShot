@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('no_invoice')->nullable()->unique();
             $table->enum('metode_pembayaran', ['Cash', 'Cashless']);
             $table->integer('total_transaksi');
-            $table->enum('status_transaksi', ['Paid', 'Pending', 'Expired', 'Cancelled'])->default('Pending');
+            $table->enum('status_transaksi', ['Paid', 'Pending', 'Unpaid', 'Expired', 'Cancelled'])->default('Unpaid');
+            $table->string('bukti_pembayaran')->nullable();
             $table->timestamps();
         });
     }

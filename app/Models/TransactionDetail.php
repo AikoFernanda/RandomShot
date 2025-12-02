@@ -25,7 +25,6 @@ class TransactionDetail extends Model
     protected $fillable = [
         'transaction_id',
         'menu_id',
-        'menu_type',
         'quantity',
         'deskripsi',
         'meja_tujuan',

@@ -11,6 +11,9 @@ use App\Http\Controllers\ProfileActivityController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TransactionHistoryController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\PaymentController;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 
 // Import controller admin (di dalam folder Admin)
 use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
@@ -59,6 +62,12 @@ Route::prefix('customer')->name('customer.')
         Route::post('/checkout', [CheckoutController::class, 'processCheckout'])->name('checkout');
 
         Route::get('/payment/{transaction}', [CheckoutController::class, 'index'])->name('payment');
+
+        Route::post('/payment-cancel', [PaymentController::class, 'cancelTransaction'])->name('payment.cancel');
+
+        Route::post('/payment', [PaymentController::class, 'processPayment'])->name('payment.validation');
+
+        Route::get('/invoice/{transaction}', [PaymentController::class, 'index'])->name('invoice');
     });
 
 // --- Rute untuk 'Tamu' dan Customer ---

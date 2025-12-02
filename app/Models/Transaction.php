@@ -29,7 +29,8 @@ class Transaction extends Model
         'no_invoice',
         'metode_pembayaran',
         'total_transaksi',
-        'status_transaksi'
+        'status_transaksi',
+        'bukti_pembayaran'
     ];
 
     /**
@@ -43,7 +44,7 @@ class Transaction extends Model
         return $this->belongsTo(User::class, 'customer_id', 'user_id');
     }
 
-    public function transaction_details() {
+    public function transactionDetails() {
         return $this->hasMany(TransactionDetail::class, 'transaction_id', 'transaction_id');
     }
 

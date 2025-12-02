@@ -18,6 +18,7 @@ return new class extends Migration
             $table->dateTime('waktu_mulai');
             $table->dateTime('waktu_selesai');
             $table->enum('status_reservasi', ['Checked-in', 'Menunggu Check-in', 'Selesai'])->default("Menunggu Check-in");
+            $table->date('tanggal_reservasi');
             $table->timestamps();
 
             // Membuat batasan unik gabungan (waktu_mulai + table_id)

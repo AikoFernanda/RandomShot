@@ -19,36 +19,36 @@ class CheckoutController extends Controller
      */
     public function index(Transaction $transaction)
     {
-        /// 1. Ambil data detail transaksi. Load relasi transaction_details, yang akan mencakup item meja dan menu
-        $details = $transaction->transaction_details;
+        // load relasi agar data tersedia (Eager loading biar hemat query)
+        // Model trnasaction ada method 'transactionDetails dan reservations
+        $transaction->load(['transactionDetails.menu', 'reservations.table']); // Laravel mengambil Detail Transaksi DAN mengambil semua Menu yang terkait sekaligus dalam 1 kali jalan. di View tinggal panggil {{ $detail->menu->nama }}, datanya sudah siap
 
         // 2. Data Total Transaksi
         $totalPrice = $transaction->total_transaksi;
 
-        // ambil data meja yg dipesan
-        $reservationData = $details->firstWhere('item_type', 'table');
+        // Ambil Data Meja/Reservasi (dari tabel reservations), ambil reservasi pertama (1 transaksi maks 1 reservasi meja)
+        $reservationData = $transaction->reservations->first();;
 
-        // ambil data menu yang dipesan
-        $itemsData = $details->where('item_type', 'menu');
+        // Ambil Data Menu (dari tabel transaction_details)
+        $itemsData = $transaction->transactionDetails;
 
-        // Jika ada reservasi, ambil data slot dari tabel reservation (jika ada relasi)
-        $reservationSlots = [];
-        if ($reservationData && $reservationData->reservation) {
-            $reservationSlots = $reservationData->reservation;
+        // 4. Tentukan Selected Table (Alamat Meja)
+        // Prioritas: Nama Meja dari Reservasi > Nama Meja dari input menu > null
+        $selectedTable = null;
+
+        if ($reservationData) {
+            $selectedTable = $reservationData->table->nama_meja ?? 'Meja Terhapus'; // Ambil dari relasi table
+        } elseif ($itemsData->isNotEmpty()) {
+            $selectedTable = $itemsData->first()->meja_tujuan;
         }
-
-        // Ambil selectedTable (alamat meja on-site) jika tidak ada reservasi
-        $selectedTable = $reservationData ? null : $itemsData->first()->meja_tujuan;
-
-
 
         return view('payment', [
             'title' => 'Payment',
-            'totalPrice' => $totalPrice,
+            'transaction' => $transaction, // Kirim object transaction utuh (praktis)
+            'totalPrice' => $transaction->total_transaksi,
             'reservationData' => $reservationData,
             'itemsData' => $itemsData,
-            'selectedTable' => $selectedTable ?? ($reservationDetail->meja_tujuan ?? null), // Alamat meja
-            'reservationSlots' => $reservationSlots
+            'selectedTable' => $selectedTable,
         ]);
     }
 
@@ -60,7 +60,7 @@ class CheckoutController extends Controller
         $totalPrice = 0;
         $errorMessage = '';
 
-        if(!$reservationData && !$itemsData) {
+        if (!$reservationData && !$itemsData) {
             $errorMessage = 'Keranjang anda kosong';
             return redirect()->route('customer.cart')->with('error', $errorMessage);
         }
@@ -92,19 +92,8 @@ class CheckoutController extends Controller
             foreach ($reservationData['slots'] as $slot) {
                 $waktuMulaiStr = $reservationData['tanggal_pemesanan'] . ' ' . $slot['startTimeDB'];
 
-                $isBooked = Reservation::query()
-
-                    // PERBAIKAN KRITIS: Menggunakan transaction_detail_id di KEDUA SISI JOIN
-                    ->join('transaction_details', function ($join) use ($mejaYgDipesan) {
-                        // Relasi FK di reservations = PK di transaction_details
-                        $join->on('reservations.transaction_detail_id', '=', 'transaction_details.transaction_detail_id')
-                            ->where('transaction_details.item_type', '=', 'table')
-                            ->where('transaction_details.item_id', $mejaYgDipesan); // Filter table ID di dalam join
-                    })
-
-                    // Filter waktu mulai di tabel reservations
-                    ->where('reservations.waktu_mulai', $waktuMulaiStr)
-
+                $isBooked = Reservation::where('table_id', $mejaYgDipesan)
+                    ->where('waktu_mulai', $waktuMulaiStr)
                     ->exists();
 
                 if ($isBooked) {
@@ -145,7 +134,7 @@ class CheckoutController extends Controller
                 'no_invoice' => null,
                 'metode_pembayaran' => 'Cashless',
                 'total_transaksi' => $totalPrice,
-                'status_transaksi' => "Pending"
+                'status_transaksi' => "Unpaid"
             ]);
 
             // buat nomor invoice
@@ -160,78 +149,79 @@ class CheckoutController extends Controller
 
             // dd($transaction->transaction_id);
 
-            // buat detail transaksi dan reservasi untuk MEJA (jika ada)
-            if ($reservationData) {
-                $table = Table::find($reservationData['table_id']);
-                if ($table) {
-                    $detail = TransactionDetail::create([
-                        'transaction_id' => $transaction->transaction_id,
-                        'item_id' => $reservationData['table_id'],
-                        'item_type' => 'table',
-                        'quantity' => count($reservationData['slots']), // quantity untuk meja adalah jumlah jam (3 = 3 jam)
-                        'deskripsi' => null,
-                        'meja_tujuan' => $reservationData['nama'],
-                        'status_pesanan' => 'Dijadwalkan',
-                        'harga' => $reservationData['total_price']
-                    ]);
-
-                    // buat reservasi
-                    foreach ($reservationData['slots'] as $slot) {
-                        $waktuMulaiStr = $reservationData['tanggal_pemesanan'] . ' ' . $slot['startTimeDB'];
-                        // Hitung waktu selesai dengan menambahkan 1 jam menggunakan Carbon
-                        $carbonMulai = Carbon::parse($waktuMulaiStr);
-                        $waktuSelesaiStr = $carbonMulai->addHour()->format('Y-m-d H:i:s');
-                        $reservation = Reservation::create([
-                            'transaction_detail_id' => $detail->transaction_detail_id,
-                            'waktu_mulai' => $waktuMulaiStr,
-                            'waktu_selesai' => $waktuSelesaiStr,
-                            'status' => 'Menunggu Check-in'
-                        ]);
-                    }
-                }
-            }
-
-            // buat detail transaksi MENU dan kurangi stok MENU (jika ada)
             if ($itemsData) {
-                // Tentukan meja tujuan, berdasarkan reservasi atau pilihan meja
-                $mejaTujuan = $reservationData ? $reservationData['nama'] : ($selectedTable['nama'] ?? null);
-                $statusPesananMenu = $reservationData ? 'Dijadwalkan' : 'Menunggu Dibuat';
+
+                // Jika ada reservasi, menu dijadwalkan
+                // Jika tidak, menu langsung dibuat
+                $mejaTujuan  = $reservationData['nama'] ?? ($selectedTable['nama'] ?? null);
+                $statusMenu  = $reservationData ? 'Dijadwalkan' : 'Menunggu Dibuat';
+
                 foreach ($itemsData as $item) {
                     $menu = Menu::find($item['menu_id']);
-                    if ($menu) {
-                        $menu->decrement('stok', $item['qty']); // DECREMENT untuk mengurangi stok dengan aman
 
-                        $detail = TransactionDetail::create([
+                    if ($menu) {
+
+                        // kurangi stok
+                        if ($menu->stok < $item['qty']) {
+                            return redirect()->route('customer.cart')
+                                ->with('error', "Stok menu {$menu->nama} tidak mencukupi.");
+                        }
+
+                        $menu->decrement('stok', $item['qty']);
+
+                        TransactionDetail::create([
                             'transaction_id' => $transaction->transaction_id,
-                            'item_id' => $item['menu_id'],
-                            'item_type' => 'menu',
-                            'quantity' => $item['qty'],
-                            'deskripsi' => null,
-                            'meja_tujuan' => $mejaTujuan,
-                            'status_pesanan' => $statusPesananMenu,
-                            'harga' => $item['harga'] * $item['qty']
+                            'menu_id'        => $item['menu_id'],
+                            'quantity'       => $item['qty'],
+                            'deskripsi'      => null,
+                            'meja_tujuan'    => $mejaTujuan,
+                            'status_pesanan' => $statusMenu,
+                            'harga'          => $menu->harga * $item['qty']
                         ]);
                     }
                 }
             }
 
-            // 5. Commit dan Bersihkan Session (DI SINI TEMPATNYA)
-            session()->forget('cart');
+            if ($reservationData) {
+
+                foreach ($reservationData['slots'] as $slot) {
+
+                    $mulai = $reservationData['tanggal_pemesanan'] . ' ' . $slot['startTimeDB'];
+                    $selesai = Carbon::parse($mulai)->addHour()->format('Y-m-d H:i:s');
+
+                    Reservation::create([
+                        'transaction_id'    => $transaction->transaction_id,
+                        'table_id'          => $reservationData['table_id'],
+                        'waktu_mulai'       => $mulai,
+                        'waktu_selesai'     => $selesai,
+                        'status_reservasi'  => 'Menunggu Check-in',
+                        'tanggal_reservasi' => $reservationData['tanggal_pemesanan'],
+                    ]);
+                }
+            }
+
+            // 5. Commit dan Bersihkan Session
             DB::commit();
+            session()->forget('cart');
+
 
             // RETURN SUKSES RESPONSE
-            return redirect()->route('customer.payment', ['transaction' => $transaction->transaction_id])
-                ->with('success', 'Pesanan berhasil dibuat. Silakan selesaikan pembayaran.');
+            return redirect()->route('customer.payment', [
+                'transaction' => $transaction,
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
 
             // LOG ERROR UNTUK DEBUGGING SERVER
             Log::error('Checkout Failed: ' . $e->getMessage());
+            // dd($e->getMessage()); // DEBUGGING 
 
             // RETURN ERROR RESPONSE
             return redirect()->route('customer.cart')->with('error', 'Gagal memproses pesanan akibat kesalahan sistem. Silakan coba lagi.');
         }
     }
+
+    
 
     /**
      * Show the form for creating a new resource.

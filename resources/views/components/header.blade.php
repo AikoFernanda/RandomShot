@@ -6,7 +6,7 @@
         <!-- Sesuaikan kelas 'w-48' atau lainnya untuk mengatur ukuran logo Anda -->
         <img id="img-logo-random-shot" src="{{ asset('img/logo-rs.png') }}" alt="logo_random_shot" class="w-26 h-auto">
         {{-- 'w-48' akan membuat lebar gambar sekitar 12rem (192px), sesuaikan nilai ini jika terlalu besar/kecil. --}}
-
+        
         <x-Navbar></x-Navbar>
 
         @if (session('status_login') == 'success')
