@@ -6,17 +6,13 @@
         <!-- Sesuaikan kelas 'w-48' atau lainnya untuk mengatur ukuran logo Anda -->
         <img id="img-logo-random-shot" src="{{ asset('img/logo-rs.png') }}" alt="logo_random_shot" class="w-26 h-auto">
         {{-- 'w-48' akan membuat lebar gambar sekitar 12rem (192px), sesuaikan nilai ini jika terlalu besar/kecil. --}}
-        
+
         <x-Navbar></x-Navbar>
 
         @if (session('status_login') == 'success')
             <!-- Kanan: dropdown profil dan history-->
             @if (!request()->routeIs('customer.*'))
                 <div class="flex items-center space-x-2">
-                    {{-- riwayat transaksi --}}
-                    <a href={{ route('customer.transaction.history') }}>
-                        <img src="{{ asset('img/aktivitas.png') }}" alt="user-history" class="w-9 h-9 rounded-full">
-                    </a>
                     {{-- cek dgn url supaya tidak muncul di /customer, gunakan wildcard (*) untuk mengecek semua rute yang berawalan customer. --}}
                     <div x-data="{ open: false }" class="relative"> {{-- Alpine.js reactive state... --}}
                         <button @click="open = !open" class="flex items-center focus:outline-none">
@@ -42,10 +38,6 @@
                       untuk "memegang" ruang agar layout tidak bergeser.
                     --}}
                 <div class="flex items-center space-x-2">
-                    <a href={{ route('customer.transaction.history') }}>
-                        <img src="{{ asset('img/aktivitas.png') }}" alt="user-history"
-                            class="w-9 h-9 rounded-full border-[#F4EFE7] ">
-                    </a>
                     <div class="w-10 h-10"></div>
                 </div>
             @endif

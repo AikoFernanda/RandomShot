@@ -7,7 +7,6 @@ use App\Http\Controllers\AuthenticationController; // use alamat_lengkap; Perint
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProfileActivityController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TransactionHistoryController;
 use App\Http\Controllers\CheckoutController;
@@ -53,11 +52,9 @@ Route::prefix('customer')->name('customer.')
 
         Route::post('/cart/select-table', [CartController::class, 'selectTable'])->name('cart.selectTable');
 
-        Route::get('/table-activity', [ProfileActivityController::class, 'index'])->name('profile.activity');
-
-        Route::get('/cafe-activity', [ProfileActivityController::class, 'index2'])->name('profile.activity.cafe');
-
         Route::get('/transaction-history', [TransactionHistoryController::class, 'index'])->name('transaction.history');
+
+        Route::post('/transaction-history', [TransactionHistoryController::class, 'show'])->name('transaction.detail');
 
         Route::post('/checkout', [CheckoutController::class, 'processCheckout'])->name('checkout');
 

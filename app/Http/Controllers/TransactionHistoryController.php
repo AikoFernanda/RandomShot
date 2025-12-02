@@ -10,58 +10,71 @@ class TransactionHistoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // Kita inject Request di sini
+    public function index(Request $request)
     {
-        return view ('transaction_history', [
-            'title' => 'Transaction History'
+        // 1. Ambil ID user dari session MELALUI object Request
+        // Ini lebih aman dan eksplisit
+        $user_id = $request->session()->get('user_id');
+
+        // 2. Ambil data transaksi
+        $transaction_history = Transaction::where('customer_id', $user_id)
+            ->latest()
+            ->get();
+
+        return view('profile.transaction_history', [
+            'title' => 'Riwayat Transaksi',
+            'transactionHistory' => $transaction_history
         ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan detail satu transaksi spesifik.
      */
-    public function create()
+    public function show(Request $request)
     {
-        //
-    }
+        // Validasi input agar tidak error jika ID kosong
+        $request->validate([
+            'transaction_id' => 'required|exists:transactions,transaction_id'
+        ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        // PERBAIKAN: Gunakan first() atau find() untuk dapat 1 objek
+        // find() lebih ringkas jika mencari berdasarkan primary key
+        $transaction = Transaction::find($request->input('transaction_id'));
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Transaction $transaction)
-    {
-        //
-    }
+        // Jika transaksi tidak ditemukan (opsional, karena sudah divalidasi 'exists')
+        if (!$transaction) {
+            return redirect()->back()->with('error', 'Transaksi tidak ditemukan.');
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Transaction $transaction)
-    {
-        //
-    }
+        // 1. Cek Otorisasi (Keamanan)
+        if ($transaction->customer_id != $request->session()->get('user_id')) {
+            abort(403, 'Unauthorized action.');
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Transaction $transaction)
-    {
-        //
-    }
+        // 2. Load Relasi (Eager Loading)
+        $transaction->load([
+            'transactionDetails.menu',
+            'reservations.table'
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Transaction $transaction)
-    {
-        //
+        // 3. Siapkan Data untuk View
+        $itemsData = $transaction->transactionDetails;
+        $reservationData = $transaction->reservations->first();
+
+        $selectedTable = null;
+        if ($reservationData) {
+            $selectedTable = $reservationData->table->nama_meja ?? 'Meja Terhapus';
+        } elseif ($itemsData->isNotEmpty()) {
+            $selectedTable = $itemsData->first()->meja_tujuan;
+        }
+
+        return view('profile.transaction-detail', [
+            'title' => 'Detail Transaksi #' . $transaction->no_invoice,
+            'transaction' => $transaction,
+            'itemsData' => $itemsData,
+            'reservationData' => $reservationData,
+            'selectedTable' => $selectedTable
+        ]);
     }
 }
