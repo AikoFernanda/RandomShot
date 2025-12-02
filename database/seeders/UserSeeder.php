@@ -37,6 +37,14 @@ class UserSeeder extends Seeder
                 'no_telepon' => '08123456787',
                 'alamat' => 'Jalan Lupa',
                 'peran' => 'Customer'
+            ],
+            [
+                'nama' => 'arul',
+                'email' => 'arul@gmail.com',
+                'password' => bcrypt('arul123'),
+                'no_telepon' => '08123456786',
+                'alamat' => 'Jalan Jalan',
+                'peran' => 'Owner'
             ]
             ];
 

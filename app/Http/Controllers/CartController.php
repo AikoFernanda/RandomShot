@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-// 1. Kita "impor" alat-alat yang kita butuhkan
+// 1.  "impor" alat-alat yang kita butuhkan
 use Illuminate\Http\Request; // Untuk mengambil data dari form
 use App\Models\Menu;    // Untuk berinteraksi dengan tabel 'users'
 use App\Models\Table;    // Untuk berinteraksi dengan tabel 'users'

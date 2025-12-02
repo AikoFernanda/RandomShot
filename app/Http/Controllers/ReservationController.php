@@ -72,11 +72,9 @@ class ReservationController extends Controller
         $table = Table::findorFail($id);
         
         // Ambil SEMUA slot yang sudah dibooking untuk meja ini
-        $bookedSlot = Reservation::whereHas('transactionDetail', function ($query) use ($id) { // Cari Reservasi yg mn relasi ke table transaction_details (model function transactionDetail())
-            $query->where('item_id', $id)
-            ->where('item_type', 'table');
-        })->select('waktu_mulai')
-        ->get(); // memiliki 'item_id' = $id DAN 'item_type' = 'Table
+        $bookedSlot = Reservation::where('table_id', "$id") // filter berdasarkan kolom pakai where, kalau berdasarkan relasi pakai whereHas
+        ->select('waktu_mulai')
+        ->get();
         
         $bookedSlotByDate = $bookedSlot
         ->groupBy(function ($booking) {
@@ -97,8 +95,8 @@ class ReservationController extends Controller
             'bookedSlotsJS' => $bookedSlotByDate->toJson(),
             
             'hargaSiang' => $table->tarif_per_jam_siang,
-            'hargaSore' => $table->tarif_per_jam_sore,   // Asumsi nama kolom
-            'hargaMalam' => $table->tarif_per_jam_malam  // Asumsi nama kolom
+            'hargaSore' => $table->tarif_per_jam_sore,
+            'hargaMalam' => $table->tarif_per_jam_malam  
             
         ]);
     }

@@ -67,6 +67,38 @@
             {{-- LEFT CONTENT --}}
             <div class="lg:col-span-2 space-y-3">
 
+                @if (!session()->has('cart.reservation') && empty(session('cart.items')))
+                    {{-- Kode UI Keranjang Kosong --}}
+                    <div
+                        class="flex flex-col items-center justify-center min-h-[50vh] bg-white/5 border border-white/10 rounded-2xl p-8 shadow-inner shadow-black/50">
+
+                        {{-- Ikon Keranjang --}}
+                        <svg class="w-20 h-20 text-red-500/70 mb-4" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            {{-- Path untuk ikon keranjang belanja --}}
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+
+                        <h2 class="text-3xl font-bold text-white mb-2">Keranjangmu Kosong!</h2>
+
+                        <p class="text-gray-400 text-lg text-center mb-6">
+                            Ayo tambahkan menu spesial kami atau reservasi meja favoritmu.
+                        </p>
+
+                        {{-- Tombol Ajakan Aksi --}}
+                        <a href="{{ route('cafe') }}"
+                            class="px-8 py-3  bg-red-600 hover:bg-red-700 rounded-full border  border-white text-white font-bold transition duration-200">
+                            Mulai Pesan Menu
+                        </a>
+
+                        <a href="{{ route('reservation') }}"
+                            class="mt-3 text-sm text-white/50 hover:text-white transition duration-200">
+                            Atau Reservasi Meja
+                        </a>
+                    </div>
+                @endif
+
                 {{-- ITEM MEJA --}}
                 @if (session()->has('cart.reservation'))
                     <div class="border border-white/20 rounded-xl p-4 flex gap-4">
@@ -110,58 +142,60 @@
 
 
                 {{-- ITEM MAKANAN --}}
-                @foreach ($itemsData as $item)
-                    <div class="border border-white/20 rounded-xl p-4 flex gap-4">
+                @if (session()->has('cart.items'))
+                    @foreach ($itemsData as $item)
+                        <div class="border border-white/20 rounded-xl p-4 flex gap-4">
 
-                        {{-- FOTO MAKANAN --}}
-                        <img src="{{ asset('img/menu/' . $item['nama_gambar']) }}"
-                            class="w-36 h-28 object-cover rounded-md">
+                            {{-- FOTO MAKANAN --}}
+                            <img src="{{ asset('img/menu/' . $item['nama_gambar']) }}"
+                                class="w-36 h-28 object-cover rounded-md">
 
-                        {{-- KONTEN --}}
-                        <div class="flex-1">
+                            {{-- KONTEN --}}
+                            <div class="flex-1">
 
-                            <div class="flex justify-between items-start">
+                                <div class="flex justify-between items-start">
 
-                                <p class="font-bold text-xl">{{ $item['nama'] }}</p>
+                                    <p class="font-bold text-xl">{{ $item['nama'] }}</p>
 
-                                <div class="flex items-center gap-4">
+                                    <div class="flex items-center gap-4">
 
-                                    {{-- QTY
+                                        {{-- QTY
                                 <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
                                     <button class="text-xl">−</button>
                                     <span class="font-semibold text-lg">2</span>
                                     <button class="text-xl">+</button>
                                 </div> --}}
 
-                                    {{-- HARGA --}}
-                                    <p class="font-bold text-xl whitespace-nowrap">
-                                        Rp{{ number_format($item['harga'] * $item['qty'], 0, '.', '.') }}
-                                    </p>
+                                        {{-- HARGA --}}
+                                        <p class="font-bold text-xl whitespace-nowrap">
+                                            Rp{{ number_format($item['harga'] * $item['qty'], 0, '.', '.') }}
+                                        </p>
+                                    </div>
                                 </div>
+
+                                <button class="text-sm text-gray-300/70 flex items-center gap-1 mt-1">
+                                    ✎ Tambahkan Catatan
+                                </button>
+
+                                {{-- <p class="mt-8 text-green-400 text-sm">Tersedia</p> --}}
+
+                                <div>
+                                    <form action="{{ route('customer.cart.remove') }}" method="POST"
+                                        class="flex justify-end mt-1">
+                                        @csrf
+                                        @method('DELETE') {{-- Method spoofing untuk Hapus --}}
+                                        <input type="hidden" name="menu_id" value="{{ $item['menu_id'] }}">
+                                        <button type="submit"
+                                            class="text-red-400 text-sm flex items-center gap-2 cursor-pointer">
+                                            🗑 Hapus dari Keranjang
+                                        </button>
+                                    </form>
+                                </div>
+
                             </div>
-
-                            <button class="text-sm text-gray-300/70 flex items-center gap-1 mt-1">
-                                ✎ Tambahkan Catatan
-                            </button>
-
-                            {{-- <p class="mt-8 text-green-400 text-sm">Tersedia</p> --}}
-
-                            <div>
-                                <form action="{{ route('customer.cart.remove') }}" method="POST"
-                                    class="flex justify-end mt-1">
-                                    @csrf
-                                    @method('DELETE') {{-- Method spoofing untuk Hapus --}}
-                                    <input type="hidden" name="menu_id" value="{{ $item['menu_id'] }}">
-                                    <button type="submit"
-                                        class="text-red-400 text-sm flex items-center gap-2 cursor-pointer">
-                                        🗑 Hapus dari Keranjang
-                                    </button>
-                                </form>
-                            </div>
-
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
 
             </div>
 
@@ -338,7 +372,7 @@
                 </div>
 
                 @if (session('error'))
-                    <div class="bg-red-500/20 text-red-300 p-4 rounded-lg mb-4 border border-red-500/50">
+                    <div class="bg-red-500/20 text-red-300 p-4 rounded-lg mb-4 border border-red-500/50 mt-3">
                         {{ session('error') }}
                     </div>
                 @endif

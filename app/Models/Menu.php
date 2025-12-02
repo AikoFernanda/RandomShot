@@ -33,8 +33,6 @@ class Menu extends Model
 
     public function transactionDetails()
     {
-        // Parameter 1: Model "anak"
-        // Parameter 2: Nama "awalan" (yang tadi 'item')
-        return $this->morphMany(TransactionDetail::class, 'item');
+        return $this->hasMany(TransactionDetail::class, 'menu_id','menu_id');
     }
 }

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\TransactionDetail;
-use App\Models\Admin;
+use App\Models\Reservation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,7 +29,8 @@ class Transaction extends Model
         'no_invoice',
         'metode_pembayaran',
         'total_transaksi',
-        'status_transaksi'
+        'status_transaksi',
+        'bukti_pembayaran'
     ];
 
     /**
@@ -43,12 +44,17 @@ class Transaction extends Model
         return $this->belongsTo(User::class, 'customer_id', 'user_id');
     }
 
-    public function transaction_details() {
+    public function transactionDetails() {
         return $this->hasMany(TransactionDetail::class, 'transaction_id', 'transaction_id');
     }
 
     public function admin()
     {
-        return $this->belongsTo(Admin::class, 'admin_id', 'admin_id');
+        return $this->belongsTo(User::class, 'admin_id', 'user_id');
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'transaction_id', 'transaction_id');
     }
 }

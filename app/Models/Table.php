@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\TransactionDetail;
+use App\Models\Reservation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,8 +36,8 @@ class Table extends Model
     /**
      * Dapatkan semua detail transaksi untuk meja ini.
      */
-    public function transactionDetails()
+    public function reservations()
     {
-        return $this->morphMany(TransactionDetail::class, 'item');
+        return $this->hasMany(Reservation::class, 'table_id', 'table_id');
     }
 }

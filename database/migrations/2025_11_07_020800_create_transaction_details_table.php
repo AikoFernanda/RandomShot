@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('transaction_details', function (Blueprint $table) {
             $table->id('transaction_detail_id');
             $table->foreignId('transaction_id')->constrained('transactions', 'transaction_id');
-            $table->integer('item_id');
-            $table->enum('item_type', ['table', 'menu']);
+            $table->foreignId('menu_id')->constrained('menus', 'menu_id');
             $table->integer('quantity');
             $table->string('deskripsi')->nullable();
             $table->string('meja_tujuan');

@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id('reservation_id');
-            $table->foreignId('transaction_detail_id')->constrained('transaction_details', 'transaction_detail_id');
+            $table->foreignId('transaction_id')->constrained('transactions', 'transaction_id');
+            $table->foreignId('table_id')->constrained('tables', 'table_id');
             $table->dateTime('waktu_mulai');
             $table->dateTime('waktu_selesai');
-            $table->enum('status', ['Checked-in', 'Menunggu Check-in', 'Selesai'])->default("Menunggu Check-in");
+            $table->enum('status_reservasi', ['Checked-in', 'Menunggu Check-in', 'Selesai'])->default("Menunggu Check-in");
+            $table->date('tanggal_reservasi');
             $table->timestamps();
 
-            // Membuat batasan unik gabungan (waktu_mulai + detail transaksi)
-            $table->unique(['waktu_mulai', 'transaction_detail_id']);
+            // Membuat batasan unik gabungan (waktu_mulai + table_id)
+            $table->unique(['waktu_mulai', 'table_id']);
         });
     }
 

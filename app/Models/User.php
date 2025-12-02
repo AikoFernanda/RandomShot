@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Models\Admin;
 use App\Models\Transaction;
 use App\Models\FeedbackReview;
+use App\Models\OperationalCost;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -32,7 +33,8 @@ class User extends Authenticatable
         'no_telepon',
         'jenis_kelamin',
         'alamat',
-        'peran'
+        'peran',
+        'status'
     ];
 
     /**
@@ -70,6 +72,11 @@ class User extends Authenticatable
         return $this->hasMany(Transaction::class, 'customer_id', 'user_id');
     }
 
+    public function adminTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'admin_id', 'user_id');
+    }
+
     public function feedbackreview()
     {
         return $this->hasOne(FeedbackReview::class, 'customer_id', 'user_id');
@@ -78,5 +85,10 @@ class User extends Authenticatable
     public function admin()
     {
         return $this->hasOne(Admin::class, 'user_id', 'user_id');
+    }
+
+    public function operationalcosts()
+    {
+        return $this->hasMany(OperationalCost::class, 'owner_id', 'user_id');
     }
 }

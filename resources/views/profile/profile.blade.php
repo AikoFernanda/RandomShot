@@ -1,22 +1,57 @@
 <x-Layout>
-    <x-slot:title>{{ $title }}</x-slot:title>
+<x-slot:title>{{ $title }}</x-slot:title>
 
-    <section class="min-h-screen bg-black text-[#F4EFE7] flex">
+{{-- WRAPPER UTAMA: Flexbox untuk membagi Sidebar (Kiri) dan Konten (Kanan) --}}
+<div class="min-h-screen bg-[#0e0f0b] text-[#F4EFE7] flex font-poppins mt-5">
 
-        {{-- SIDEBAR --}}
-        <aside class="w-72 bg-[#2e2e2c] py-24 px-8 flex flex-col">
-            <h2 class="text-3xl">HALO,</h2>
-            <h1 class="text-5xl mb-10 uppercase">PENGGUNA!</h1>
+    {{-- ================= SIDEBAR ================= --}}
+    {{-- sticky top-0 h-screen: Agar sidebar tetap diam saat konten di-scroll --}}
+    <aside
+        class="w-72 bg-[#1a1a19] border-r border-white/10 py-12 px-8 flex flex-col sticky top-0 h-screen overflow-y-auto hidden md:flex shrink-0">
 
+        <h2 class="text-xl text-gray-400 font-light mb-1">HALO,</h2>
+        {{-- Menampilkan nama user (optional, jika ada di session) --}}
+        <h1 class="text-3xl font-bebas tracking-wide mb-12 uppercase text-[#e9d9c9] truncate">
+            {{ session('nama') ?? 'PENGGUNA' }}!
+        </h1>
+
+        <nav class="space-y-4 flex-1">
+
+            {{-- Menu 1: Profil --}}
             <a href="{{ route('customer.profile') }}"
-                class="w-full py-3 bg-black/40 border border-[#F4EFE7] rounded-xl mb-3 text-center">
+                class="group flex items-center gap-3 w-full py-3 px-4 rounded-xl text-left transition duration-300
+                    {{ Route::is('customer.profile') ? 'bg-[#e9d9c9] text-black font-bold shadow-[0_0_15px_rgba(233,217,201,0.3)]' : 'hover:bg-white/5 text-gray-400 hover:text-white' }}">
+
+                {{-- Ikon User --}}
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 {{ Route::is('customer.profile') ? 'text-black' : 'text-gray-500 group-hover:text-white' }}"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
                 Informasi Akun
             </a>
 
-            <a href="{{ route('customer.profile.activity') }}" class="w-full py-3 bg-transparent text-[#F4EFE7] text-center">
-                Aktivitas Saya
+            {{-- Menu 2: Riwayat (Aktif) --}}
+            <a href="{{ route('customer.transaction.history') }}" {{-- Pastikan route name benar --}}
+                class="group flex items-center gap-3 w-full py-3 px-4 rounded-xl text-left transition duration-300
+                   {{ Route::is('customer.transaction.history') ? 'bg-[#e9d9c9] text-black font-bold shadow-[0_0_15px_rgba(233,217,201,0.3)]' : 'hover:bg-white/5 text-gray-400 hover:text-white' }}">
+
+                {{-- Ikon Riwayat --}}
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 {{ Route::is('transaction.history') ? 'text-black' : 'text-gray-500 group-hover:text-white' }}"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+                Riwayat Transaksi
             </a>
-        </aside>
+
+        </nav>
+
+        {{-- Tombol Logout (Optional di bawah sidebar) --}}
+        {{-- <form action="/logout" method="POST"> @csrf <button class="...">Logout</button> </form> --}}
+    </aside>
 
 
         {{-- 

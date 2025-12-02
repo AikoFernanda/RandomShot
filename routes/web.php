@@ -7,10 +7,12 @@ use App\Http\Controllers\AuthenticationController; // use alamat_lengkap; Perint
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProfileActivityController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TransactionHistoryController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\PaymentController;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 
 // Import controller admin (di dalam folder Admin)
 use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
@@ -50,15 +52,19 @@ Route::prefix('customer')->name('customer.')
 
         Route::post('/cart/select-table', [CartController::class, 'selectTable'])->name('cart.selectTable');
 
-        Route::get('/table-activity', [ProfileActivityController::class, 'index'])->name('profile.activity');
-
-        Route::get('/cafe-activity', [ProfileActivityController::class, 'index2'])->name('profile.activity.cafe');
-
         Route::get('/transaction-history', [TransactionHistoryController::class, 'index'])->name('transaction.history');
+
+        Route::post('/transaction-history', [TransactionHistoryController::class, 'show'])->name('transaction.detail');
 
         Route::post('/checkout', [CheckoutController::class, 'processCheckout'])->name('checkout');
 
         Route::get('/payment/{transaction}', [CheckoutController::class, 'index'])->name('payment');
+
+        Route::post('/payment-cancel', [PaymentController::class, 'cancelTransaction'])->name('payment.cancel');
+
+        Route::post('/payment', [PaymentController::class, 'processPayment'])->name('payment.validation');
+
+        Route::get('/invoice/{transaction}', [PaymentController::class, 'index'])->name('invoice');
     });
 
 // --- Rute untuk 'Tamu' dan Customer ---

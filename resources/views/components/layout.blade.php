@@ -42,6 +42,7 @@
 <body>
     <x-Header></x-Header>
     {{-- <x-Header>{{ $title }}</x-Header> --}}
+
     <main>
         {{ $slot }}
     </main>

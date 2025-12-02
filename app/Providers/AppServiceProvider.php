@@ -23,8 +23,8 @@ class AppServiceProvider extends ServiceProvider
         //
         // tambahkan relation::morphMap 
         Relation::morphMap([
-            'menu' => \App\Models\Menu::class,
-            'table' => \App\Models\Table::class,
+            // 'menu' => \App\Models\Menu::class,
+            // 'table' => \App\Models\Table::class,
             // Nanti  bisa tambahkan 'admin', 'customer', dll. jika dibutuhkan di sini
             // Ini untuk kasus relasi model antara detail transaksi, table, dan menu
             // MorphMap adalah "buku terjemahan" di mana kamu memberi tahu Laravel: "Hei Laravel, jika kamu lihat string 'menu' di database, itu maksudnya adalah Model App\Models\Menu."
