@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Table;
 use App\Models\Reservation;
-use Carbon\Carbon; // Import Carbon untuk mengelola tanggal
+use Carbon\Carbon;
 
 class ReservationController extends Controller
 {
@@ -28,26 +28,68 @@ class ReservationController extends Controller
         ]);
     }
 
+    public function show($id)
+    {
+        // 1. Cari meja
+        $table = Table::findOrFail($id);
+        
+        // 2. Ambil booking yang relevan (hari ini ke depan)
+        $bookedData = Reservation::where('table_id', $id)
+            ->whereDate('waktu_mulai', '>=', Carbon::today())
+            ->get();
+        
+        // 3. Format data untuk JavaScript (Grouping by Date)
+        $bookedSlotsByDate = $bookedData
+            ->groupBy(function ($reservation) {
+                // Key: Tanggal (Y-m-d)
+                return Carbon::parse($reservation->waktu_mulai)->format('Y-m-d');
+            })
+            ->map(function ($reservations) {
+                // Value: Array Jam Mulai (H:i)
+                return $reservations->map(function ($reservation) {
+                    return Carbon::parse($reservation->waktu_mulai)->format('H:i');
+                })->toArray(); // Pastikan jadi array murni
+            });
+        
+        return view('reservation.table_detail', [
+            'title' => 'Detail Meja',
+            'table' => $table,
+            'hargaSiang' => $table->tarif_per_jam_siang,
+            'hargaSore' => $table->tarif_per_jam_sore,
+            'hargaMalam' => $table->tarif_per_jam_malam,
+            'bookedSlotsJS' => $bookedSlotsByDate, // Kirim Collection langsung, blade akan otomatis json_encode di @json atau di script
+            // Tambahkan data unpaid transaction
+            'hasUnpaid' => false, // Default false
+            'unpaidTransactionId' => null
+        ]);
+    }
+
     public function store(Request $request)
     {
-        // validate
+        // 1. Validasi
         $request->validate([
-            'table_id' => 'required|integer',
-            'tanggal_pemesanan' => 'required|date',
-            'selected_slots' => 'required|json'
+            'table_id' => 'required|exists:tables,table_id',
+            'tanggal_pemesanan' => 'required|date|after_or_equal:today', // Jangan boleh booking masa lalu
+            'selected_slots' => 'required' // json validation bisa tricky, cukup required dulu
         ]);
 
-        // ambil data dari db dan request post form
-        $table = Table::find($request->table_id);
-        $selectedSlots = json_decode($request->selected_slots, true); // Ubah JSON jadi array
+        // 2. Decode JSON
+        $selectedSlots = json_decode($request->selected_slots, true);
+        
+        // Cek jika decode gagal atau kosong
+        if (!$selectedSlots || count($selectedSlots) === 0) {
+            return redirect()->back()->with('error', 'Silakan pilih slot waktu terlebih dahulu.');
+        }
 
-        // Hitung total harga reservasi
+        $table = Table::find($request->table_id);
+
+        // 3. Hitung Total
         $totalReservationPrice = 0;
         foreach ($selectedSlots as $slot) {
             $totalReservationPrice += $slot['price'];
         }
 
-        // susun data disimpan session
+        // 4. Simpan ke Session
         $reservationData = [
             'table_id' => $table->table_id,
             'nama' => $table->nama,
@@ -57,88 +99,9 @@ class ReservationController extends Controller
             'total_price' => $totalReservationPrice
         ];
 
-        // simpan ke session 'cart.reservation'
-        session()->put('cart.reservation', $reservationData); // // INI ADALAH PENJAGA, mengoverwrite cart.reservation untuk mencegah dalam sesi ada 2 reservasi meja.
+        session()->put('cart.reservation', $reservationData);
 
-        return redirect()->route('cafe')->with('success', 'Meja Berhasil ditambahkan! Silahkan tambah menu yang diinginkan.');
-    }
-    
-    /**
-     * Display the specified resource.
-    */
-    public function show($id)
-    {
-        // Cari meja berdasarkan ID yang diklik
-        $table = Table::findorFail($id);
-        
-        // Ambil SEMUA slot yang sudah dibooking untuk meja ini
-        $bookedSlot = Reservation::where('table_id', "$id") // filter berdasarkan kolom pakai where, kalau berdasarkan relasi pakai whereHas
-        ->select('waktu_mulai')
-        ->get();
-        
-        $bookedSlotByDate = $bookedSlot
-        ->groupBy(function ($booking) {
-            // Ambil TANGGAL (YYYY-MM-DD) dari 'waktu_mulai'
-            return Carbon::parse($booking->waktu_mulai)->format('Y-m-d');
-        })
-        ->map(function ($day) {
-            // Ambil JAM (HH:MM:SS) dari 'waktu_mulai'
-            return $day->pluck('waktu_mulai')->map(function ($datetime) {
-                return Carbon::parse($datetime)->format('H:i:s');
-            });
-        });
-        
-        return view('reservation.table_detail', [
-            'title' => 'Detail Page',
-            'table' => $table,
-            'bookedSlot' => $bookedSlot,
-            'bookedSlotsJS' => $bookedSlotByDate->toJson(),
-            
-            'hargaSiang' => $table->tarif_per_jam_siang,
-            'hargaSore' => $table->tarif_per_jam_sore,
-            'hargaMalam' => $table->tarif_per_jam_malam  
-            
-        ]);
-    }
-    
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create() {}
-
-    /**
-     * Store a newly created resource in storage.
-     */
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // 5. Redirect ke Cart/Menu
+        return redirect()->route('cafe')->with('success', 'Meja berhasil dipilih! Silakan lanjut pilih menu.');
     }
 }
-
-/**
- * whereHas('transactionDetail', ...): Ini adalah perintah untuk "memfilter Reservation berdasarkan isi dari transactionDetail".
- * function ($query) use ($id): Ini adalah Closure (fungsi anonim) yang berisi filter untuk tabel transaction_details.
- * $query: Merujuk ke query builder untuk transaction_details.
- * use ($id): Ini penting agar kita bisa menggunakan variabel $id (dari URL) di dalam Closure ini.
- * $query->where(...): Ini adalah filter yang Anda inginkan, yang diterapkan pada tabel transaction_details.
- */

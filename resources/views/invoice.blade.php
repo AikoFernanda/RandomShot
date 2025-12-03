@@ -57,7 +57,7 @@
                 {{-- PESAN --}}
                 <p class="text-sm text-gray-600 leading-relaxed mb-8">
                     Terima kasih! Bukti pembayaran Anda telah kami terima. 
-                    Silakan cek status transaksi secara berkala pada profil Anda. Kami siap membantu jika status tidak kunjung berubah.
+                    Silakan cek status transaksi secara berkala pada riwayat transaksi Anda. Hubungi kami jika status tidak segera berubah.
                 </p>
 
                 {{-- TOMBOL AKSI --}}

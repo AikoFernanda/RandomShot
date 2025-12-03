@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Database\Eloquent\Relations\Relation; // tambahkan user relation
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View; // Import View
+use App\Models\Transaction; // Import Model
+use Illuminate\Support\Facades\Auth; // Import Auth
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,18 +22,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
-        // tambahkan relation::morphMap 
-        Relation::morphMap([
-            // 'menu' => \App\Models\Menu::class,
-            // 'table' => \App\Models\Table::class,
-            // Nanti  bisa tambahkan 'admin', 'customer', dll. jika dibutuhkan di sini
-            // Ini untuk kasus relasi model antara detail transaksi, table, dan menu
-            // MorphMap adalah "buku terjemahan" di mana kamu memberi tahu Laravel: "Hei Laravel, jika kamu lihat string 'menu' di database, itu maksudnya adalah Model App\Models\Menu."
-        ]);
-        // coba di tinker:
-        // $detail = App\Models\TransactionDetail::find(2)
-        // $detail->item  
-        // $detail // ini akan menampilkan perilaku 'lazy loading' laravel
+        // View Composer: Jalankan fungsi ini setiap kali view 'components.header' dipanggil
+        View::composer('components.header', function ($view) {
+            $hasUnpaid = false;
+
+            // Cek jika user login (sesuaikan dengan logic loginmu, misal session('user_id'))
+            if (session()->has('user_id')) {
+                $hasUnpaid = Transaction::where('customer_id', session('user_id'))
+                    ->where('status_transaksi', 'Unpaid')
+                    ->exists();
+            }
+
+            // Kirim variabel $hasUnpaid ke view
+            $view->with('hasUnpaid', $hasUnpaid);
+        });
     }
 }

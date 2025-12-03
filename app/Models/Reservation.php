@@ -29,7 +29,8 @@ class Reservation extends Model
         'waktu_mulai',
         'waktu_selesai',
         'status_reservasi',
-        'tanggal_reservasi'
+        'tanggal_reservasi',
+        'harga'
     ];
 
     public function transaction()

@@ -37,7 +37,7 @@ class CheckoutController extends Controller
         $selectedTable = null;
 
         if ($reservationData) {
-            $selectedTable = $reservationData->table->nama_meja ?? 'Meja Terhapus'; // Ambil dari relasi table
+            $selectedTable = $reservationData->table->nama ?? 'Terjadi kesalahan sistem'; // Ambil dari relasi table
         } elseif ($itemsData->isNotEmpty()) {
             $selectedTable = $itemsData->first()->meja_tujuan;
         }
@@ -97,7 +97,7 @@ class CheckoutController extends Controller
                     ->exists();
 
                 if ($isBooked) {
-                    $errorMessage = 'Jadwal ' . $reservationData['nama'] . ' pada pukul ' . $slot['time'] . ' telah dipesan oleh pengguna lain.';
+                    $errorMessage = 'Jadwal ' . $reservationData['nama'] . ' pada pukul ' . $slot['time'] . ' telah dipesan.';
                     return redirect()->route('customer.cart')->with('error', $errorMessage);
                 }
             }
@@ -196,6 +196,7 @@ class CheckoutController extends Controller
                         'waktu_selesai'     => $selesai,
                         'status_reservasi'  => 'Menunggu Check-in',
                         'tanggal_reservasi' => $reservationData['tanggal_pemesanan'],
+                        'harga'             => $slot['price']
                     ]);
                 }
             }
