@@ -1,165 +1,193 @@
 <x-Layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    {{-- Banner --}}
-    <section class="relative w-full h-[500px] bg-black">
-        <img src="{{ asset('img/bgreservasi.png') }}" class="w-full h-full object-cover opacity-60">
+    {{-- WRAPPER UTAMA --}}
+    <div class="min-h-screen bg-[#0e0f0b] text-[#F4EFE7] font-poppins">
 
-        <div class="absolute inset-2 flex flex-col justify-center px-12">
-            <h1 class="text-7xl text-[#F4EFE7]">RANDOM SHOT<br>POOL AND CAFE</h1>
-            <p class="text-[#F4EFE7] mt-2 max-w-2xl text-xl">
-                Tempat ini hadir untuk memberikan pengalaman hiburan yang menyenangkan
-                dan nyaman bagi para pelanggan
-            </p>
-        </div>
-    </section>
+        {{-- 1. HERO BANNER --}}
+        <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden group">
+            <div class="absolute inset-0 bg-cover bg-center"
+                 style="background-image: url('{{ asset('img/bgreservasi.png') }}');">
+            </div>
+            {{-- Gradient Overlay --}}
+            <div class="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent"></div>
 
-    {{-- Category Buttons --}}
-    <section class="bg-black text-[#F4EFE7] px-12 py-10">
-        <div class="flex gap-3">
-            <a href="{{ route('reservation', ['kategori' => 'Biliar']) }}"
-                class="px-6 py-2 border border-white rounded-xl font-medium
-            {{ request('kategori') == 'Biliar' ? 'bg-[#FFF4E4] text-[#181C14]' : 'text-[#FFF4E4] hover:bg-[#FFF2E0]/20' }}">
-                Meja Biliar
-            </a>
-            <a href="{{ route('reservation', ['kategori' => 'Tenis']) }}"
-                class="px-6 py-2 border border-white rounded-xl font-medium
-            {{ request('kategori') == 'Tenis' ? 'bg-[#FFF4E4] text-[#181C14]' : 'text-[#FFF4E4] hover:bg-[#FFF2E0]/20' }}">
-                Meja Tenis
-            </a>
-            <a href="{{ route('reservation', ['kategori' => 'Playstation']) }}"
-                class="px-6 py-2 border border-white rounded-xl font-medium
-            {{ request('kategori') == 'Playstation' ? 'bg-[#FFF4E4] text-[#181C14]' : 'text-[#FFF4E4] hover:bg-[#FFF2E0]/20' }}">
-                PlayStation
-            </a>
-        </div>
-    </section>
-
-    {{-- Grid Meja --}}
-    <section class="bg-black text-[#F4EFE7] px-12 pb-24">
-        <h2 class="text-5xl mb-6">Daftar Meja</h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            @foreach ($tables as $table)
-                {{-- Item 1 --}}
-                <div class="bg-white/10 border border-white/20 rounded-xl p-4 shadow-lg">
-                    <img src="{{ asset('img/' . $table->nama_gambar) }}" class="w-full h-65 object-cover rounded-lg">
-
-                    <h3 class="text-4xl mt-4">{{ $table->nama }}</h3>
-                    <p class="text-gray-300">Mulai Rp{{ number_format($table->tarif_per_jam_siang, 0, ',', '.') }}/jam
-                    </p>
-
-                    <a href="{{ route('reservation.detail', $table->table_id) }}" {{-- route param reservation/{id} --}}
-                        class="mt-4 inline-block px-5 py-2 bg-white hover:bg-white/50 text-black hover:text-[#F4EFE7] rounded-lg font-semibold">
-                        Lihat Detail
-                    </a>
-                </div>
-            @endforeach
-        </div>
-    </section>
-
-    {{-- Ulasan --}}
-    <section class="bg-black text-[#F4EFE7] px-12 pb-20">
-
-        <div class="flex items-center justify-between mb-6">
-            <h2 class="text-5xl tracking-wide">ULASAN</h2>
-
-            <a href="/ulasan"
-                class="px-5 py-2 bg-white/30 text-[#F4EFE7] rounded-lg font-semibold hover:bg-gray-200 hover:text-black transition">
-                Lihat Ulasan Lainnya
-            </a>
-
+            <div class="absolute inset-0 flex flex-col justify-center px-6 md:px-16 container mx-auto">
+                <span class="text-[#e9d9c9] font-bold tracking-widest uppercase mb-2 animate-fadeIn">Reservasi Online</span>
+                <h1 class="text-5xl md:text-7xl font-bebas text-white leading-tight drop-shadow-lg mb-4">
+                    RANDOM SHOT<br>POOL & CAFE
+                </h1>
+                <p class="text-gray-300 max-w-xl text-base md:text-lg leading-relaxed border-l-4 border-[#e9d9c9] pl-4">
+                    Tempat hiburan terbaik dengan meja berkualitas profesional. 
+                    Booking sekarang sebelum kehabisan slot!
+                </p>
+            </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {{-- 2. FILTER KATEGORI  --}}
+        <div class=" top-20 z-30 bg-[#0e0f0b]/90 backdrop-blur-md border-b border-white/10 py-4">
+            <div class="container mx-auto px-6 flex justify-start md:justify-center overflow-x-auto no-scrollbar gap-3">
+                
+                {{-- Helper function for active class --}}
+                @php
+                    $activeClass = 'bg-[#e9d9c9] text-black border-[#e9d9c9] shadow-[0_0_15px_rgba(233,217,201,0.3)] font-bold';
+                    $inactiveClass = 'bg-white/5 text-gray-400 border-white/10 hover:bg-white/10 hover:text-white hover:border-white/30';
+                @endphp
 
-            {{-- Rating Summary --}}
-            <div class="bg-black/40 p-6 rounded-xl border border-white">
-                <p class="text-5xl font-bold">4.9 <span class="text-2xl">/ 5</span></p>
-                <p class="text-gray-300 mb-4">2518 Penilaian</p>
+                <a href="{{ route('reservation', ['kategori' => 'Biliar']) }}"
+                   class="px-6 py-2.5 rounded-full text-sm transition-all duration-300 border whitespace-nowrap {{ request('kategori') == 'Biliar' ? $activeClass : $inactiveClass }}">
+                     Meja Biliar
+                </a>
+                <a href="{{ route('reservation', ['kategori' => 'Tenis']) }}"
+                   class="px-6 py-2.5 rounded-full text-sm transition-all duration-300 border whitespace-nowrap {{ request('kategori') == 'Tenis' ? $activeClass : $inactiveClass }}">
+                     Meja Tenis
+                </a>
+                <a href="{{ route('reservation', ['kategori' => 'Playstation']) }}"
+                   class="px-6 py-2.5 rounded-full text-sm transition-all duration-300 border whitespace-nowrap {{ request('kategori') == 'Playstation' ? $activeClass : $inactiveClass }}">
+                     PlayStation
+                </a>
+            </div>
+        </div>
 
-                {{-- Bar Graph --}}
-                <div class="space-y-2">
-                    @for ($i = 5; $i >= 1; $i--)
-                        <div class="flex items-center gap-4">
-                            <span class="w-8">{{ $i }}</span>
-                            <div class="flex-1 h-2 bg-white/20 rounded-full">
-                                <div class="h-2 bg-yellow-400 rounded-full w-[{{ rand(40, 100) }}%]"></div>
+        {{-- 3. GRID DAFTAR MEJA --}}
+        <div class="container mx-auto px-6 md:px-12 py-12">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl md:text-4xl font-bebas text-white">
+                    DAFTAR <span class="text-[#e9d9c9]">MEJA</span>
+                </h2>
+                <p class="text-sm text-gray-400 hidden md:block">Pilih meja favoritmu</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach ($tables as $table)
+                    <div class="group relative bg-[#1a1a19] border border-white/10 rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl hover:shadow-[#e9d9c9]/10">
+                        
+                        {{-- Gambar Meja --}}
+                        <div class="h-56 overflow-hidden relative">
+                            <img src="{{ asset('img/' . $table->nama_gambar) }}" 
+                                 class="w-full h-full object-cover" 
+                                 alt="{{ $table->nama }}">
+                            
+                            {{-- Overlay Gradient Bawah --}}
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#1a1a19] via-transparent to-transparent"></div>
+                            
+                            {{-- Badge Harga --}}
+                            <div class="absolute top-4 right-4 bg-black/60 backdrop-blur-sm border border-white/10 px-3 py-1 rounded-lg">
+                                <span class="text-[#e9d9c9] font-bold text-xs">Mulai</span>
+                                <span class="text-white font-bold text-sm block">
+                                    Rp{{ number_format($table->tarif_per_jam_siang, 0, ',', '.') }}<span class="text-[10px] font-normal text-gray-400">/jam</span>
+                                </span>
                             </div>
                         </div>
-                    @endfor
-                </div>
-            </div>
 
-            {{-- Individual Reviews --}}
-            <div class="space-y-6">
+                        {{-- Info Meja --}}
+                        <div class="p-6 relative">
+                            <h3 class="text-2xl font-bebas text-white mb-2 group-hover:text-[#e9d9c9] transition-colors">
+                                {{ $table->nama }}
+                            </h3>
+                            
+                            {{-- Fasilitas Icons (Dummy/Static for now or dynamic if available) --}}
+                            <div class="flex gap-3 mb-6 opacity-60 grayscale group-hover:grayscale-0 transition-all">
+                                <img src="{{ asset('img/wifi.png') }}" class="w-5 h-5" title="WiFi">
+                                <img src="{{ asset('img/cafe.png') }}" class="w-5 h-5" title="Cafe">
+                                <img src="{{ asset('img/parking.png') }}" class="w-5 h-5" title="Parkir">
+                            </div>
 
-                {{-- Review Card 1 --}}
-                <div class="bg-black/40 p-6 rounded-xl border border-white">
-
-                    <div class="flex items-center gap-4">
-
-                        {{-- Avatar + Initials Style (mirip profil halaman akun) --}}
-                        <div
-                            class="w-14 h-14 rounded-full bg-white flex items-center justify-center 
-                        text-black text-xl font-bold">
-                            AJ
+                            <a href="{{ route('reservation.detail', $table->table_id) }}"
+                               class="block w-full text-center py-3 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-sm hover:bg-[#e9d9c9] hover:text-black hover:border-[#e9d9c9] transition-all duration-300">
+                                LIHAT DETAIL & BOOKING
+                            </a>
                         </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
 
-                        <div>
-                            <p class="font-bold text-lg">Anggita Jeon</p>
-                            <p class="text-yellow-400 text-sm">★★★★☆</p>
+        {{-- 4. SECTION ULASAN --}}
+        <div class="border-t border-white/10 bg-[#141414]">
+            <div class="container mx-auto px-6 md:px-12 py-16">
+                
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                    <div>
+                        <h2 class="text-4xl font-bebas text-white mb-2">APA KATA MEREKA?</h2>
+                        <p class="text-gray-400">Ulasan jujur dari pelanggan setia kami.</p>
+                    </div>
+
+                    <a href="#" class="group flex items-center gap-2 text-[#e9d9c9] font-bold text-sm hover:text-white transition">
+                        LIHAT SEMUA ULASAN 
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                    {{-- Card Rating Statistik --}}
+                    <div class="lg:col-span-1 bg-[#1a1a19] border border-white/10 p-8 rounded-2xl">
+                        <div class="flex items-baseline gap-2 mb-1">
+                            <span class="text-6xl font-bebas text-white">4.9</span>
+                            <span class="text-xl text-gray-500">/ 5.0</span>
+                        </div>
+                        <div class="flex text-yellow-400 mb-4 text-xl">★★★★★</div>
+                        <p class="text-sm text-gray-400 mb-8">Berdasarkan 2.518 ulasan pelanggan</p>
+
+                        {{-- Bar Statistik --}}
+                        <div class="space-y-3">
+                            @foreach([5,4,3,2,1] as $star)
+                                <div class="flex items-center gap-3 text-xs">
+                                    <span class="w-3">{{ $star }}</span>
+                                    <div class="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                        <div class="h-full bg-[#e9d9c9]" style="width: {{ $star >= 4 ? rand(70,90) : rand(5,20) }}%"></div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
-                    <p class="mt-4 text-gray-300 leading-relaxed">
-                        Suasananya nyaman! Pelayan ramah & tempatnya cozy!
-                    </p>
-                </div>
-
-                {{-- Review Card 2 --}}
-                <div class="bg-black/40 p-6 rounded-xl border border-white">
-
-                    <div class="flex items-center gap-4">
-
-                        {{-- Avatar --}}
-                        <div
-                            class="w-14 h-14 rounded-full bg-white flex items-center justify-center 
-                        text-black text-xl font-bold">
-                            AN
+                    {{-- Card Ulasan Individual --}}
+                    <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        {{-- Review 1 --}}
+                        <div class="bg-[#1a1a19] border border-white/5 p-6 rounded-2xl hover:border-white/20 transition duration-300">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center text-white font-bold text-xs">AJ</div>
+                                    <div>
+                                        <p class="font-bold text-white text-sm">Anggita Jeon</p>
+                                        <p class="text-xs text-gray-500">Member sejak 2023</p>
+                                    </div>
+                                </div>
+                                <span class="text-yellow-400 text-xs">★★★★★</span>
+                            </div>
+                            <p class="text-gray-300 text-sm leading-relaxed">
+                                "Suasananya nyaman banget! Pelayan ramah & tempatnya cozy. Meja biliar-nya lurus dan terawat. Pasti bakal balik lagi sih!"
+                            </p>
                         </div>
 
-                        <div>
-                            <p class="font-bold text-lg">Afra Naila</p>
-                            <p class="text-yellow-400 text-sm">★★★★★</p>
+                        {{-- Review 2 --}}
+                        <div class="bg-[#1a1a19] border border-white/5 p-6 rounded-2xl hover:border-white/20 transition duration-300">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white font-bold text-xs">AN</div>
+                                    <div>
+                                        <p class="font-bold text-white text-sm">Afra Naila</p>
+                                        <p class="text-xs text-gray-500">Member Gold</p>
+                                    </div>
+                                </div>
+                                <span class="text-yellow-400 text-xs">★★★★★</span>
+                            </div>
+                            <p class="text-gray-300 text-sm leading-relaxed">
+                                "Tempat biliar terbaik di Bogor! Harga terjangkau tapi fasilitas bintang lima. WC bersih, musholla ada. Mantap!"
+                            </p>
                         </div>
+
                     </div>
-
-                    <p class="mt-4 text-gray-300 leading-relaxed">
-                        Tempat biliar terbaik di Bogor! Harga terjangkau, kualitas meja mantap
-                    </p>
                 </div>
 
             </div>
-
         </div>
-    </section>
 
-    <footer class="bg-black text-[#F4EFE7] py-10">
-        <div class="px-12">
-            <img id="img-logo-random-shot" src="{{ asset('img/logo-rs.png') }}" alt="logo_random_shot"
-                class="w-64 h-auto mb-4">
-
-            <p class="text-gray-400 text-base mb-4">
-                Perumahan Indogreen Blok D1 No.1<br>
-                Gunung Sari, Citeureup, Bogor, Indonesia
-            </p>
-
-            <p class="text-gray-500 text-xs">
-                © 2025 Random Shot Pool and Cafe. All rights reserved.
-            </p>
-        </div>
-    </footer>
+    </div>
+    
+    <style>.no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }</style>
 
 </x-Layout>

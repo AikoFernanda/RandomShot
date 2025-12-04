@@ -77,7 +77,7 @@
                             {{-- 1. RESERVASI MEJA (Jika Ada) --}}
                             {{-- Perbaikan: Kita loop karena reservationData bisa jadi collection --}}
                             @if ($reservationData && $reservationData->isNotEmpty())
-                                @foreach($reservationData as $res)
+                                @foreach ($reservationData as $res)
                                     <div class="flex justify-between items-start">
                                         <div class="flex gap-4">
                                             {{-- 
@@ -93,8 +93,9 @@
                                             @else
                                                 <div
                                                     class="w-12 h-12 bg-[#e9d9c9]/10 rounded-lg flex items-center justify-center border border-[#e9d9c9]/20 shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#e9d9c9]"
-                                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        class="h-6 w-6 text-[#e9d9c9]" fill="none"
+                                                        viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             stroke-width="1.5"
                                                             d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -119,44 +120,67 @@
                                             </div>
                                         </div>
                                         {{-- Harga Meja --}}
-                                        {{-- Asumsi Anda menyimpan harga reservasi di suatu tempat atau 0 --}}
+                                        <p class="font-mono font-medium">
+                                            Rp{{ number_format($res->harga, 0, ',', '.') }}
+                                        </p>
                                     </div>
                                     <div class="w-full h-px bg-white/5 my-4"></div>
                                 @endforeach
                             @endif
 
                             {{-- 2. LIST MENU --}}
+                            {{-- 2. LIST MENU CAFE --}}
                             @foreach ($itemsData as $item)
-                                <div class="flex justify-between items-start">
+                                <div
+                                    class="flex justify-between items-start border-b border-white/5 pb-4 last:border-0 last:pb-0 mb-4 last:mb-0">
                                     <div class="flex gap-4">
+
                                         {{-- GAMBAR MENU --}}
                                         @if (optional($item->menu)->nama_gambar)
                                             <div
-                                                class="w-16 h-16 rounded-lg overflow-hidden border border-white/10 shadow-md shrink-0">
+                                                class="w-16 h-16 rounded-lg overflow-hidden border border-white/10 shadow-md shrink-0 bg-[#252525]">
                                                 <img src="{{ asset('img/menu/' . $item->menu->nama_gambar) }}"
-                                                    class="w-full h-full object-cover"
+                                                    class="w-full h-full object-contain p-1"
                                                     alt="{{ $item->menu->nama ?? 'Menu' }}">
                                             </div>
                                         @else
                                             <div
-                                                class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center border border-white/10 shrink-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400"
+                                                class="w-16 h-16 bg-white/5 rounded-lg flex items-center justify-center border border-white/10 shrink-0">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="1.5"
                                                         d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                                 </svg>
                                             </div>
                                         @endif
 
-                                        <div>
-                                            <p class="font-bold">{{ $item->menu->nama ?? 'Menu Terhapus' }}</p>
-                                            <p class="text-xs text-gray-400 mt-1">
+                                        <div class="flex flex-col">
+                                            {{-- Nama Menu --}}
+                                            <p class="font-bold text-base md:text-lg">
+                                                {{ $item->menu->nama ?? 'Menu Terhapus' }}</p>
+
+                                            {{-- Harga Satuan x Qty --}}
+                                            <p class="text-xs text-gray-400 mt-0.5">
                                                 {{ $item->quantity }} x
                                                 Rp{{ number_format($item->harga / $item->quantity, 0, ',', '.') }}
                                             </p>
+
+                                            {{-- BAGIAN NOTE (CATATAN) --}}
+                                            {{-- BAGIAN NOTE (CATATAN) --}}
+                                            @if (!empty($item->deskripsi))
+                                                <div
+                                                    class="mt-2 bg-white/5 px-3 py-2 rounded-lg border border-white/10 w-full max-w-[250px] md:max-w-[300px]">
+                                                    <p class="text-[10px] text-[#e9d9c9] font-bold uppercase tracking-wider mb-1"> Catatan:</p>
+                                                    <p class="text-[11px] text-gray-400 italic leading-relaxed break-words whitespace-pre-wrap">{{ $item->deskripsi }}</p>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
-                                    <p class="font-mono font-medium">Rp{{ number_format($item->harga, 0, ',', '.') }}
+
+                                    {{-- Harga Total Item --}}
+                                    <p class="font-mono font-medium text-white/90">
+                                        Rp{{ number_format($item->harga, 0, ',', '.') }}
                                     </p>
                                 </div>
                             @endforeach

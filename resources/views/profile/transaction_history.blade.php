@@ -1,30 +1,25 @@
 <x-Layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    {{-- WRAPPER UTAMA: Flexbox untuk membagi Sidebar (Kiri) dan Konten (Kanan) --}}
-    <div class="min-h-screen bg-[#0e0f0b] text-[#F4EFE7] flex font-poppins mt-5">
+    {{-- WRAPPER UTAMA: Samakan dengan Profile (pt-20) agar transisi halaman mulus --}}
+    <div class="min-h-screen bg-[#0e0f0b] text-[#F4EFE7] flex font-poppins pt-20">
 
-        {{-- ================= SIDEBAR ================= --}}
-        {{-- sticky top-0 h-screen: Agar sidebar tetap diam saat konten di-scroll --}}
+        {{-- ================= SIDEBAR (Compact Version) ================= --}}
         <aside
-            class="w-72 bg-[#1a1a19] border-r border-white/10 py-12 px-8 flex flex-col sticky top-0 h-screen overflow-y-auto hidden md:flex shrink-0">
+            class="w-64 bg-[#1a1a19] border-r border-white/10 py-6 px-6 flex flex-col sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto hidden md:flex shrink-0">
 
-            <h2 class="text-xl text-gray-400 font-light mb-1">HALO,</h2>
-            {{-- Menampilkan nama user (optional, jika ada di session) --}}
-            <h1 class="text-3xl font-bebas tracking-wide mb-12 uppercase text-[#e9d9c9] truncate">
+            <h2 class="text-lg text-gray-400 font-light mb-1">HALO,</h2>
+            <h1 class="text-2xl font-bebas tracking-wide mb-8 uppercase text-[#e9d9c9] truncate">
                 {{ session('nama') ?? 'PENGGUNA' }}!
             </h1>
 
-            <nav class="space-y-4 flex-1">
-
-                {{-- Menu 1: Profil --}}
+            <nav class="space-y-2 flex-1">
+                {{-- MENU PROFIL (Kondisi: Tidak Aktif / Hover style) --}}
                 <a href="{{ route('customer.profile') }}"
-                    class="group flex items-center gap-3 w-full py-3 px-4 rounded-xl text-left transition duration-300
+                    class="group flex items-center gap-3 w-full py-2.5 px-3 rounded-lg text-left transition duration-300 text-sm
                     {{ Route::is('customer.profile') ? 'bg-[#e9d9c9] text-black font-bold shadow-[0_0_15px_rgba(233,217,201,0.3)]' : 'hover:bg-white/5 text-gray-400 hover:text-white' }}">
-
-                    {{-- Ikon User --}}
                     <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5 {{ Route::is('customer.profile') ? 'text-black' : 'text-gray-500 group-hover:text-white' }}"
+                        class="h-4 w-4 {{ Route::is('customer.profile') ? 'text-black' : 'text-gray-500 group-hover:text-white' }}"
                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -32,37 +27,29 @@
                     Informasi Akun
                 </a>
 
-                {{-- Menu 2: Riwayat (Aktif) --}}
+                {{-- MENU RIWAYAT TRANSAKSI (Kondisi: Aktif) --}}
+                {{-- Perhatikan Route::is() saya kasih wildcard (*) jaga-jaga kalau ada detail transaksi --}}
                 <a href="{{ route('customer.transaction.history') }}"
-                    class="group flex items-center gap-3 w-full py-3 px-4 rounded-xl text-left transition duration-300
-                   {{ Route::is('customer.transaction.history') ? 'bg-[#e9d9c9] text-black font-bold shadow-[0_0_15px_rgba(233,217,201,0.3)]' : 'hover:bg-white/5 text-gray-400 hover:text-white' }}">
-
-                    {{-- Ikon Riwayat --}}
+                    class="group flex items-center gap-3 w-full py-2.5 px-3 rounded-lg text-left transition duration-300 text-sm
+                   {{ Route::is('customer.transaction.history*') ? 'bg-[#e9d9c9] text-black font-bold shadow-[0_0_15px_rgba(233,217,201,0.3)]' : 'hover:bg-white/5 text-gray-400 hover:text-white' }}">
                     <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5 {{ Route::is('customer.transaction.history') ? 'text-black' : 'text-gray-500 group-hover:text-white' }}"
+                        class="h-4 w-4 {{ Route::is('customer.transaction.history*') ? 'text-black' : 'text-gray-500 group-hover:text-white' }}"
                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                     </svg>
                     Riwayat Transaksi
                 </a>
-
             </nav>
-
-            {{-- Tombol Logout (Optional di bawah sidebar) --}}
-            {{-- <form action="/logout" method="POST"> @csrf <button class="...">Logout</button> </form> --}}
         </aside>
 
         {{-- ================= KONTEN UTAMA ================= --}}
-        {{-- flex-1: Mengambil sisa lebar layar --}}
-        <main class="flex-1 p-8 md:p-16 lg:px-24 w-full">
-
-            <div class="max-w-4xl mx-auto space-y-8">
-
-                {{-- HEADER HALAMAN --}}
-                <div class="mb-10 border-b border-white/10 pb-6">
-                    <h1 class="text-5xl font-bebas tracking-wide mb-2">RIWAYAT TRANSAKSI</h1>
-                    <p class="text-gray-400">Pantau status pesanan dan riwayat kuliner Anda di sini.</p>
+        <main class="flex-1 p-4 md:p-8 w-full">
+            {{-- Masukkan konten tabel/list transaksi di sini --}}
+            <div class="max-w-4xl mx-auto space-y-6">
+                <div class="border-b border-white/10 pb-3">
+                    <h1 class="text-3xl font-bebas tracking-wide mb-1">RIWAYAT TRANSAKSI</h1>
+                    <p class="text-sm text-gray-400">Pantau status pesanan Anda.</p>
                 </div>
 
                 {{-- LOOPING DATA TRANSAKSI --}}
@@ -142,10 +129,11 @@
                         {{-- Footer Kartu --}}
                         <div class="px-6 py-5 bg-black/20 border-t border-white/5">
                             <div class="flex justify-between items-center w-full mt-5">
-
-                                <p class="text-xs text-red-400 italic max-w-[60%]">
-                                    Pesanan akan dibatalkan dalam 15 menit setelah transaksi dibuat.
-                                </p>
+                                @if ($transaction->status_transaksi == 'Unpaid')
+                                    <p class="text-xs text-red-400 italic max-w-[60%]">
+                                        Pesanan akan dibatalkan dalam 15 menit setelah transaksi dibuat.
+                                    </p>
+                                @endif
 
                                 {{-- Tombol-tombol --}}
                                 <div class="flex justify-end gap-3">

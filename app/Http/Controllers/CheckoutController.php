@@ -173,7 +173,7 @@ class CheckoutController extends Controller
                             'transaction_id' => $transaction->transaction_id,
                             'menu_id'        => $item['menu_id'],
                             'quantity'       => $item['qty'],
-                            'deskripsi'      => null,
+                            'deskripsi'      => $item['note']??null,
                             'meja_tujuan'    => $mejaTujuan,
                             'status_pesanan' => $statusMenu,
                             'harga'          => $menu->harga * $item['qty']

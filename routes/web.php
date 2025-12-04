@@ -50,6 +50,8 @@ Route::prefix('customer')->name('customer.')
 
         Route::delete('/cart/remove', [CartController::class, 'destroy'])->name('cart.remove');
 
+        Route::post('/cart/update-note', [CartController::class, 'updateNote'])->name('cart.updateNote');
+
         Route::post('/cart/select-table', [CartController::class, 'selectTable'])->name('cart.selectTable');
 
         Route::get('/transaction-history', [TransactionHistoryController::class, 'index'])->name('transaction.history');

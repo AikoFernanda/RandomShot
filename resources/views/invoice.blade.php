@@ -62,13 +62,12 @@
 
                 {{-- TOMBOL AKSI --}}
                 <div class="space-y-3">
-                    <a href="/"
+                    <a href="{{route('home')}}"
                         class="block w-full py-3 bg-black text-white font-bold rounded-lg hover:bg-gray-800 transition">
                         Kembali ke Beranda
                     </a>
 
-                    {{-- Opsional: Tombol Cek Status (Reload) --}}
-                    <a href="{{ route('customer.invoice', $transaction->transaction_id) }}"
+                    <a href="#"
                         class="block w-full py-3 border border-gray-300 text-gray-600 font-bold rounded-lg hover:bg-gray-50 transition">
                         Beri Rating
                     </a>
