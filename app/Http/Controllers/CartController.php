@@ -150,6 +150,20 @@ class CartController extends Controller
         ]);
     }
 
+    public function updateNote(Request $request)
+    {
+        $cart = session()->get('cart', []);
+        $menuId = $request->input('menu_id');
+        $note = $request->input('note');
+
+        if (isset($cart['items'][$menuId])) {
+            $cart['items'][$menuId]['note'] = $note;
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->back()->with('success', 'Catatan berhasil disimpan!');
+    }
+
     /**
      * Store a newly created resource in storage.
      */

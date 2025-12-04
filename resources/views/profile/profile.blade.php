@@ -1,70 +1,55 @@
 <x-Layout>
-<x-slot:title>{{ $title }}</x-slot:title>
+    <x-slot:title>{{ $title }}</x-slot:title>
 
-{{-- WRAPPER UTAMA: Flexbox untuk membagi Sidebar (Kiri) dan Konten (Kanan) --}}
-<div class="min-h-screen bg-[#0e0f0b] text-[#F4EFE7] flex font-poppins mt-5">
+    <div class="min-h-screen bg-[#0e0f0b] text-[#F4EFE7] flex font-poppins pt-20">
 
-    {{-- ================= SIDEBAR ================= --}}
-    {{-- sticky top-0 h-screen: Agar sidebar tetap diam saat konten di-scroll --}}
-    <aside
-        class="w-72 bg-[#1a1a19] border-r border-white/10 py-12 px-8 flex flex-col sticky top-0 h-screen overflow-y-auto hidden md:flex shrink-0">
+        {{-- SIDEBAR --}}
+        <aside
+            class="w-64 bg-[#1a1a19] border-r border-white/10 py-6 px-6 flex flex-col sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto hidden md:flex shrink-0">
 
-        <h2 class="text-xl text-gray-400 font-light mb-1">HALO,</h2>
-        {{-- Menampilkan nama user (optional, jika ada di session) --}}
-        <h1 class="text-3xl font-bebas tracking-wide mb-12 uppercase text-[#e9d9c9] truncate">
-            {{ session('nama') ?? 'PENGGUNA' }}!
-        </h1>
+            <h2 class="text-lg text-gray-400 font-light mb-1">HALO,</h2>
+            <h1 class="text-2xl font-bebas tracking-wide mb-8 uppercase text-[#e9d9c9] truncate">
+                {{ session('nama') ?? 'PENGGUNA' }}!
+            </h1>
 
-        <nav class="space-y-4 flex-1">
-
-            {{-- Menu 1: Profil --}}
-            <a href="{{ route('customer.profile') }}"
-                class="group flex items-center gap-3 w-full py-3 px-4 rounded-xl text-left transition duration-300
+            <nav class="space-y-2 flex-1">
+                <a href="{{ route('customer.profile') }}"
+                    class="group flex items-center gap-3 w-full py-2.5 px-3 rounded-lg text-left transition duration-300 text-sm
                     {{ Route::is('customer.profile') ? 'bg-[#e9d9c9] text-black font-bold shadow-[0_0_15px_rgba(233,217,201,0.3)]' : 'hover:bg-white/5 text-gray-400 hover:text-white' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="h-4 w-4 {{ Route::is('customer.profile') ? 'text-black' : 'text-gray-500 group-hover:text-white' }}"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    Informasi Akun
+                </a>
+                <a href="{{ route('customer.transaction.history') }}"
+                    class="group flex items-center gap-3 w-full py-2.5 px-3 rounded-lg text-left transition duration-300 text-sm
+                   {{ Route::is('transaction.history') ? 'bg-[#e9d9c9] text-black font-bold shadow-[0_0_15px_rgba(233,217,201,0.3)]' : 'hover:bg-white/5 text-gray-400 hover:text-white' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="h-4 w-4 {{ Route::is('transaction.history') ? 'text-black' : 'text-gray-500 group-hover:text-white' }}"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    Riwayat Transaksi
+                </a>
+            </nav>
+        </aside>
 
-                {{-- Ikon User --}}
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 {{ Route::is('customer.profile') ? 'text-black' : 'text-gray-500 group-hover:text-white' }}"
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                Informasi Akun
-            </a>
-
-            {{-- Menu 2: Riwayat (Aktif) --}}
-            <a href="{{ route('customer.transaction.history') }}" {{-- Pastikan route name benar --}}
-                class="group flex items-center gap-3 w-full py-3 px-4 rounded-xl text-left transition duration-300
-                   {{ Route::is('customer.transaction.history') ? 'bg-[#e9d9c9] text-black font-bold shadow-[0_0_15px_rgba(233,217,201,0.3)]' : 'hover:bg-white/5 text-gray-400 hover:text-white' }}">
-
-                {{-- Ikon Riwayat --}}
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 {{ Route::is('transaction.history') ? 'text-black' : 'text-gray-500 group-hover:text-white' }}"
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                </svg>
-                Riwayat Transaksi
-            </a>
-
-        </nav>
-
-        {{-- Tombol Logout (Optional di bawah sidebar) --}}
-        {{-- <form action="/logout" method="POST"> @csrf <button class="...">Logout</button> </form> --}}
-    </aside>
-
-
-        {{-- 
-          PROFIL 
-          gabung SEMUA logic Alpine.js di satu x-data di <main> 
-        --}}
-        <main class="flex-1 py-24" x-data="{
-            nama: '{{ $user->name }}',
-            successMessage: '',
-            showNotification: false,
+        {{-- KONTEN UTAMA --}}
+        <main class="flex-1 p-4 md:p-8 w-full" x-data="{
+            nama: '{{ $user->nama }}',
         
             submitForm(formElement) {
                 const formData = new FormData(formElement);
+        
+                // Loading state: Disable tombol saat proses
+                const submitBtn = formElement.querySelector('button[type=submit]');
+                const originalText = submitBtn.innerText;
+                submitBtn.disabled = true;
+                submitBtn.innerText = 'Menyimpan...';
         
                 fetch(formElement.action, {
                         method: 'POST',
@@ -77,126 +62,154 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            this.successMessage = data.message;
-                            this.showNotification = true;
-                            setTimeout(() => { this.showNotification = false }, 3000);
+                            // 1. Update UI Avatar & Nama jika berubah
+                            if (formData.get('nama')) this.nama = formData.get('nama');
         
+                            // 2. Panggil SweetAlert Toast (dari Layout)
+                            Toast.fire({
+                                icon: 'success',
+                                title: data.message || 'Profil berhasil diperbarui!',
+                                iconColor: '#4ade80'
+                            });
                         } else {
-                            console.error('Update gagal');
-                            this.successMessage = 'Update Gagal! Cek kembali data anda.';
-        
-                            // Agar pop-up merah muncul
-                            this.showNotification = true;
-        
-                            // agar menyembunyikan pop-up, bukan cuma teks
-                            setTimeout(() => { this.showNotification = false }, 3000);
+                            // Error Validasi
+                            Toast.fire({
+                                icon: 'error',
+                                title: data.message || 'Update Gagal! Cek kembali data Anda.',
+                                iconColor: '#ef4444'
+                            });
                         }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        // Error Sistem/Jaringan
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Terjadi kesalahan sistem.',
+                            iconColor: '#ef4444'
+                        });
+                    })
+                    .finally(() => {
+                        // Kembalikan tombol ke kondisi semula
+                        submitBtn.disabled = false;
+                        submitBtn.innerText = originalText;
                     });
             }
         }">
 
-            {{-- AVATAR --}}
-            <div class="flex justify-center mb-10">
-                <div
-                    class="w-24 h-24 rounded-full bg-[#F4EFE7] 
-                        flex items-center justify-center 
-                        text-3xl font-bold text-black">
-                    {{-- 2 huruf pertama dari nama (sekarang ambil dari 'nama' di x-data) --}}
-                    <span x-text="nama.substring(0,2).toUpperCase()"></span>
-                </div>
-            </div>
+            <div class="max-w-4xl mx-auto space-y-6">
 
-            {{-- FORM --}}
-            <div class="max-w-3xl mx-auto space-y-6">
-
-                {{-- POP UP --}}
-                <div x-show="showNotification" x-text="successMessage" {{-- Animasi --}}
-                    x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-90"
-                    x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-300"
-                    x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-90"
-                    style="display:none;" {{-- Warna (Sudah Benar) --}}
-                    :class="{
-                        'bg-green-600 border-green-700': successMessage.toLowerCase().includes('berhasil'),
-                        'bg-red-600 border-red-700': successMessage.toLowerCase().includes('gagal')
-                    }"
-                    {{-- KELAS POSISI BARU (TENGAH ATAS) --}}
-                    class="fixed z-50 top-28 left-1/2 -translate-x-1/2 w-auto max-w-lg text-[#F4EFE7] px-6 py-3 rounded-lg shadow-lg font-semibold">
-                </div>
-
-                {{-- @submit.prevent untuk 'mencegat' submit --}}
-                <form action="{{ route('customer.profile.update') }}" method="POST"
-                    @submit.prevent="submitForm($event.target)" class="space-y-6 text-[#F4EFE7]">
-                    @csrf
-                    @method('PUT')
-
-                    {{-- NAMA --}}
-                    <div class="flex items-center gap-6">
-                        <label for="nama" class="w-40 text-base font-semibold">Nama</label>
-                        <input type="text" id="nama" name="nama" value="{{ $user->nama }}"
-                            class="flex-1 bg-transparent border border-[#F4EFE7] rounded-xl
-                                  px-4 py-3 focus:outline-none">
+                {{-- HEADER HALAMAN --}}
+                <div class="border-b border-white/10 pb-3 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bebas tracking-wide mb-1">INFORMASI AKUN</h1>
+                        <p class="text-sm text-gray-400">Kelola informasi profil Anda.</p>
                     </div>
 
-                    {{-- EMAIL --}}
-                    <div class="flex items-center gap-6">
-                        <label for="email" class="w-40 text-base font-semibold">Email</label>
-                        <input type="email" id="email" name="email" value="{{ $user->email }}" readonly
-                            class="flex-1 bg-gray-700/50 border border-[#F4EFE7] rounded-xl
-                                  px-4 py-3 focus:outline-none cursor-not-allowed">
-                    </div>
-
-                    {{-- NO HP --}}
-                    <div class="flex items-center gap-6">
-                        <label for="no_telepon" class="w-40 text-base font-semibold">No. HP</label>
-                        <input type="text" id="no_telepon" name="no_telepon" value="{{ $user->no_telepon }}"
-                            class="flex-1 bg-transparent border border-[#F4EFE7] rounded-xl
-                                  px-4 py-3 focus:outline-none">
-                    </div>
-
-                    {{-- JENIS KELAMIN --}}
-                    <div class="flex items-center gap-6">
-                        <label for="jenis_kelamin" class="w-40 text-base font-semibold">Jenis Kelamin</label>
-                        <select id="jenis_kelamin" name="jenis_kelamin"
-                            class="flex-1 text-[#F4EFE7] bg-transparent border border-[#F4EFE7] rounded-xl 
-                                   px-4 py-3 focus:outline-none
-                                   appearance-none bg-no-repeat bg-right-4"
-                            style="background-image: url('data:image/svg+xml;charset=UTF-8,<svg ... (ikon panah)> ... </svg>'); background-position-x: 95%;">
-
-                            <option value="Pria" @selected($user->jenis_kelamin == 'Pria')>Pria</option>
-                            <option value="Wanita" @selected($user->jenis_kelamin == 'Wanita')>Wanita</option>
-                        </select>
-                    </div>
-
-                    {{-- PASSWORD --}}
-                    <div class="flex items-center gap-6">
-                        <label for="password" class="w-40 text-base font-semibold">Password Baru</label>
-                        <input type="password" id="password" name="password"
-                            placeholder="Isi jika ingin ganti password"
-                            class="flex-1 bg-transparent border border-[#F4EFE7] rounded-xl
-                                  px-4 py-3 focus:outline-none">
-                    </div>
-
-                    {{-- TOMBOL SIMPAN --}}
-                    <div class="flex justify-end pt-4">
+                    <form method="POST" action="{{ route('user.logout') }}">
+                        @csrf
                         <button type="submit"
-                            class="bg-blue-600 hover:bg-blue-700 text-[#F4EFE7] font-bold py-2 px-6 rounded-lg transition">
-                            Simpan Perubahan
+                            class="px-3 py-1.5 border border-red-500/50 text-red-400 hover:bg-red-500 hover:text-white rounded-md transition text-xs font-bold flex items-center gap-2">
+                            Logout
                         </button>
-                    </div>
-                </form>
-            </div>
+                    </form>
+                </div>
 
-            {{-- LOGOUT DI KANAN --}}
-            <div class="max-w-3xl mx-auto mt-6 flex justify-end">
-                <a href="#" {{-- Ganti ke route('logout') --}}
-                    class="bg-red-700 px-16 py-3 text-[#F4EFE7] font-semibold 
-                           rounded-xl hover:bg-red-700/60 transition">
-                    Log Out
-                </a>
-            </div>
+                {{-- CARD FORM --}}
+                <div class="bg-white/5 border border-white/10 rounded-xl p-5 md:p-8 shadow-lg">
 
+                    <form action="{{ route('customer.profile.update') }}" method="POST"
+                        @submit.prevent="submitForm($event.target)" class="space-y-6">
+
+                        @csrf
+                        @method('PUT')
+
+                        <div class="flex flex-col lg:flex-row gap-8">
+
+                            {{-- KOLOM KIRI (AVATAR) --}}
+                            <div class="flex flex-col items-center lg:items-start gap-3 lg:w-1/4">
+                                <div
+                                    class="w-28 h-28 lg:w-32 lg:h-32 rounded-full bg-gradient-to-br from-[#e9d9c9] to-[#cbbcae] 
+                                    flex items-center justify-center text-4xl font-bebas text-black shadow-lg border-4 border-black/30 mx-auto lg:mx-0">
+                                    <span x-text="nama.substring(0,2).toUpperCase()"></span>
+                                </div>
+                                <div class="text-center lg:text-left">
+                                    <h3 class="text-base font-bold text-white mb-0.5" x-text="nama"></h3>
+                                    <p class="text-xs text-gray-400">Customer Member</p>
+                                </div>
+                            </div>
+
+                            {{-- KOLOM KANAN (INPUT) --}}
+                            <div class="flex-1 space-y-4 lg:border-l lg:border-white/10 lg:pl-8">
+
+                                {{-- Nama --}}
+                                <div class="space-y-1">
+                                    <label for="nama"
+                                        class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Nama
+                                        Lengkap</label>
+                                    <input type="text" id="nama" name="nama" value="{{ $user->nama }}"
+                                        x-model="nama"
+                                        class="w-full bg-black/20 border border-white/20 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#e9d9c9] focus:ring-1 focus:ring-[#e9d9c9] transition">
+                                </div>
+
+                                {{-- Email --}}
+                                <div class="space-y-1 opacity-70">
+                                    <label for="email"
+                                        class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Email</label>
+                                    <input type="email" id="email" name="email" value="{{ $user->email }}"
+                                        readonly
+                                        class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-400 cursor-not-allowed">
+                                </div>
+
+                                {{-- HP & Gender --}}
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="space-y-1">
+                                        <label for="no_telepon"
+                                            class="text-xs font-semibold text-gray-400 uppercase tracking-wider">No.
+                                            Handphone</label>
+                                        <input type="text" id="no_telepon" name="no_telepon"
+                                            value="{{ $user->no_telepon }}"
+                                            class="w-full bg-black/20 border border-white/20 rounded-lg px-3 py-2 text-sm text-white focus:border-[#e9d9c9] transition">
+                                    </div>
+
+                                    <div class="space-y-1">
+                                        <label for="jenis_kelamin"
+                                            class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Jenis
+                                            Kelamin</label>
+                                        <select id="jenis_kelamin" name="jenis_kelamin"
+                                            class="w-full bg-black/20 border border-white/20 rounded-lg px-3 py-2 text-sm text-white appearance-none cursor-pointer">
+                                            <option value="Pria" @selected($user->jenis_kelamin == 'Pria')>Pria</option>
+                                            <option value="Wanita" @selected($user->jenis_kelamin == 'Wanita')>Wanita</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                {{-- Password --}}
+                                <div class="space-y-1 pt-3 border-t border-white/10">
+                                    <label for="password"
+                                        class="text-xs font-semibold text-[#e9d9c9] uppercase tracking-wider">Ganti
+                                        Password</label>
+                                    <input type="password" id="password" name="password"
+                                        placeholder="Kosongkan jika tidak ingin mengubah"
+                                        class="w-full bg-black/20 border border-white/20 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600">
+                                </div>
+
+                            </div>
+                        </div>
+
+                        {{-- Tombol Simpan --}}
+                        <div class="flex justify-end pt-4 border-t border-white/10">
+                            <button type="submit"
+                                class="bg-[#e9d9c9] hover:bg-white text-black font-bold py-2.5 px-6 rounded-lg shadow-lg transition text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                                Simpan Perubahan
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
         </main>
 
-    </section>
-
+    </div>
 </x-Layout>

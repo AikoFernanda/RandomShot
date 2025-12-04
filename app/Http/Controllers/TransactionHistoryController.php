@@ -60,13 +60,13 @@ class TransactionHistoryController extends Controller
 
         // 3. Siapkan Data untuk View
         $itemsData = $transaction->transactionDetails;
-        $reservationData = $transaction->reservations->first();
+        $reservationData = $transaction->reservations;
 
-        $selectedTable = null;
-        if ($reservationData) {
-            $selectedTable = $reservationData->table->nama_meja ?? 'Meja Terhapus';
-        } elseif ($itemsData->isNotEmpty()) {
-            $selectedTable = $itemsData->first()->meja_tujuan;
+        if ($reservationData->isNotEmpty()) {
+            // ambil nama meja pertama
+            $selectedTable = $reservationData->first()->table->nama_meja;
+        } else {
+            $selectedTable = $itemsData->first()->meja_tujuan ?? null;
         }
 
         return view('profile.transaction-detail', [

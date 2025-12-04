@@ -57,18 +57,17 @@
                 {{-- PESAN --}}
                 <p class="text-sm text-gray-600 leading-relaxed mb-8">
                     Terima kasih! Bukti pembayaran Anda telah kami terima. 
-                    Silakan cek status transaksi secara berkala pada profil Anda. Kami siap membantu jika status tidak kunjung berubah.
+                    Silakan cek status transaksi secara berkala pada riwayat transaksi Anda. Hubungi kami jika status tidak segera berubah.
                 </p>
 
                 {{-- TOMBOL AKSI --}}
                 <div class="space-y-3">
-                    <a href="/"
+                    <a href="{{route('home')}}"
                         class="block w-full py-3 bg-black text-white font-bold rounded-lg hover:bg-gray-800 transition">
                         Kembali ke Beranda
                     </a>
 
-                    {{-- Opsional: Tombol Cek Status (Reload) --}}
-                    <a href="{{ route('customer.invoice', $transaction->transaction_id) }}"
+                    <a href="#"
                         class="block w-full py-3 border border-gray-300 text-gray-600 font-bold rounded-lg hover:bg-gray-50 transition">
                         Beri Rating
                     </a>
