@@ -67,7 +67,7 @@
                         Kembali ke Beranda
                     </a>
 
-                    <a href="#"
+                    <a href="{{ route('review') }}"
                         class="block w-full py-3 border border-gray-300 text-gray-600 font-bold rounded-lg hover:bg-gray-50 transition">
                         Beri Rating
                     </a>

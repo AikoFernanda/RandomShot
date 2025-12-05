@@ -17,22 +17,6 @@
                 <p class="text-[#F4EFE7]">Silahkan membuat akun untuk melanjutkan</p>
             </div>
 
-            <!-- notifikasi kesalahan-->
-            <div>
-                @if ($errors->any() || session('error'))
-                    <div id='popup-error'
-                        class="text-red-600 bg-red-100 p-2.5 border border-red-500 rounded-[5px] mb-[15px]">
-                        <strong>Oops! Ada yang salah:</strong>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                            <li>{{ session('error') }}</li>
-                        </ul>
-                    </div>
-                @endif
-            </div>
-
             <!-- Form Pendaftaran -->
             <form action="{{ route('register.validation') }}" method="POST" class="space-y-4">
                 @csrf

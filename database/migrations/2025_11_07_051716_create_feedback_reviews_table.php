@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('feedback_reviews', function (Blueprint $table) {
             $table->id('feedback_review_id');
             $table->foreignId('customer_id')->constrained('users', 'user_id');
+            $table->float('rating');
             $table->string('feedback')->nullable();
             $table->string('review')->nullable();
-            $table->float('rating')->nullable();
             $table->timestamps();
         });
     }

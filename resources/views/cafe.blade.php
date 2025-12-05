@@ -133,7 +133,7 @@
                                 {{-- Tombol Aksi --}}
                                 @if ($menu->stok > 0)
                                     @if (!$isLoggedIn)
-                                        <a href="{{ route('login') }}" onclick="return confirm('Login dulu ya kak!');"
+                                        <a href="{{ route('login.required') }}"
                                             class="block w-full py-2 rounded-lg bg-white/10 hover:bg-[#e9d9c9] hover:text-black text-xs font-bold text-center transition">
                                             + Tambah
                                         </a>

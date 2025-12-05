@@ -11,23 +11,7 @@
             <!-- Header Form -->
             <div class="text-center mb-8">
                 <h1 class="text-5xl font-bold-1/2 text-[#F4EFE7] mb-2">Selamat Datang</h1>
-                <p class="text-[#F4EFE7]">Silahkan login untuk ke laman selanjutnya</p>
-            </div>
-
-            <!-- notifikasi kesalahan -->
-            <div>
-                @if ($errors->any() || session('error'))
-                    <div id='popup-error'
-                        class="text-red-600 bg-red-100 p-2.5 border border-red-500 rounded-[5px] mb-[15px]">
-                        <strong>Oops! Ada yang salah:</strong>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                            <li>{{ session('error') }}</li>
-                        </ul>
-                    </div>
-                @endif
+                <p class="text-[#F4EFE7]">Silahkan masuk untuk ke laman selanjutnya</p>
             </div>
 
             <!-- Form Login -->
@@ -52,7 +36,7 @@
                 <div class="pt-4">
                     <button type="submit"
                         class="w-full bg-[#F4EFE7] border border-black hover:bg-[#273520] hover:border border-white text-black hover:text-white font-bold py-3 px-4 rounded-lg transition duration-200">
-                        Login
+                        Masuk
                     </button>
                 </div>
             </form>

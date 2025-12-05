@@ -23,7 +23,7 @@ class CheckRole
         // dd($userRole); // debug
 
         if (!$userRole) {
-             return redirect()->route('login'); // jika tidak punya peran (tamu) paksa login
+             return redirect()->route('login')->with('error', 'Silahkan Masuk terlebih dahulu'); // jika tidak punya peran (tamu) paksa login
         }
         // cek $userRole
         if (!in_array(($userRole), $roles)) {
