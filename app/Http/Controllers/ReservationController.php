@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Models\Table;
 use App\Models\Reservation;
+use App\Models\FeedbackReview;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB; 
 
 class ReservationController extends Controller
 {
@@ -22,9 +25,30 @@ class ReservationController extends Controller
 
         $tables = $query->get();
 
+        // ambil 3 review terbaru dengan rating tertinggi >=4
+        $displayReviews = FeedbackReview::with('customer')
+        ->where('rating', '>=', 4)
+        ->latest()
+        ->limit(3)
+        ->get();
+
+        // hitung statistik
+        $totalReviews = FeedbackReview::count();
+        $averageRating = FeedbackReview::avg('rating') ?? 0;
+
+        // hitung persentase bintang
+        $starCounts = FeedbackReview::select('rating', DB::raw('count(*) as total'))
+        ->groupBy('rating')
+        ->pluck('total', 'rating')
+        ->toArray();
+
         return view('reservation.table_reservation', [
             'title' => 'Reservation Page',
-            'tables' => $tables
+            'tables' => $tables,
+            'displayReviews' => $displayReviews,
+            'totalReviews' => $totalReviews,
+            'averageRating' => $averageRating,
+            'starCounts' => $starCounts
         ]);
     }
 

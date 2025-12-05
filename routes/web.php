@@ -11,14 +11,14 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TransactionHistoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PaymentController;
-use App\Models\Transaction;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 
 // Import controller admin (di dalam folder Admin)
 use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
 use App\Http\Controllers\Admin\TableController as AdminTableController;
 use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
-use Psy\ManualUpdater\Checker;
+use App\Http\Controllers\FeedbackReviewController;
 
 // --- Rute khusus untuk 'Tamu' ---
 Route::middleware('guest')->group(function () {
@@ -67,6 +67,8 @@ Route::prefix('customer')->name('customer.')
         Route::post('/payment', [PaymentController::class, 'processPayment'])->name('payment.validation');
 
         Route::get('/invoice/{transaction}', [PaymentController::class, 'index'])->name('invoice');
+
+        Route::post('/review', [FeedbackReviewController::class, 'store'])->name('review.store');
     });
 
 // --- Rute untuk 'Tamu' dan Customer ---
@@ -76,13 +78,9 @@ Route::middleware('block')->group(function () {
         return view('landing', ['title' => 'Landing Page']);
     })->name('landing');
 
-    Route::get('/home', function () {
-        return view('home', ['title' => 'Home Page']);
-    })->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    Route::get('/review', function () {
-        return view('review', ['title' => 'Review']);
-    })->name('review');
+    Route::get('/review', [FeedbackReviewController::class, 'index'])->name('review');
 
     Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation');
 
@@ -99,6 +97,10 @@ Route::middleware('block')->group(function () {
     Route::get('/about', function () {
         return view('about', ['title' => 'About Us']);
     })->name('about');
+
+    Route::get('/login-required', function() {
+        return redirect()->route('login')->with('error', 'Silakan masuk terlebih dahulu');
+    })->name('login.required');
 });
 
 

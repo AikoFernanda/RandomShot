@@ -131,7 +131,17 @@
                             <div class="flex justify-between items-center w-full mt-5">
                                 @if ($transaction->status_transaksi == 'Unpaid')
                                     <p class="text-xs text-red-400 italic max-w-[60%]">
-                                        Pesanan akan dibatalkan dalam 15 menit setelah transaksi dibuat.
+                                        Pesanan akan dibatalkan dalam 15 menit setelah transaksi dibuat, segera
+                                        selesaikan pembayaran.
+                                    </p>
+                                @elseif ($transaction->status_transaksi == 'Pending')
+                                    <p class="text-xs text-blue-300 italic max-w-[60%]">
+                                        Sedang diverifikasi Admin.
+                                        <a href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20mau%20tanya%20status%20pesanan%20{{ $transaction->no_invoice }}%20kok%20belum%20berubah%20ya?"
+                                            target="_blank" class="underline font-bold hover:text-blue-200 transition">
+                                            Hubungi kami
+                                        </a>
+                                        jika status tidak berubah saat jam kerja.
                                     </p>
                                 @endif
 

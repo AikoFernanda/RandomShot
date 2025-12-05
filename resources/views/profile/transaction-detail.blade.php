@@ -129,7 +129,6 @@
                             @endif
 
                             {{-- 2. LIST MENU --}}
-                            {{-- 2. LIST MENU CAFE --}}
                             @foreach ($itemsData as $item)
                                 <div
                                     class="flex justify-between items-start border-b border-white/5 pb-4 last:border-0 last:pb-0 mb-4 last:mb-0">
@@ -166,7 +165,6 @@
                                                 Rp{{ number_format($item->harga / $item->quantity, 0, ',', '.') }}
                                             </p>
 
-                                            {{-- BAGIAN NOTE (CATATAN) --}}
                                             {{-- BAGIAN NOTE (CATATAN) --}}
                                             @if (!empty($item->deskripsi))
                                                 <div

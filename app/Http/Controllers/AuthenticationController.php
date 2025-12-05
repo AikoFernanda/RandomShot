@@ -83,7 +83,7 @@ class AuthenticationController extends Controller
             }
         } else
         {
-            return redirect()->route('login')->with('error', 'Email atau passwowrd yang anda masukkan salah');
+            return redirect()->route('login')->with('error', 'Email atau password yang anda masukkan salah');
         }
     }
 
@@ -99,7 +99,7 @@ class AuthenticationController extends Controller
         // 3. Regenerate Token CSRF Supaya form login berikutnya aman dari serangan CSRF lama.
         $request->session()->regenerateToken();
 
-        return redirect()->route('home')->with('logout_success', 'Harap Login Kembali!');
+        return redirect()->route('home')->with('success', 'Berhasil logout!');
     }
 
     /**
