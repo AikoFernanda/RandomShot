@@ -29,6 +29,7 @@ use App\Http\Controllers\Owner\SaleReportController;
 use App\Http\Controllers\Owner\OperationalCostController;
 use App\Http\Controllers\Owner\FinancialReportController;
 use App\Http\Controllers\Owner\AdminController;
+use App\Http\Controllers\Owner\FeedbackController;
 
 
 // --- Rute khusus untuk 'Tamu' ---
@@ -179,11 +180,7 @@ Route::prefix('owner')->name('owner.')
         Route::put('/biaya-operasional/{id}', [OperationalCostController::class, 'update'])->name('data.operasional.update');
         Route::delete('/biaya-operasional/{id}', [OperationalCostController::class, 'destroy'])->name('data.operasional.destroy');
 
-        Route::get('/feedback', function () {
-            return view('owner.feedback', [
-                'title' => 'Feedback Pelanggan',
-            ]);
-        })->name('feedback');
+        Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback');
     });
 
 
