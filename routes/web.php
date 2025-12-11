@@ -13,12 +13,16 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\FeedbackReviewController;
 
 // Import controller admin (di dalam folder Admin)
 use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
 use App\Http\Controllers\Admin\TableController as AdminTableController;
 use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
-use App\Http\Controllers\FeedbackReviewController;
+use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\MenuOrderController;
+use App\Http\Controllers\Admin\MenuController as AdminMenuController;
+
 
 // --- Rute khusus untuk 'Tamu' ---
 Route::middleware('guest')->group(function () {
@@ -30,9 +34,6 @@ Route::middleware('guest')->group(function () {
 
     Route::post('/login', [AuthenticationController::class, 'userLogin'])->name('login.validation');
 });
-
-
-
 
 // --- Rute untuk Customer ---
 Route::prefix('customer')->name('customer.')
@@ -98,7 +99,7 @@ Route::middleware('block')->group(function () {
         return view('about', ['title' => 'About Us']);
     })->name('about');
 
-    Route::get('/login-required', function() {
+    Route::get('/login-required', function () {
         return redirect()->route('login')->with('error', 'Silakan masuk terlebih dahulu');
     })->name('login.required');
 });
@@ -110,36 +111,38 @@ Route::prefix('admin')->name('admin.')
         'role:Employee'
     )
     ->group(function () {
-        Route::get('/reservation-data', [AdminReservationController::class, 'index'])
-            ->name('reservation');
 
-        Route::get('/table-data', [AdminTableController::class, 'index'])
-            ->name('table');
+        Route::get('/reservation', [AdminReservationController::class, 'index'])->name('reservation'); // Sesuai sidebar menu
 
-        Route::get('/data-meja', function () {
-            return view('admin.data-meja', [
-                'title' => 'Data Meja',
-            ]);
-        })->name('data.meja');
+        Route::post('/reservation/{id}/status', [AdminReservationController::class, 'updateStatus'])->name('reservation.update');  // Route untuk update status via AJAX
 
-        Route::get('/data-menu', function () {
-            return view('admin.data-menu', [
-                'title' => 'Data Menu',
-            ]);
-        })->name('data.menu');
+        Route::get('/data-pesanan', [MenuOrderController::class, 'index'])->name('order');
 
-        Route::get('/data-transaksi', function () {
-            return view('admin.data-transaksi', [
-                'title' => 'Data Transaksi',
-            ]);
-        })->name('transaksi');
+        Route::post('/pesanan/{id}/status', [MenuOrderController::class, 'updateStatus'])->name('order.update');
 
+        Route::get('/data-transactions', [TransactionController::class, 'index'])->name('transaction');
+
+        Route::get('/data-transactions/{id}', [TransactionController::class, 'show'])->name('transaction.show');
+
+        Route::put('/data-transactions/{id}', [TransactionController::class, 'update'])->name('transaction.update');
 
         Route::get('/customer-data', [AdminCustomerController::class, 'index'])
             ->name('customer'); //Tanda titik (.) di dalam view() adalah pengganti untuk garis miring (/) di dalam folder. perintah return view() untuk mencari dan menampilkan file HTML "cari file Blade (HTML) dan tampilkan isinya". Perintah ini tidak mengubah URL di browser, redirect('/...) itu yang mengubah alamat url.
 
         Route::post('/customer/{id}/status', [AdminCustomerController::class, 'updateStatus'])
             ->name('updateStatus'); // Rute ini akan menangani update status
+
+        // CRUD MENU
+        Route::get('/data-menu', [AdminMenuController::class, 'index'])->name('menu');
+        Route::post('/menu', [AdminMenuController::class, 'store'])->name('menu.store');
+        Route::put('/menu/{id}', [AdminMenuController::class, 'update'])->name('menu.update');
+        Route::delete('/menu/{id}', [AdminMenuController::class, 'destroy'])->name('menu.destroy');
+
+        // CRUD MEJA
+        Route::get('/data-meja', [AdminTableController::class, 'index'])->name('table');
+        Route::post('/meja', [AdminTableController::class, 'store'])->name('table.store');
+        Route::put('/meja/{id}', [AdminTableController::class, 'update'])->name('table.update');
+        Route::delete('/meja/{id}', [AdminTableController::class, 'destroy'])->name('table.destroy');
     });
 
 // --- Rute untuk Owner ---

@@ -30,7 +30,7 @@ class Table extends Model
         'tarif_per_jam_sore',
         'tarif_per_jam_malam',
         'nama_gambar',
-        'status_meja'
+        'status'
     ];
 
     /**

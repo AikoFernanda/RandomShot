@@ -5,99 +5,56 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request) // <-- Injeksi 'Request'
+    public function index(Request $request)
     {
+        // Query Dasar: Ambil user 'customer' & urutkan dari yang terbaru
+        $query = User::where('peran', 'customer')->latest();
 
-        // 1. Ambil dari request ('per_page'), jika tidak ada, default-nya 10.
-        $perPage = $request->input('per_page', 10);
-        // 2. Mulai query
-        $query = User::where('peran', 'customer');
-
-        // 3. Cek apakah ada input 'search'
+        // Logika Pencarian (Nama atau No HP)
+        // Pakai 'orWhere' agar placeholder search di view ("Cari Nama, No HP") berfungsi.
         if ($request->has('search') && $request->search != '') {
-            $searchTerm = $request->search;
+            $search = $request->search;
 
-            // 4. Tambahkan filter 'where' ke query (Cari di kolom 'nama')
-            $query->where(function ($q) use ($searchTerm) {
-                $q->where('nama', 'like', '%' . $searchTerm . '%');
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('no_telepon', 'like', "%{$search}%");
             });
         }
 
-        // 5. Gunakan variabel $perPage di paginate()
-        $customers = $query->paginate($perPage);
+        // Pagination Fixed (10 per halaman)
+        //    withQueryString() penting agar saat pindah ke halaman 2, hasil pencarian tidak hilang.
+        $customers = $query->paginate(10)->withQueryString();
 
-        // 6. Kembalikan view (sama seperti sebelumnya)
         return view('admin.customer_data', [
-            'title' => 'Data Customer',
+            'title' => 'Data Pelanggan',
             'customers' => $customers
-            // 'perPage' => $perPage // Opsional
         ]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update status customer via Fetch/AJAX.
      */
     public function updateStatus(Request $request, $id)
     {
-        // Cari customer berdasarkan ID, atau gagal (404)
-        $customer = User::findOrFail($id);
+        // Keamanan: Pastikan yang diedit benar-benar 'customer' (bukan admin/owner)
+        $customer = User::where('peran', 'customer')->findOrFail($id);
 
-        // Validasi data yang masuk (pastikan hanya 'Aktif' atau 'Nonaktif')
+        // 2. Validasi Input
         $request->validate([
-            'status' => 'required|string|in:Aktif,Nonaktif',
+            'status' => ['required', Rule::in(['Aktif', 'Nonaktif'])],
         ]);
 
-        // Update kolom status di database
+        // 3. Simpan Perubahan
         $customer->status = $request->status;
         $customer->save();
 
-        // Kembalikan respons JSON yang akan dibaca oleh fetch()
         return response()->json(['success' => true]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

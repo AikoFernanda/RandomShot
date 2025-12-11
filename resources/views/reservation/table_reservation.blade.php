@@ -49,42 +49,72 @@
         {{-- 3. GRID DAFTAR MEJA --}}
         <div class="container mx-auto px-6 md:px-12 py-12">
             <div class="flex items-center justify-between mb-8">
-                <h2 class="text-3xl md:text-4xl font-bebas text-white">DAFTAR <span class="text-[#e9d9c9]">MEJA</span>
-                </h2>
+                <h2 class="text-3xl md:text-4xl font-bebas text-white">DAFTAR <span class="text-[#e9d9c9]">MEJA</span></h2>
                 <p class="text-sm text-gray-400 hidden md:block">Pilih meja favoritmu</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach ($tables as $table)
-                    <div
-                        class="group relative bg-[#1a1a19] border border-white/10 rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl hover:shadow-[#e9d9c9]/10">
+                    @php
+                        // Cek status maintenance
+                        $isMaintenance = $table->status === 'Dalam Perbaikan';
+                    @endphp
+
+                    <div class="group relative bg-[#1a1a19] border border-white/10 rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl hover:shadow-[#e9d9c9]/10 {{ $isMaintenance ? 'opacity-75' : '' }}">
+                        
+                        {{-- GAMBAR MEJA --}}
                         <div class="h-56 overflow-hidden relative">
+                            {{-- Jika maintenance, tambah filter grayscale --}}
                             <img src="{{ asset('img/' . $table->nama_gambar) }}"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 {{ $isMaintenance ? 'grayscale filter brightness-50' : '' }}"
                                 alt="{{ $table->nama }}">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-[#1a1a19] via-transparent to-transparent">
-                            </div>
-                            <div
-                                class="absolute top-4 right-4 bg-black/60 backdrop-blur-sm border border-white/10 px-3 py-1 rounded-lg">
-                                <span class="text-[#e9d9c9] font-bold text-xs">Mulai</span>
-                                <span
-                                    class="text-white font-bold text-sm block">Rp{{ number_format($table->tarif_per_jam_siang, 0, ',', '.') }}<span
-                                        class="text-[10px] font-normal text-gray-400">/jam</span></span>
-                            </div>
+                            
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#1a1a19] via-transparent to-transparent"></div>
+                            
+                            {{-- BADGE HARGA (Hanya muncul jika TIDAK maintenance) --}}
+                            @if(!$isMaintenance)
+                                <div class="absolute top-4 right-4 bg-black/60 backdrop-blur-sm border border-white/10 px-3 py-1 rounded-lg">
+                                    <span class="text-[#e9d9c9] font-bold text-xs">Mulai</span>
+                                    <span class="text-white font-bold text-sm block">
+                                        Rp{{ number_format($table->tarif_per_jam_siang, 0, ',', '.') }}
+                                        <span class="text-[10px] font-normal text-gray-400">/jam</span>
+                                    </span>
+                                </div>
+                            @else
+                                {{-- BADGE MAINTENANCE (Muncul jika maintenance) --}}
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="bg-red-600/90 backdrop-blur-sm px-6 py-2 rounded-lg border border-red-400 shadow-xl transform rotate-[-5deg]">
+                                        <span class="text-white font-bebas tracking-widest text-xl">MAINTENANCE</span>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
+
+                        {{-- KONTEN BAWAH --}}
                         <div class="p-6 relative">
-                            <h3
-                                class="text-2xl font-bebas text-white mb-2 group-hover:text-[#e9d9c9] transition-colors">
-                                {{ $table->nama }}</h3>
-                            <div class="flex gap-3 mb-6 opacity-60 grayscale group-hover:grayscale-0 transition-all">
+                            <h3 class="text-2xl font-bebas text-white mb-2 {{ $isMaintenance ? 'text-gray-500' : 'group-hover:text-[#e9d9c9]' }} transition-colors">
+                                {{ $table->nama }}
+                            </h3>
+                            
+                            <div class="flex gap-3 mb-6 opacity-60 {{ $isMaintenance ? 'grayscale opacity-30' : 'grayscale group-hover:grayscale-0' }} transition-all">
                                 <img src="{{ asset('img/wifi.png') }}" class="w-5 h-5" title="WiFi">
                                 <img src="{{ asset('img/cafe.png') }}" class="w-5 h-5" title="Cafe">
                                 <img src="{{ asset('img/parking.png') }}" class="w-5 h-5" title="Parkir">
                             </div>
-                            <a href="{{ route('reservation.detail', $table->table_id) }}"
-                                class="block w-full text-center py-3 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-sm hover:bg-[#e9d9c9] hover:text-black hover:border-[#e9d9c9] transition-all duration-300">LIHAT
-                                DETAIL & BOOKING</a>
+
+                            {{-- TOMBOL BOOKING --}}
+                            @if($isMaintenance)
+                                {{-- Tombol Mati (Disabled) --}}
+                                <button disabled class="block w-full text-center py-3 rounded-xl bg-red-900/20 border border-red-500/30 text-red-400 font-bold text-sm cursor-not-allowed">
+                                    SEDANG DIPERBAIKI
+                                </button>
+                            @else
+                                {{-- Tombol Hidup --}}
+                                <a href="{{ route('reservation.detail', $table->table_id) }}"
+                                   class="block w-full text-center py-3 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-sm hover:bg-[#e9d9c9] hover:text-black hover:border-[#e9d9c9] transition-all duration-300">
+                                   LIHAT DETAIL & BOOKING
+                                </a>
+                            @endif
                         </div>
                     </div>
                 @endforeach

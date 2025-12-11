@@ -8,9 +8,7 @@
     <div class="max-w-6xl mx-auto flex justify-between items-center px-4 py-4">
 
         {{-- LOGO --}}
-        <a href="/">
             <img id="img-logo-random-shot" src="{{ asset('img/logo-rs.png') }}" alt="logo_random_shot" class="w-26 h-auto">
-        </a>
 
         @if (!request()->is('/'))
             <x-Navbar></x-Navbar>
