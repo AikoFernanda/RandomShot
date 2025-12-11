@@ -25,7 +25,8 @@ use App\Http\Controllers\Admin\MenuController as AdminMenuController;
 
 // import controller owner (didalam folder owner)
 use App\Http\Controllers\Owner\PerformanceController;
-
+use App\Http\Controllers\Owner\SaleReportController;
+use App\Http\Controllers\Owner\OperationalCostController;
 
 // --- Rute khusus untuk 'Tamu' ---
 Route::middleware('guest')->group(function () {
@@ -161,17 +162,17 @@ Route::prefix('owner')->name('owner.')
             ]);
         })->name('laporan.keuangan');
 
-        Route::get('/laporan-penjualan', function () {
-            return view('owner.sale-report', [
-                'title' => 'Laporan Penjualan',
-            ]);
-        })->name('laporan.penjualan');
+        Route::get('/laporan-penjualan', [SaleReportController::class, 'index'])->name('laporan.penjualan');
 
-        Route::get('/data-operasional', function () {
-            return view('owner.operational', [
-                'title' => 'Data Operasional',
-            ]);
-        })->name('data.operasional');
+        Route::get('/owner/transaksi/{id}', [SaleReportController::class, 'show'])->name('transaksi.detail');
+
+        Route::get('/biaya-operasional', [OperationalCostController::class, 'index'])->name('data.operasional');
+
+        // CRUD BIAYA OPERASIONAL
+        Route::get('/biaya-operasional', [OperationalCostController::class, 'index'])->name('data.operasional');
+        Route::post('/biaya-operasional', [OperationalCostController::class, 'store'])->name('data.operasional.store');
+        Route::put('/biaya-operasional/{id}', [OperationalCostController::class, 'update'])->name('data.operasional.update');
+        Route::delete('/biaya-operasional/{id}', [OperationalCostController::class, 'destroy'])->name('data.operasional.destroy');
 
         Route::get('/feedback', function () {
             return view('owner.feedback', [
