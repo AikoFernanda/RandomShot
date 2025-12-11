@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\MenuController as AdminMenuController;
 use App\Http\Controllers\Owner\PerformanceController;
 use App\Http\Controllers\Owner\SaleReportController;
 use App\Http\Controllers\Owner\OperationalCostController;
+use App\Http\Controllers\Owner\FinancialReportController;
 
 // --- Rute khusus untuk 'Tamu' ---
 Route::middleware('guest')->group(function () {
@@ -156,11 +157,7 @@ Route::prefix('owner')->name('owner.')
 
         Route::get('/performance', [PerformanceController::class, 'index'])->name('performance');
 
-        Route::get('/laporan-keuangan', function () {
-            return view('owner.finance-report', [
-                'title' => 'Laporan Keuangan',
-            ]);
-        })->name('laporan.keuangan');
+        Route::get('/laporan-keuangan', [FinancialReportController::class, 'index'])->name('laporan.keuangan');
 
         Route::get('/laporan-penjualan', [SaleReportController::class, 'index'])->name('laporan.penjualan');
 
