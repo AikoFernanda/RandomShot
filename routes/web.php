@@ -23,6 +23,9 @@ use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\MenuOrderController;
 use App\Http\Controllers\Admin\MenuController as AdminMenuController;
 
+// import controller owner (didalam folder owner)
+use App\Http\Controllers\Owner\PerformanceController;
+
 
 // --- Rute khusus untuk 'Tamu' ---
 Route::middleware('guest')->group(function () {
@@ -150,11 +153,7 @@ Route::prefix('owner')->name('owner.')
     ->middleware('role:Owner')
     ->group(function () {
 
-        Route::get('/performa', function () {
-            return view('owner.performance', [
-                'title' => 'Performa Bisnis',
-            ]);
-        })->name('performa');
+        Route::get('/performance', [PerformanceController::class, 'index'])->name('performance');
 
         Route::get('/laporan-keuangan', function () {
             return view('owner.finance-report', [

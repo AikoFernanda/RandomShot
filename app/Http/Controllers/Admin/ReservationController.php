@@ -24,8 +24,12 @@ class ReservationController extends Controller
                 // Logika waktu: Kalau tanggalnya hari ini, cek jamnya. Kalau tanggal lampau, pasti lewat.
                 $q->where('tanggal_reservasi', '<', Carbon::now()->format('Y-m-d'))
                     ->orWhere(function ($subQ) {
-                        $subQ->where('tanggal_reservasi', Carbon::now()->format('Y-m-d'))
-                            ->where('waktu_selesai', '<', Carbon::now()->format('H:i:s'));
+                        // Ambil waktu sekarang
+                        $now = Carbon::now();
+
+                        $subQ->where('tanggal_reservasi', $now->format('Y-m-d'))
+                            // Kirim Carbon object utuh, biar Laravel yang atur formatnya jadi Y-m-d H:i:s
+                            ->where('waktu_selesai', '<', $now);
                     });
             })
             ->update(['status_reservasi' => 'Selesai']);

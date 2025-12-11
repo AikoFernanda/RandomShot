@@ -45,7 +45,7 @@
     </style>
 </head>
 
-<body class="bg-[#F4EFE7]"> 
+<body class="bg-[#181C14] text-[#F4EFE7]">
 
     <div x-data="{ isSidebarOpen: false }" class="flex min-h-screen">
         
