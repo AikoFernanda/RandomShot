@@ -76,7 +76,7 @@ class AuthenticationController extends Controller
                 } elseif ($user->peran == 'Employee') {
                     return redirect()->route('admin.reservation')->with('success', 'Berhasil login, Selamat datang!');
                 } elseif ($user->peran == 'Owner') {
-                    return redirect()->route('owner.performa')->with('success', 'Berhasil login, Selamat datang!');
+                    return redirect()->route('owner.performance')->with('success', 'Berhasil login, Selamat datang!');
                 }
             } else {
                 return redirect()->route('login')->with('error', 'Akun anda telah di nonaktifkan');

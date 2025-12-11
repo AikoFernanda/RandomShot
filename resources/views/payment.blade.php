@@ -18,7 +18,7 @@
                 {{-- TIMER --}}
                 @php
                     $deadline = $transaction->created_at
-                        ? $transaction->created_at->addMinutes(2)
+                        ? $transaction->created_at->addMinutes(15)
                         : now()->addMinutes(2);
                     $sisaDetik = now()->diffInSeconds($deadline, false);
                 @endphp

@@ -1,15 +1,27 @@
 <x-layout-admin>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    {{-- Kartu Konten Utama (yang gelap) --}}
-    <div class="bg-[#3C3D37] rounded-2xl p-6 text-[#F4EFE7]">
-        {{-- search bar --}}
-        <form action="{{ route('admin.customer') }}" method="GET" class="mb-4">
-            <div class="relative">
-                <input type="text" name="search" placeholder="Cari berdasarkan nama..." value="{{ request('search') }}"
-                    {{-- Menampilkan query search saat ini --}}
-                    class="w-full bg-[#757572] rounded-lg py-3 pl-12 pr-4 text-[#F4EFE7] placeholder-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                {{-- Ikon search di dalam input --}}
+    {{-- WRAPPER --}}
+    <div class="min-h-screen bg-[#181C14] text-[#F4EFE7] font-poppins p-4 md:p-8">
+
+        {{-- HEADER --}}
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h1 class="text-3xl font-bebas tracking-wide text-white">DATA PELANGGAN</h1>
+                <p class="text-sm text-gray-400">Kelola informasi dan status akun customer.</p>
+            </div>
+        </div>
+
+        {{-- KARTU KONTEN UTAMA --}}
+        <div class="bg-[#3C3D37] rounded-2xl p-6 text-[#F4EFE7] shadow-lg border border-white/5">
+
+            {{-- 1. FORM PENCARIAN (Sama seperti Transaksi) --}}
+            <form action="{{ route('admin.customer') }}" method="GET" class="relative mb-6">
+                <input type="text" name="search" placeholder="Cari Nama, Email, atau No HP..."
+                    value="{{ request('search') }}"
+                    class="w-full bg-[#757572] rounded-lg py-3 pl-12 pr-12 text-[#F4EFE7] placeholder-gray-300 focus:outline-none focus:ring-1 focus:ring-[#F4EFE7] transition">
+
+                {{-- Ikon Search --}}
                 <span class="absolute left-4 top-1/2 -translate-y-1/2 text-[#F4EFE7]">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5">
@@ -17,124 +29,161 @@
                             d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                     </svg>
                 </span>
-                {{-- Tombol submit tersembunyi, form akan submit saat menekan Enter --}}
-            </div>
-        </form>
 
-        {{-- Wrapper Tabel agar bisa scroll horizontal di HP --}}
-        <div class="overflow-x-auto">
-            <table class="w-full min-w-[800px] text-sm text-left">
-                {{-- Header Tabel --}}
-                <thead class="text-[#F4EFE7] uppercase font-medium">
-                    <tr>
-                        <th scope="col" class="py-3 px-4">Nama Pengguna</th>
-                        <th scope="col" class="py-3 px-4">No. Handphone</th>
-                        <th scope="col" class="py-3 px-4">Email</th>
-                        <th scope="col" class="py-3 px-4">Alamat</th>
-                        <th scope="col" class="py-3 px-4">Status</th>
-                    </tr>
-                </thead>
+                {{-- Tombol X / Reset --}}
+                @if (request('search'))
+                    <a href="{{ route('admin.customer') }}" title="Hapus Pencarian"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-gray-300 hover:text-white hover:bg-white/20 transition duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                            stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </a>
+                @endif
+            </form>
 
-                {{-- Isi Tabel --}}
-                <tbody>
-                    @foreach ($customers as $customer)
-                        <tr class="border-b border-[#F4EFE7]/50">
-                            <td class="py-4 px-4 [#F4EFE7]space-nowrap">
-                                <div class="flex items-center space-x-3">
-                                    <span>{{ $customer->nama }}</span>
-                                </div>
-                            </td>
-                            <td class="py-4 px-4 [#F4EFE7]space-nowrap">{{ $customer->no_telepon }}</td>
-                            <td class="py-4 px-4 [#F4EFE7]space-nowrap">{{ $customer->email }}</td>
-                            <td class="py-4 px-4 [#F4EFE7]space-normal max-w-xs">{{ $customer->alamat }}</td>
-                            <td class="py-4 px-4 [#F4EFE7]space-nowrap">
-                                {{-- Status akun --}}
-                                {{-- 1. x-data: Kita 'simpan' statusnya. (Ganti 'Aktif' dengan data asli dari server, misal: '{{ $customer->status }}') 2. relative: Diperlukan agar ikon panah bisa diposisikan --}}
-                                {{-- 1. Tambahkan customerId dan fungsi updateStatus() ke x-data(Pastikan $customer->status dan $customer->id ada dari controller) --}}
-                                <div x-data="{
-                                    status: '{{ $customer->status }}',
-                                    customerId: {{ $customer->user_id }},
-                                    updateStatus() {
-                                        fetch(`/customer/${this.customerId}/status`, {
-                                                method: 'POST',
-                                                headers: {
-                                                    'Content-Type': 'application/json',
-                                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                                },
-                                                body: JSON.stringify({
-                                                    status: this.status
-                                                })
-                                            })
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                if (data.success) {
-                                                    console.log('Status berhasil diupdate!');
-                                
-                                                } else {
-                                                    console.error('Gagal update status.');
+            {{-- 2. TABEL DATA --}}
+            <div class="overflow-x-auto">
+                <table class="w-full min-w-[900px] text-sm text-left">
+                    {{-- Header Tabel --}}
+                    <thead class="text-[#ECDFCC]/75 uppercase font-medium border-b border-[#FFF3E1]/20">
+                        <tr>
+                            <th scope="col" class="py-4 px-4">Nama Pengguna</th>
+                            <th scope="col" class="py-4 px-4">No. Handphone</th>
+                            <th scope="col" class="py-4 px-4">Email</th>
+                            <th scope="col" class="py-4 px-4">Alamat</th>
+                            <th scope="col" class="py-4 px-4 text-center">Status Akun</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="text-[#F4EFE7]">
+                        @forelse ($customers as $customer)
+                            <tr class="border-b border-[#FFF3E1]/10 hover:bg-white/5 transition duration-200">
+                                {{-- Nama & Avatar --}}
+                                <td class="py-4 px-4">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-[#e9d9c9] text-black flex items-center justify-center font-bold text-xs">
+                                            {{ substr($customer->nama, 0, 1) }}
+                                        </div>
+                                        <span class="font-bold">{{ $customer->nama }}</span>
+                                    </div>
+                                </td>
+
+                                <td class="py-4 px-4 text-gray-300 font-mono">{{ $customer->no_telepon ?? '-' }}</td>
+                                <td class="py-4 px-4 text-gray-300">{{ $customer->email }}</td>
+                                <td class="py-4 px-4 text-gray-300 max-w-xs truncate" title="{{ $customer->alamat }}">
+                                    {{ $customer->alamat ?? '-' }}
+                                </td>
+
+                                {{-- STATUS & UPDATE (X-DATA) --}}
+                                <td class="py-4 px-4 text-center">
+                                    <div x-data="{
+                                        currentStatus: '{{ $customer->status }}',
+                                        customerId: {{ $customer->user_id }},
+                                    
+                                        confirmChange(event) {
+                                            const nextStatus = event.target.value;
+                                            event.target.value = this.currentStatus;
+                                    
+                                            // SweetAlert Konfirmasi (Style sudah konsisten Dark & Gold)
+                                            Swal.fire({
+                                                title: 'Ubah Status Akun?',
+                                                text: `Anda akan mengubah status ${this.currentStatus} menjadi ${nextStatus}.`,
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                background: '#1a1a19',
+                                                color: '#F4EFE7',
+                                                confirmButtonColor: '#e9d9c9',
+                                                cancelButtonColor: '#3C3D37',
+                                                confirmButtonText: '<span style=\'color:black; font-weight:bold;\'>Ya, Ubah</span>',
+                                                cancelButtonText: 'Batal',
+                                                reverseButtons: true
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    this.updateStatus(nextStatus);
                                                 }
                                             });
-                                    }
-                                }" class="relative w-fit">
+                                        },
+                                    
+                                        updateStatus(newStatus) {
+                                            fetch(`/admin/customer/${this.customerId}/status`, {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                                    },
+                                                    body: JSON.stringify({ status: newStatus })
+                                                })
+                                                .then(res => res.json())
+                                                .then(data => {
+                                                    if (data.success) {
+                                                        this.currentStatus = newStatus;
+                                    
+                                                        // Panggil Toast Global dari layout-admin agar konsisten (ada loading bar & warna sama)
+                                                        Toast.fire({
+                                                            icon: 'success',
+                                                            title: 'Status berhasil diperbarui!',
+                                                            iconColor: '#4ade80' // Samakan warna hijau dengan notifikasi layout
+                                                        });
+                                    
+                                                    } else {
+                                                        Swal.fire('Gagal!', 'Terjadi kesalahan sistem.', 'error');
+                                                    }
+                                                })
+                                                .catch(() => {
+                                                    Swal.fire('Error!', 'Gagal menghubungi server.', 'error');
+                                                });
+                                        }
+                                    }" class="relative inline-block">
 
-                                    <select x-model="status" @change="updateStatus()" {{-- 2. @change trigger disini --}}
-                                        :class="{
-                                            'bg-green-200 text-green-800': status == 'Aktif',
-                                            'bg-red-200 text-red-800': status == 'Nonaktif'
-                                        }"
-                                        class="text-xs font-semibold px-3 py-1.5 rounded-lg appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-150">
-                                        <option value="Aktif">Aktif</option>
-                                        <option value="Nonaktif">Nonaktif</option>
-                                    </select>
+                                        <select :value="currentStatus" @change="confirmChange($event)"
+                                            :class="{
+                                                'bg-green-500/20 text-green-400 border-green-500/50': currentStatus ==
+                                                    'Aktif',
+                                                'bg-red-500/20 text-red-400 border-red-500/50': currentStatus ==
+                                                    'Nonaktif'
+                                            }"
+                                            class="appearance-none border text-xs font-bold pl-4 pr-10 py-2 rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#e9d9c9] transition">
+                                            <option value="Aktif">Aktif</option>
+                                            <option value="Nonaktif">Nonaktif</option>
+                                        </select>
 
-                                    {{-- Ini adalah Ikon Panah 1. absolute ...: Menempatkannya di atas <select> di sisi kanan. 2. pointer-events-none: Agar bisa di-klik 'tembus' ke <select> di bawahnya. 3. :class: Mengubah warna panah agar cocok dengan status. --}}
-                                    <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
-                                        :class="{
-                                            'text-green-800': status === 'Aktif',
-                                            'text-red-800': status === 'Nonaktif'
-                                        }">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="2" stroke="currentColor" class="w-4 h-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                        </svg>
+                                        {{-- Panah Dropdown --}}
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2"
+                                            :class="currentStatus == 'Aktif' ? 'text-green-400' : 'text-red-400'">
+                                            <svg class="h-3 w-3 fill-current" viewBox="0 0 20 20">
+                                                <path
+                                                    d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                            </svg>
+                                        </div>
+
                                     </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="py-10 text-center text-gray-400">
+                                    <div class="flex flex-col items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2 opacity-50"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                        <p>Data pelanggan tidak ditemukan.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
 
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-
-                    {{-- Pagination (Footer Tabel) --}}
-                    <nav class="pt-2 mb-4 flex justify-end items-center text-sm">
-
-                        {{-- Kiri: Link pagination --}}
-                        {{ $customers->withQueryString()->links() }}
-
-                        {{-- Kanan: Dropdown "per page" --}}
-                        <div class="text-gray-400">
-                            <form action="{{ route('admin.customer') }}" method="GET">
-
-                                {{-- Input tersembunyi(hidden) ini PENTING --}}
-                                {{-- Ini untuk menyimpan query 'search' Anda saat mengganti 'per_page' --}}
-                                <input type="hidden" name="search" value="{{ request('search') }}">
-
-                                <select name="per_page" onchange="this.form.submit()" {{-- Otomatis submit saat diganti --}}
-                                    class="text-[#F4EFE7] bg-[#3C3D37] border border-[#F4EFE7] mb-3 rounded-lg py-2 px-3 focus:outline-none focus:ring-1 focus:ring-blue-500">
-
-                                    {{-- 
-                                      @selected() adalah helper Blade untuk mengecek 
-                                      request 'per_page' saat ini dan memilih option yang sesuai.
-                                    --}}
-                                    <option value="10" @selected(request('per_page', 10) == 10)>10/page</option>
-                                    <option value="20" @selected(request('per_page') == 20)>20/page</option>
-                                    <option value="50" @selected(request('per_page') == 50)>50/page</option>
-                                </select>
-                            </form>
-                        </div>
-                    </nav>
-                </tbody>
+            {{-- 3. PAGINATION --}}
+            <div class="mt-6 border-t border-white/10 pt-4">
+                {{ $customers->withQueryString()->links('pagination::tailwind') }}
+            </div>
 
         </div>
-
+    </div>
 </x-layout-admin>

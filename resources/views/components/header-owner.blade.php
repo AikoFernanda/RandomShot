@@ -12,18 +12,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                 stroke="currentColor" class="w-7 h-7">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
-
-            {{-- 
-               BADGE TITIK MERAH
-               Muncul jika: Ada Transaksi Pending ATAU Ada Pesanan Menu Menunggu Dibuat
-            --}}
-            @if (
-                (isset($pendingTrxCount) && $pendingTrxCount > 0) || 
-                (isset($pendingOrdersCount) && $pendingOrdersCount > 0)
-            )
-                <span class="absolute top-0 right-0 block h-3 w-3 rounded-full ring-2 ring-[#181C14] bg-red-500 animate-pulse transform translate-x-1/4 -translate-y-1/4"></span>
-            @endif
+            </svg> 
         </button>
 
         {{-- Logo --}}

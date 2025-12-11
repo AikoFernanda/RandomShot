@@ -13,6 +13,28 @@ class TransactionHistoryController extends Controller
     // Kita inject Request di sini
     public function index(Request $request)
     {
+        // PENYAPU (SOLUSI FIX)
+
+        // 1. Ambil data transaksi yang kadaluarsa
+        $expiredTransactions = \App\Models\Transaction::where('status_transaksi', 'unpaid')
+            ->where('created_at', '<', now()->subMinutes(15)) // 15 menit dari waktu created_at akan di delete
+            ->get();
+
+        // 2. Loop satu per satu untuk hapus anak-anaknya dulu
+        foreach ($expiredTransactions as $trx) {
+
+            // Hapus data di tabel 'transaction_details' milik transaksi ini
+            // (Memanfaatkan fungsi transactionDetails() di model)
+            $trx->transactionDetails()->delete();
+
+            // Hapus data di tabel 'reservations' milik transaksi ini
+            // (Memanfaatkan fungsi reservations() di model)
+            $trx->reservations()->delete();
+
+            // 3. Setelah anak-anaknya bersih, baru hapus parentnya (Transaksi)
+            $trx->delete();
+        }
+
         // 1. Ambil ID user dari session MELALUI object Request
         // Ini lebih aman dan eksplisit
         $user_id = $request->session()->get('user_id');

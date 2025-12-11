@@ -34,7 +34,7 @@ class RedirectIfAuthenticated
 
             if ($peran == 'Owner') {
                 // Ganti 'owner.laporan' dengan nama rute Anda yang sebenarnya
-                return redirect()->route('owner.performa'); 
+                return redirect()->route('owner.performance'); 
             }
 
             // Fallback (jika peran tidak dikenal, tendang ke home)
