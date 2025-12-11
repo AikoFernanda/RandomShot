@@ -128,9 +128,9 @@
                 </a>
 
                 {{-- 5. KELOLA ADMIN --}}
-                <a href="{{ route('owner.data-admin') }}"
+                <a href="{{ route('owner.data.admin') }}"
                     class="text-lg py-2 px-3 rounded-lg transition-colors duration-150 
-                    {{ request()->routeIs('owner.data-admin') 
+                    {{ request()->routeIs('owner.data.admin') 
                         ? 'bg-black border border-[#F4EFE7] text-[#F4EFE7] font-semibold' 
                         : 'text-[#F4EFE7] hover:bg-white/5' }}">
                     Kelola Data Admin

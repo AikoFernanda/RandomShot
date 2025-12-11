@@ -28,6 +28,8 @@ use App\Http\Controllers\Owner\PerformanceController;
 use App\Http\Controllers\Owner\SaleReportController;
 use App\Http\Controllers\Owner\OperationalCostController;
 use App\Http\Controllers\Owner\FinancialReportController;
+use App\Http\Controllers\Owner\AdminController;
+
 
 // --- Rute khusus untuk 'Tamu' ---
 Route::middleware('guest')->group(function () {
@@ -165,6 +167,12 @@ Route::prefix('owner')->name('owner.')
 
         Route::get('/biaya-operasional', [OperationalCostController::class, 'index'])->name('data.operasional');
 
+        // CRUD data admin
+        Route::get('/data-admin', [AdminController::class, 'index'])->name('data.admin');
+        Route::post('/data-admin', [AdminController::class, 'store'])->name('data.admin.store');
+        Route::put('/data-admin/{id}', [AdminController::class, 'update'])->name('data.admin.update');
+        Route::delete('/data-admin/{id}', [AdminController::class, 'destroy'])->name('data.admin.destroy');
+
         // CRUD BIAYA OPERASIONAL
         Route::get('/biaya-operasional', [OperationalCostController::class, 'index'])->name('data.operasional');
         Route::post('/biaya-operasional', [OperationalCostController::class, 'store'])->name('data.operasional.store');
@@ -176,12 +184,6 @@ Route::prefix('owner')->name('owner.')
                 'title' => 'Feedback Pelanggan',
             ]);
         })->name('feedback');
-
-        Route::get('/data-admin', function () {
-            return view('owner.data-admin', [
-                'title' => 'Data Admin',
-            ]);
-        })->name('data-admin');
     });
 
 
